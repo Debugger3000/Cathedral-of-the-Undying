@@ -5,19 +5,34 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private Rigidbody2D rb; // player rigidbody
+
+    [Header("Master Weapon List")]
+    public WeaponDatabase masterDB;
+
     [Header("Movement")]
-    [SerializeField] public float moveSpeed = 5f;
+    public float moveSpeed = 5f;
 
     [Header("Aim")]
-    [SerializeField] private Transform aimPivot;
+    public Transform aimPivot;
+    // private Transform muzzlePoint;
     private Vector2 moveInput;
     private Vector2 mousePos; // mouse for aim pos
-    private Rigidbody2D rb;
+    
+
+    [Header("Weapon")]
+    // projectile prefab spawn
+    public Weapon weaponControl; // Assign your gun object here
+    // public WeaponData Pistol;
+    //public GameObject curProjectile;
+    //public GameObject curWeapon;
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        WeaponData data = masterDB.GetWeaponByName("Shotgun");
+        weaponControl.Equip(data);
     }
 
     
@@ -35,6 +50,30 @@ public class PlayerController : MonoBehaviour
     {
         mousePos = context.ReadValue<Vector2>();
         Debug.Log(mousePos);
+    }
+
+    // Pplayer shoot with spacebar
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        // fire only on space press down
+        if (context.performed)
+        {
+            if (weaponControl != null)
+            {
+                // shootInput = context.ReadValue<>();
+                Debug.Log("Shoot input / spacebar pressed !");
+
+                // get muzzle pos
+                // Vector3 muzzlePos = muzzlePoint.position;
+
+                // initialize prefab - projectile script takes over...
+                //Instantiate(curProjectile, muzzlePos, muzzlePoint.rotation);
+                weaponControl.Fire(); // fire weapon via Weapon Class method
+            }
+            
+        }
+        
+
     }
 
     private void FixedUpdate()

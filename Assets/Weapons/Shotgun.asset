@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44de9573b0a492147a7556133a1dfa3a, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Shotgun
+  projectilePrefab: {fileID: 1258052255578545577, guid: 57d721f686e27244288417c9174d578c, type: 3}
+  weaponPrefab: {fileID: 7061523503901339698, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
+  muzzleOffset: 2
+  fireRate: 0.5
+  bulletSpeed: 30
