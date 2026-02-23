@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb; // player rigidbody
 
-    [Header("Master Weapon List")]
-    public WeaponDatabase masterDB;
+    // [Header("Master Weapon List")]
+    // public WeaponDatabase masterDB;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -31,10 +31,20 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        WeaponData data = masterDB.GetWeaponByName("Shotgun");
-        weaponControl.Equip(data);
+        // WeaponData data = masterDB.GetWeaponByName("Shotgun");
+        // weaponControl.Equip(data);
     }
 
+    public void OnSwitchWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // rotate weapon in inventory...
+            Debug.Log("Pressed Q to get inventory...");
+            GameController.Instance.SwitchWeapon(); // call gameController to swap weapon...
+        }
+
+    }
     
     
 
@@ -49,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public void OnAim(InputAction.CallbackContext context)
     {
         mousePos = context.ReadValue<Vector2>();
-        Debug.Log(mousePos);
+        //Debug.Log(mousePos);
     }
 
     // Pplayer shoot with spacebar
