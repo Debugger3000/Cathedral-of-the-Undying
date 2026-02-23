@@ -10,4 +10,5 @@ public class WeaponData : ScriptableObject
     public float muzzleOffset = 0.4f;
     public float fireRate = 0.5f;
     public float bulletSpeed = 20f;
+    public float weaponDamage = 10f;
 }
