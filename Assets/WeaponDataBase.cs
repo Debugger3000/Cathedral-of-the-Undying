@@ -5,11 +5,13 @@ using System.Collections.Generic;
 public class WeaponDatabase : ScriptableObject
 {
     // A list of all weapons in the game
-    public List<WeaponData> allWeapons;
+    public List<WeaponData> weapons;
+
+    // public WeaponData startWeapon;
 
     // Helper function to find a weapon by its name
     public WeaponData GetWeaponByName(string name)
     {
-        return allWeapons.Find(w => w.weaponName == name);
+        return weapons.Find(w => w.weaponName == name);
     }
 }

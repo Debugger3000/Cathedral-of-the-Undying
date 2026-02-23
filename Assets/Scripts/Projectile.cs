@@ -1,42 +1,35 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : BaseProjectile
 {
-    public float speed = 20f;
-    public int damage = 10;
-    private Rigidbody2D rb;
+    
+    
 
-    void Awake()
+    // void Awake()
+    // {
+    //     // rb = GetComponent<Rigidbody2D>();
+    //     // SetAttributes();
+    // }
+
+    //
+    public override void SpecialEffect()
     {
-        rb = GetComponent<Rigidbody2D>();
+        Debug.Log("The fireball exploded in a radius!");
+        // Add explosion particles or area-of-effect damage here
     }
 
     // Use FixedUpdate for physics-based velocity
-    void FixedUpdate()
-    {
-        // We set velocity directly to ensure it moves at a constant speed
-        rb.linearVelocity = transform.up * speed; 
-    }
+    // void FixedUpdate()
+    // {
+    //     // We set velocity directly to ensure it moves at a constant speed
+    //     // rb.linearVelocity = transform.up * speed; 
+    // }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // // Update is called once per frame
+    // void Update()
+    // {
         
-    }
+    // }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("projectile detection.........");
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
-        {
-            Debug.Log("Hit an environment Layer!");
-            HandleHit(gameObject);
-        }
-    }
-
-    void HandleHit(GameObject target)
-    {
-        // Add damage logic here
-        Destroy(target); // Destroy the bullet
-    }
+    
 }
