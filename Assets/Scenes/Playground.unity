@@ -11361,98 +11361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b3cfe1c70fc7e43acd62983085cc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  masterDB: {fileID: 11400000, guid: 9438939955c901c418d7a397b4e366d7, type: 2}
-  moveSpeed: 5
-  aimPivot: {fileID: 993350425}
-  weaponControl: {fileID: 1132529323}
---- !u!58 &703303553
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703303547}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!114 &703303554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703303547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
-  m_ShadowGroup: 0
-  m_Priority: 0
-  m_ComponentVersion: 5
-  m_HasRenderer: 0
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 000000002d4b933ee5635aaf4d59f59e610b5cba
-  m_ShapePath:
-  - {x: -0.52576095, y: -0.28103125, z: 0}
-  - {x: -0.29391187, y: 0.074943185, z: 0}
-  - {x: 0.010540605, y: 0.56440246, z: 0}
-  - {x: 0.525761, y: -0.2939118, z: 0}
-  m_ShapePathHash: 1864971262
-  m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 0}
-  m_ShadowShape2DProvider:
-    rid: -2
-  m_ShadowCastingSource: 1
-  m_ShadowMesh:
-    m_Mesh: {fileID: 695920668}
-    m_LocalBounds:
-      m_Center: {x: 0.000000059604645, y: 0.13524532, z: 0}
-      m_Extent: {x: 0.525761, y: 0.42915714, z: 0}
-    m_EdgeProcessing: 1
-    m_TrimEdge: 0
-    m_FlipX: 0
-    m_FlipY: 0
-    m_InitialTrim: 0
-  m_CastingOption: 1
-  m_PreviousTrimEdge: 0
-  m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 1
-  m_PreviousShadowShape2DSource: {fileID: 703303553}
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  startWeapon: {fileID: 11400000, guid: 15aee0bc3addd9147818cb9769f1f402, type: 2}
+  baseWeapons: {fileID: 11400000, guid: b8eccc96237c2f54c82dd258d9a7c74f, type: 2}
+  levelTwoWeapons: {fileID: 0}
+  levelThreeWeapons: {fileID: 0}
 --- !u!1 &993350424
 GameObject:
   m_ObjectHideFlags: 0
@@ -11476,7 +11388,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008626260}
+  m_GameObject: {fileID: 993350424}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.93939, y: 0.59652, z: 0}
@@ -11491,7 +11403,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008626260}
+  m_GameObject: {fileID: 993350424}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 753a15af55dfce7468ea09edfc81403e, type: 3}
@@ -11645,7 +11557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1352193351
 Transform:
   m_ObjectHideFlags: 0
@@ -12707,3 +12619,4 @@ SceneRoots:
   - {fileID: 89331758}
   - {fileID: 974660933}
   - {fileID: 1008626261}
+  - {fileID: 1352193351}
