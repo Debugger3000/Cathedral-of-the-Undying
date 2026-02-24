@@ -9,14 +9,20 @@ public class GameController : MonoBehaviour
     public static GameController Instance; // The global reference
     
 
+    [Header("Player")]
     public GameObject playerPrefab;
 
     public Transform playerSpawnPoint;
 
+    [Header("Camera")]
     public CinemachineCamera virtualCamera;
 
+    [Header("Weapons / Inventory")]
     public WeaponDatabaseGame weaponDataBaseGame;
     public Inventory inventory;
+
+    [Header("UI")]
+    public UIManager uiManager;
 
     void Awake()
     {
@@ -50,6 +56,7 @@ public class GameController : MonoBehaviour
         WeaponInstance shotgunInstance = weaponDataBaseGame.GetShotgun();
         inventory.WeaponPickUp(shotgunInstance);
         playerWeapon.Equip(shotgunInstance); // equip player with weapon
+        uiManager.UpdateCurrentWeaponDisplay(shotgunInstance.weaponData.weaponSprite);
     }
 
     // Weapon functions
@@ -58,5 +65,6 @@ public class GameController : MonoBehaviour
         // rotate inventory ahead by 1
         WeaponInstance newWeapon = inventory.SwapWeapons(); // rotate inventory / weapon
         playerWeapon.Equip(newWeapon); // equip player with new weapon
+        uiManager.UpdateCurrentWeaponDisplay(newWeapon.weaponData.weaponSprite); // update UI with new weapon sprite
     }
 }

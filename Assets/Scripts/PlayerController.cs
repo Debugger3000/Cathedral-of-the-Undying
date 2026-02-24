@@ -22,10 +22,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Weapon")]
     // projectile prefab spawn
-    public Weapon weaponControl; // Assign your gun object here
+    public BaseWeapon weaponControl; // Assign your gun object here
     // public WeaponData Pistol;
     //public GameObject curProjectile;
     //public GameObject curWeapon;
+
+    [Header("Health")]
+    private float maxHealth = 100f;
+    private float currentHealth;
 
 
     private void Awake()
@@ -33,8 +37,26 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         // WeaponData data = masterDB.GetWeaponByName("Shotgun");
         // weaponControl.Equip(data);
+
+        currentHealth = maxHealth; // set currentHealth
     }
 
+    // Player collision logic
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+
+
+
+        
+    }
+
+
+
+    //---
+    // Player Inputs
+    //
+    // 'Q' - user input to change weapon
     public void OnSwitchWeapon(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -43,11 +65,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Pressed Q to get inventory...");
             GameController.Instance.SwitchWeapon(); // call gameController to swap weapon...
         }
-
     }
     
-    
-
     // This MUST match the name of your Action in the Input Asset.
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -80,10 +99,7 @@ public class PlayerController : MonoBehaviour
                 //Instantiate(curProjectile, muzzlePos, muzzlePoint.rotation);
                 weaponControl.Fire(); // fire weapon via Weapon Class method
             }
-            
         }
-        
-
     }
 
     private void FixedUpdate()
@@ -112,7 +128,6 @@ public class PlayerController : MonoBehaviour
 
         // Get the direction from the player to the mouse
         Vector2 lookDir = (Vector2)mouseWorldPos - (Vector2)aimPivot.position;
-
 
         // Calculate the angle in degrees
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
