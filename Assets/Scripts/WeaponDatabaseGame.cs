@@ -18,24 +18,24 @@ public class WeaponDatabaseGame : MonoBehaviour
 
    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    // void Start()
+    // {
         
-    }
+    // }
 
     public WeaponInstance GetStarterWeapon()
     {
         return new WeaponInstance(startWeapon);
-    } 
+    }
 
     public WeaponInstance GetShotgun()
     {
         return new WeaponInstance(baseWeapons.GetWeaponByName("Shotgun"));
     } 
 
-    // Update is called once per frame
-    void Update()
-    {
+    // // Update is called once per frame
+    // void Update()
+    // {
         
-    }
+    // }
 }
