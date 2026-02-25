@@ -108,9 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   muzzlePoint: {fileID: 1019122831111811992}
-  currentWeaponData:
-    weaponData: {fileID: 0}
-    curAmmo: 0
 --- !u!1 &3476377438386311351
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +124,7 @@ GameObject:
   - component: {fileID: 5444900889151858962}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
