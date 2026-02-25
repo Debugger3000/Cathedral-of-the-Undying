@@ -20,6 +20,13 @@ public abstract class BaseProjectile : MonoBehaviour
 
     public abstract void SpecialEffect();
 
+    public virtual void EnemyHit(GameObject target)
+    {
+
+
+        Destroy(target); // destroy projectile...
+    }
+
     // Use FixedUpdate for physics-based velocity
     void FixedUpdate()
     {
@@ -36,10 +43,17 @@ public abstract class BaseProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("projectile detection.........");
+        // base environment projectile destruction
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
         {
             Debug.Log("Hit an environment Layer!");
             HandleHit(gameObject);
+        }
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
+        {
+            Debug.Log("Hit an enemy with player projectile !!!");
+            EnemyHit(gameObject);
+            
         }
     }
 
