@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShamblerData
   enemyName: Shambler
   damage: 10
+  attackRange: 0.75
+  windUpTime: 0.5
+  attackCooldown: 1.5
+  attackAngle: 45
   maxHealth: 100
   armour: 10
   moveSpeed: 2
   rotationSpeed: 3
   enemyPrefab: {fileID: 5813305964766610418, guid: cb75b65c7416ca94eaca9d9da515fa43, type: 3}
+  attackHitbox: {fileID: 7819302047958935761, guid: 0da6eaaf580998643bd5d0dd0bf42b89, type: 3}

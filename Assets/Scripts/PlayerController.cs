@@ -1,5 +1,6 @@
 
 
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,10 +46,53 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
+        // Enemy has collided with the player...
+        // Player should take damage based on enemy damage property
+        // This only works for physical contact driven enemy interactions
+        // if(LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
+        // {
+        //     //EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+        //     //PlayerTakeDamage(enemy.enemyData.damage); // give damage from enemy data
+        // }
+        // if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyAttack"))
+        // {
+        //     Debug.Log($"Enemy hitbox triggered player.................");
+        //     // EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+        //     // If the player is currently dashing/dodging, we skip the damage
+        //     // if (isInvulnerable) 
+        //     // {
+        //     //     Debug.Log("Dodged the attack!");
+        //     //     return;
+        //     // }
 
+        //     PlayerTakeDamage(10f); // player takes damage...
+        // }
+        // else if 
+        // enemy projectiles...
+    }
 
-
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
         
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack"))
+        {
+            Debug.Log("Enemy hitbox triggered player via TRIGGER event!");
+
+            if (other.TryGetComponent<AttackHitboxController>(out var attackHitboxScript))
+            {
+                Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
+                PlayerTakeDamage(attackHitboxScript.damage);
+            }
+
+        }
+    }
+
+
+    public void PlayerTakeDamage(float damage)
+    {
+        currentHealth -= damage; // subtract
+        GameController.Instance.PlayerDamaged(currentHealth); // trigger UI update
+
     }
 
 

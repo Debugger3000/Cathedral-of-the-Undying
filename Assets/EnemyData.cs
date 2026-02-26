@@ -7,6 +7,12 @@ public abstract class EnemyData : ScriptableObject
 
     public float damage = 10f; // weapons damage
 
+    public float attackRange = 2f;       // How far the raycast goes
+    public float windUpTime = 2f;       // Raycast detection to attack time
+    public float attackCooldown = 1.5f;  // Time between attacks
+    public float hitboxLifetime = 1.0f; // how long the hitbox visual should be shown
+    public float attackAngle = 45f;
+
     public float maxHealth = 100f;
 
     public float armour = 10f;
@@ -16,6 +22,8 @@ public abstract class EnemyData : ScriptableObject
     
     // public GameObject projectilePrefab; // projectile prefab for weapon
     public GameObject enemyPrefab; // weapon prefab
+
+    public GameObject attackHitbox;
 
     //public Sprite weaponSprite; // weapon visual for UI
     // private Transform muzzlePoint;
@@ -44,6 +52,12 @@ public abstract class EnemyData : ScriptableObject
     {
         //
             Debug.Log("Enemy basic attack called...");
+
+            // basic enemy attack
+            // small raycasted aoe cone infront of themselves when they collide or get close to player...
+
+
+
 
             // set fire rate time for next fire
             // nextFireTime = Time.time + (1f / currentWeaponData.weaponData.fireRate);

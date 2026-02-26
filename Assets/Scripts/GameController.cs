@@ -67,4 +67,23 @@ public class GameController : MonoBehaviour
         playerWeapon.Equip(newWeapon); // equip player with new weapon
         uiManager.UpdateCurrentWeaponDisplay(newWeapon.weaponData.weaponSprite); // update UI with new weapon sprite
     }
+
+
+    // UI
+    public void PlayerDamaged(float currentHealth)
+    {
+        // player is dead
+        if(currentHealth <= 0f)    
+        {
+            Destroy(playerInstance); // kill player model...
+            // player dead
+            // have a nice delay and the enemies swarming..
+            // cue death music / text saying player has died...
+            // then pop up end game menu...
+        }
+        uiManager.UpdatePlayerHealth(currentHealth); // update player UI health bar
+    }
+
+
+
 }
