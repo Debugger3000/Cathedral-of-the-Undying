@@ -14,6 +14,11 @@ public class UIManager : MonoBehaviour
 
     public Image playerCurrentWeapon;
 
+    [Header("Points Multiplier")]
+    public Image multiplierPointsProgressBar;
+    public Image multiplierTimerProgressBar;
+    public TextMeshProUGUI multiplierLevelText;
+    public char multiplierlevelCharacter = 'X'; 
     void Start()
     {
         
@@ -28,6 +33,48 @@ public class UIManager : MonoBehaviour
     public void UpdateCurrentWeaponDisplay(Sprite weaponSprite)
     {
         playerCurrentWeapon.sprite = weaponSprite; // set sprite ???
+    }
+
+    // set multiplier points progress bar 
+    // 0 -> 100 (scaled fill range: 0 -> 1)
+    public void UpdatePointsMultiplierPoints(int multiplierPoints)
+    {
+        // set progress bar for timer
+        // 3 -> 0 how to scale this to 0 -> 1.0
+        Debug.Log($"Set POINTS FILL from: {multiplierPoints}");
+        float scaledRange = multiplierPoints / 100.0f;
+        Debug.Log($"Set SCALED SCALED TO (for else): {scaledRange}");
+        if(scaledRange == 1)
+        {
+            // we need to reset points bar to zero since we hit ceiling
+            multiplierPointsProgressBar.fillAmount = 0; // set to 0...
+            
+        }
+        else
+        {
+            
+            multiplierPointsProgressBar.fillAmount = scaledRange; // set progress bar            
+        }
+        
+
+
+        // set level
+    }
+
+    public void UpdateMultiplierLevel(int multiplierLevel)
+    {
+        string newLevelText = $"{multiplierLevel}{multiplierlevelCharacter}";
+        multiplierLevelText.text = newLevelText; // set UI text
+        
+    }
+
+    // set multiplier timer progress bar
+    // 3 -> 0 timer converted to 0 -> 1.0 
+    public void UpdateMultiplierTimer(float multiplierTimer)
+    {
+        float scaledRange = multiplierTimer / 3; // 
+        multiplierTimerProgressBar.fillAmount = scaledRange;
+        
     }
 
     // Update player health bar

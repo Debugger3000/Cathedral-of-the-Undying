@@ -4,6 +4,7 @@ public abstract class BaseProjectile : MonoBehaviour
 {
     public float speed = 20f;
     public float damage = 10;
+    public int weaponPoints = 10;
     protected Rigidbody2D rb; // grab projectile gameObject rigidbody
     void Awake()
     {
@@ -11,11 +12,12 @@ public abstract class BaseProjectile : MonoBehaviour
     }
 
 
-    public void SetAttributes(float speed, float damage)
+    public void SetAttributes(float speed, float damage, int weaponPoints)
     {
         Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
+        this.weaponPoints = weaponPoints; // set weaponPoints
     }
 
     public abstract void SpecialEffect();
@@ -53,7 +55,8 @@ public abstract class BaseProjectile : MonoBehaviour
         {
             Debug.Log("Hit an enemy with player projectile !!!");
             EnemyHit(gameObject);
-            
+            // point multiplier needs to be increased
+            PointMultiplier.Instance.AddPoint(weaponPoints); // add weapon points...
         }
     }
 

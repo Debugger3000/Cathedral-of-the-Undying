@@ -17,6 +17,8 @@ public abstract class WeaponData : ScriptableObject
 
     public float weaponPenetration = 10f; // if we introduce enemy armour 
 
+    public int weaponPoints = 10; // how much this weapons projectiles should increment the point multiplier...
+
     // upgrade level 1 - 3
     //public int upgradeLevel = 1;
 
@@ -39,7 +41,7 @@ public abstract class WeaponData : ScriptableObject
             // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
             if (projScript != null)
             {
-                projScript.SetAttributes(bulletSpeed, weaponDamage);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }
