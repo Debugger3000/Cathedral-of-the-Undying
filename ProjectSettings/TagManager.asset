@@ -16,8 +16,8 @@ TagManager:
   - NoColEnvironment
   - Projectile
   - Enemy
-  - 
-  - 
+  - EnemyAttack
+  - Ignore
   - 
   - 
   - 
