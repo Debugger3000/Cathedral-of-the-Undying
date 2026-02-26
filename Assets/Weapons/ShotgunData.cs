@@ -38,7 +38,7 @@ public class ShotgunData : WeaponData
             // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
             if (projScript != null)
             {
-                projScript.SetAttributes(bulletSpeed, weaponDamage);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }
