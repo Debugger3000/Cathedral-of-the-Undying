@@ -118,13 +118,17 @@ public abstract class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            GameController instance = GameController.Instance;
-            // have unit drop a box...
-            GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
-            WeaponName weaponName = instance.GetWeaponBoxDropName();
-            Debug.Log($"weapon name for box drop is: {weaponName}");
-            box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
-
+            // roll 50% chance that a weapon box drops...
+            if (Random.value <= 0.5f)
+            {
+                GameController instance = GameController.Instance;
+                // have unit drop a box...
+                GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+                WeaponName weaponName = instance.GetWeaponBoxDropName();
+                Debug.Log($"weapon name for box drop is: {weaponName}");
+                box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
+            }
+            
             Die(); // enemy unit dies
         } 
     }

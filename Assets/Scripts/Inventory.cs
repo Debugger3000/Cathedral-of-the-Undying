@@ -33,8 +33,14 @@ public class Inventory : MonoBehaviour
     // add new weapon to inventory...
     public void WeaponPickUp(WeaponInstance newWeapon)
     {
-        inventoryWeapons.Add(newWeapon);
-        Debug.Log($"weapon pick up in inventroy... {inventoryWeapons.Count} ......... { inventoryWeapons}");
+        // if not null, then we don't add same weapon
+        WeaponInstance foundWeapon = inventoryWeapons.Find(w => w.weaponData.weaponName == newWeapon.weaponData.weaponName);
+        // check if weapon is already added to inventory
+        if(foundWeapon == null)
+        {
+            inventoryWeapons.Add(newWeapon);
+            Debug.Log($"weapon pick up in inventroy... {inventoryWeapons.Count} ......... { inventoryWeapons}");
+        }
     }
 
     // deal with weapon upgrade

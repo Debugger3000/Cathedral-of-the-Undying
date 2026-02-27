@@ -14031,6 +14031,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponBox
       objectReference: {fileID: 0}
+    - target: {fileID: 2916868469267405726, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
