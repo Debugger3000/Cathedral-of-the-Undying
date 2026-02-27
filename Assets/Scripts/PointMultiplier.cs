@@ -61,6 +61,8 @@ public class PointMultiplier : MonoBehaviour
             multiplierLevel++; // increment level
             multiplierPoints = 0; // reset multiplier points to 0
             UpdateLevelUI(); // update the level UI
+
+            // check what weapons / upgrades are now available to drop on kills..
         }
 
 

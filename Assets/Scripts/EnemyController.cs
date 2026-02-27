@@ -1,6 +1,4 @@
 using System.Collections;
-using Mono.Cecil.Cil;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -116,9 +114,19 @@ public abstract class EnemyController : MonoBehaviour
         currentHealth -= amount; // subtract health with normal (0-100)
         Debug.Log($"Damage taken is: {amount}");
 
-        healthBarFill.fillAmount = currentHealth / 100; //
+        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
 
-        if (currentHealth <= 0) Die();
+        if (currentHealth <= 0)
+        {
+            GameController instance = GameController.Instance;
+            // have unit drop a box...
+            GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+            WeaponName weaponName = instance.GetWeaponBoxDropName();
+            Debug.Log($"weapon name for box drop is: {weaponName}");
+            box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
+
+            Die(); // enemy unit dies
+        } 
     }
 
 
@@ -137,49 +145,6 @@ public abstract class EnemyController : MonoBehaviour
         rb.MovePosition(newPosition);
     }
 
-    // void CheckForAttack()
-    // {
-    //     if (Time.time >= nextAttackTime)
-    //     {
-    //         // Raycast forward to see if player is in front
-    //         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
-
-    //         if (hit.collider != null)
-    //         {
-    //             StartCoroutine(PerformConeAttack()); // start delayed attack
-    //         }
-    //     }
-    // }
-
-    //
-    // IEnumerator PerformConeAttack()
-    // {
-    //     isAttacking = true;
-    //     nextAttackTime = Time.time + enemyData.attackCooldown;
-
-    //     // 1. WIND UP: Warning phase (visual telegraph)
-    //     Debug.Log("Enemy is charging attack...");
-    //     yield return new WaitForSeconds(0.5f); // The "Dodge Window" for the player
-
-    //     // 2. THE HIT: Check for player in cone
-    //     Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(transform.position, enemyData.attackRange, LayerMask.GetMask("Player"));
-
-    //     foreach (var player in hitPlayers)
-    //     {
-    //         Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
-    //         // Check if player is within the cone angle using Dot Product
-    //         if (Vector3.Angle(transform.up, dirToPlayer) < enemyData.attackAngle / 2f)
-    //         {
-    //             Debug.Log("Player caught in cone attack!");
-    //             // player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
-    //         }
-    //     }
-
-    //     // 3. RECOVERY: Brief pause after swinging
-    //     yield return new WaitForSeconds(0.3f);
-    //     isAttacking = false;
-    // }
-
     // Visualize the attack range in the Editor
     private void OnDrawGizmos()
     {
@@ -192,18 +157,4 @@ public abstract class EnemyController : MonoBehaviour
         Gizmos.DrawRay(transform.position, leftBoundary * enemyData.attackRange);
         Gizmos.DrawRay(transform.position, rightBoundary * enemyData.attackRange);
     }
-
-
-    // Update 
-    // void Update()
-    // {
-    //     //rotate to look at player
-    //     Vector3 direction = target.position - myTransform.position;
-    //     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    //     myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
-
-    //     //move towards the player
-    //     Vector3 newPosition = Vector3.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.fixedDeltaTime);
-    //     rb.MovePosition(newPosition);
-    // }
 }

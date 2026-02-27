@@ -18,6 +18,7 @@ MonoBehaviour:
   weaponSprite: {fileID: 21300152, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
   fireRate: 2
   bulletSpeed: 10
-  weaponDamage: 10
+  weaponDamage: 50
   initialWeaponAmmo: 999
   weaponPenetration: 10
+  weaponPoints: 10

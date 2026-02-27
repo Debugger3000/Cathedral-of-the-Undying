@@ -41,9 +41,9 @@ public class UIManager : MonoBehaviour
     {
         // set progress bar for timer
         // 3 -> 0 how to scale this to 0 -> 1.0
-        Debug.Log($"Set POINTS FILL from: {multiplierPoints}");
+        // Debug.Log($"Set POINTS FILL from: {multiplierPoints}");
         float scaledRange = multiplierPoints / 100.0f;
-        Debug.Log($"Set SCALED SCALED TO (for else): {scaledRange}");
+        // Debug.Log($"Set SCALED SCALED TO (for else): {scaledRange}");
         if(scaledRange == 1)
         {
             // we need to reset points bar to zero since we hit ceiling

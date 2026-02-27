@@ -85,6 +85,27 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        // player runs into a weapon box...
+        else if(other.gameObject.layer == LayerMask.NameToLayer("WeaponBox"))
+        {
+            // Use GetComponentInParent to be safe
+            WeaponBox boxScript = other.GetComponentInParent<WeaponBox>();
+
+            if (boxScript != null) 
+            {
+                WeaponName name = boxScript.weaponName;
+                Debug.Log($"Weapon name on player pickup is: {name}");
+                
+                GameController.Instance.PickUpWeaponBox(name);
+                
+                // Tell the box to destroy itself so it's not picked up twice
+                boxScript.SelfDestruct();
+            }
+            else 
+            {
+                Debug.LogWarning("Hit a 'WeaponBox' layer, but no WeaponBox script was found!");
+            }
+        }
     }
 
 

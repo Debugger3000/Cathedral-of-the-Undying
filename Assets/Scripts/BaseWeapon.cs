@@ -41,8 +41,6 @@ public abstract class BaseWeapon : MonoBehaviour
         }
 
         currentWeaponData = newData; // load new weapon data
-        //weaponPrefab = newData.weaponPrefab; // load new weapon prefab
-        //projectilePrefab = newData.projectilePrefab; // load new projectile prefab
 
         // insantiate new gun prefab, and hold object so we can grab muzzle point
         GameObject newGun = Instantiate(newData.weaponData.weaponPrefab, transform.position, transform.rotation, transform);
@@ -60,12 +58,4 @@ public abstract class BaseWeapon : MonoBehaviour
     {
         return currentWeaponData;
     }
-    
-
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 }

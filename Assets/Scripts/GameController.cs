@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public WeaponDatabaseGame weaponDataBaseGame;
     public Inventory inventory;
 
+    public GameObject weaponBox;
+
     [Header("UI")]
     public UIManager uiManager;
 
@@ -51,12 +53,12 @@ public class GameController : MonoBehaviour
         Debug.Log($"first weapon instance: {firstWeaponInstance}");
         inventory.WeaponPickUp(firstWeaponInstance);
         playerWeapon.Equip(firstWeaponInstance); // equip player with weapon
-
+        uiManager.UpdateCurrentWeaponDisplay(firstWeaponInstance.weaponData.weaponSprite); // update ui
         // equip shotgun too for testing
-        WeaponInstance shotgunInstance = weaponDataBaseGame.GetShotgun();
-        inventory.WeaponPickUp(shotgunInstance);
-        playerWeapon.Equip(shotgunInstance); // equip player with weapon
-        uiManager.UpdateCurrentWeaponDisplay(shotgunInstance.weaponData.weaponSprite);
+        // WeaponInstance shotgunInstance = weaponDataBaseGame.GetShotgun();
+        // inventory.WeaponPickUp(shotgunInstance);
+        // playerWeapon.Equip(shotgunInstance); // equip player with weapon
+        // uiManager.UpdateCurrentWeaponDisplay(shotgunInstance.weaponData.weaponSprite);
     }
 
     // Weapon functions
@@ -84,6 +86,18 @@ public class GameController : MonoBehaviour
         uiManager.UpdatePlayerHealth(currentHealth); // update player UI health bar
     }
 
+    // weapon box drop
+    public WeaponName GetWeaponBoxDropName()
+    {
+        // get level and get a weapon Name ( ID )
+        int level = PointMultiplier.Instance.multiplierLevel;
+        return weaponDataBaseGame.GetWeaponDrop(level); // pass weapon id back to box
+    }
 
-
+    public void PickUpWeaponBox(WeaponName weaponName)
+    {
+        Debug.Log($"Player is picking up weaon in GAMECONTROLLER: {weaponName}");
+        WeaponInstance weaponInstance = weaponDataBaseGame.GetWeaponPickUp(weaponName); // get weapon instance..
+        inventory.WeaponPickUp(weaponInstance); // add new weapon instance to inventory...
+    }
 }

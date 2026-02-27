@@ -11664,9 +11664,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   startWeapon: {fileID: 11400000, guid: 15aee0bc3addd9147818cb9769f1f402, type: 2}
-  baseWeapons: {fileID: 11400000, guid: b8eccc96237c2f54c82dd258d9a7c74f, type: 2}
-  levelTwoWeapons: {fileID: 0}
-  levelThreeWeapons: {fileID: 0}
+  baseWeapons:
+  - {fileID: 11400000, guid: 7b02d37ec7157224185c04be425dcf24, type: 2}
+  weaponConfigs:
+  - weaponName: 1
+    dropLevel: 0
+  - weaponName: 2
+    dropLevel: 10
+  - weaponName: 3
+    dropLevel: 10
+  - weaponName: 4
+    dropLevel: 10
 --- !u!1 &993350424
 GameObject:
   m_ObjectHideFlags: 0
@@ -11745,6 +11753,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 1629527614}
   weaponDataBaseGame: {fileID: 974660934}
   inventory: {fileID: 1008626262}
+  weaponBox: {fileID: 2916868469267405726, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
   uiManager: {fileID: 1620483064}
 --- !u!4 &1017860642
 Transform:
@@ -14010,6 +14019,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
+--- !u!1001 &8245029924108056206
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2916868469267405726, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_Name
+      value: WeaponBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791837417053571409, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
 --- !u!1001 &8269678820615226908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14165,3 +14231,4 @@ SceneRoots:
   - {fileID: 6677132070625450058}
   - {fileID: 8269678820615226908}
   - {fileID: 1871939698}
+  - {fileID: 8245029924108056206}
