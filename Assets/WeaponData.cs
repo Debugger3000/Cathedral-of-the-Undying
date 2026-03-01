@@ -19,6 +19,8 @@ public abstract class WeaponData : ScriptableObject
 
     public int weaponPoints = 10; // how much this weapons projectiles should increment the point multiplier...
 
+    public bool isSpecialEffect = false; // weapon has special effect on projectiles or on hit
+
     // upgrade level 1 - 3
     //public int upgradeLevel = 1;
 
@@ -41,7 +43,8 @@ public abstract class WeaponData : ScriptableObject
             // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
             if (projScript != null)
             {
-                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints);
+                
+                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints, isSpecialEffect);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }

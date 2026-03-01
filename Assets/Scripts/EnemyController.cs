@@ -2,6 +2,33 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
+[System.Serializable]
+public class EnemyStatsCopy
+{
+    // These are the stats prone to modification via debuffs/buffs
+    public float currentHealth;
+    public float maxHealth;
+    public float damage;
+    public float moveSpeed;
+    public float armour;
+    public float attackCooldown;
+
+    // Constructor to clone the ScriptableObject data into this instance
+    public EnemyStatsCopy(EnemyData data)
+    {
+        maxHealth = data.maxHealth;
+        currentHealth = data.maxHealth;
+        damage = data.damage;
+        moveSpeed = data.moveSpeed;
+        armour = data.armour;
+        attackCooldown = data.attackCooldown;
+    }
+}
+
+
+
 // Base enemy implementation
 public abstract class EnemyController : MonoBehaviour
 {
@@ -12,8 +39,14 @@ public abstract class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     public EnemyData enemyData; // Drag your ShamblerData or BossData here
 
+    private EnemyStatsCopy enemyStatsCopy; // copy of data to apply effects too...
+
+    // apply debuff to data, set a timer for that effect, in update check array for timers hitting zero, normalize 
+
     private float nextAttackTime;
     private bool isAttacking = false;
+
+    private bool isAffected = false; // for special effects 
 
     // Unit Stats
     protected float currentHealth;
@@ -32,12 +65,18 @@ public abstract class EnemyController : MonoBehaviour
         currentHealth = enemyData.maxHealth; // set health...
         // healthBarPrefab.SetActive = false;
 
+        // set enemy stats copy
+        enemyStatsCopy = new EnemyStatsCopy(enemyData);
+
         // Canvas canvas = GetComponentInChildren<Canvas>();
         // canvas.worldCamera = Camera.main;
     }
 
     // implemented by actual unit script...
     protected abstract void Die(); // unit death
+
+    // Subclasses MUST implement this (Cone, Circle, Projectile, etc.)
+    protected abstract void ExecuteAttackLogic();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -50,6 +89,12 @@ public abstract class EnemyController : MonoBehaviour
             BaseProjectile projectile = collision.GetComponent<BaseProjectile>(); // grab projectiles damage
 
             TakeDamage(projectile.damage); // unit should lose health...
+
+            // check if projetile / weapon has a special effect to apply...
+            if(projectile.isSpecialEffect)
+            {
+                StartCoroutine(ApplySpecialEffectImpact(projectile));                
+            }
         }
         // if (LayerMask.LayerToName(collision.gameObject.layer) == "Player")
         // {
@@ -59,11 +104,27 @@ public abstract class EnemyController : MonoBehaviour
         // }
     }
 
+
+    // New Coroutine to handle the pause in movement
+    private IEnumerator ApplySpecialEffectImpact(BaseProjectile projectile)
+    {
+        isAffected = true; 
+        
+        // Apply the knockback/effect
+        enemyStatsCopy = projectile.SpecialEffect(gameObject, enemyStatsCopy, projectile);
+        
+        // Wait for a short duration so the physics force actually moves the object
+        yield return new WaitForSeconds(0.2f); 
+        
+        isAffected = false;
+    }
+
+
     void Update()
     {
-        if (target == null || isAttacking) return;
+        if (target == null || isAttacking || isAffected) return; // no target 
 
-        HandleRotation();
+        HandleRotation(); // rotate eneny
         
         // Check if we can attack
         if (Time.time >= nextAttackTime)
@@ -86,6 +147,9 @@ public abstract class EnemyController : MonoBehaviour
         {
             MoveTowardsPlayer();
         }
+
+        // check debuff status
+
     }
 
     private IEnumerator AttackSequence()
@@ -95,7 +159,7 @@ public abstract class EnemyController : MonoBehaviour
         // 1. Wind up - Every enemy pauses briefly
         yield return new WaitForSeconds(enemyData.windUpTime);
 
-        // 2. THE ACTUAL ATTACK - This is now unique to each enemy
+        // 
         ExecuteAttackLogic();
 
         // 3. Recovery / Cooldown
@@ -105,8 +169,7 @@ public abstract class EnemyController : MonoBehaviour
         isAttacking = false;
     }
 
-    // Subclasses MUST implement this (Cone, Circle, Projectile, etc.)
-    protected abstract void ExecuteAttackLogic();
+    
 
     // receive flat damage...
     public void TakeDamage(float amount)
@@ -118,6 +181,7 @@ public abstract class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            // Weapon Box drop on enemy death
             // roll 50% chance that a weapon box drops...
             if (Random.value <= 0.5f)
             {
@@ -129,13 +193,14 @@ public abstract class EnemyController : MonoBehaviour
                 box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
             }
             
-            Die(); // enemy unit dies
+            // unit dies...
+            Die(); // call Die function implemented by specific unit controller
         } 
     }
 
 
     
-
+    // Movement rotation
     void HandleRotation()
     {
         Vector3 direction = target.position - transform.position;
@@ -143,13 +208,16 @@ public abstract class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
     }
 
+    // Movement position
     void MoveTowardsPlayer()
     {
-        Vector2 newPosition = Vector2.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.deltaTime);
-        rb.MovePosition(newPosition);
+        Vector2 direction = (target.position - transform.position).normalized;
+        //Vector2 newPosition = Vector2.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.deltaTime);
+        // rb.MovePosition(newPosition);
+        rb.linearVelocity = direction * enemyStatsCopy.moveSpeed;
     }
 
-    // Visualize the attack range in the Editor
+    // attack hitbox visual
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
