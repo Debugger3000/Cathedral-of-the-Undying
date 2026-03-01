@@ -2,35 +2,20 @@ using UnityEngine;
 
 public class Projectile : BaseProjectile
 {
-    
-    
 
-    // void Awake()
-    // {
-    //     // rb = GetComponent<Rigidbody2D>();
-    //     // SetAttributes();
-    // }
 
     //
-    public override EnemyStatsCopy SpecialEffect(GameObject enemy, EnemyStatsCopy enemyStats, BaseProjectile projectile)
+    public override DebuffController SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile)
     {
         Debug.Log("Basic projectile no effect...");
+        // divide movespeed by 3.... lmao
+        float debuffedMoveSpeed = enemyStats.moveSpeed / debuffData.effectIntensity; // half movement speed for person hit
+
+        StatsCopy debuffedStats = new StatsCopy(enemyStats.currentHealth, debuffedMoveSpeed, enemyStats.armour);
+
+
+        // have to provide a lifetime from this projectiles special effect
         
-        return enemyStats;
-    }
-
-    // Use FixedUpdate for physics-based velocity
-    // void FixedUpdate()
-    // {
-    //     // We set velocity directly to ensure it moves at a constant speed
-    //     // rb.linearVelocity = transform.up * speed; 
-    // }
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
-
-    
+        return new DebuffController(debuffData, debuffedStats);
+    }  
 }

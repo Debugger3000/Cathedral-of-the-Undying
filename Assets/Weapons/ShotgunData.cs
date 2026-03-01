@@ -24,13 +24,14 @@ public class ShotgunData : WeaponData
             GameObject bullet = Instantiate(projectilePrefab, muzzle.position, finalRotation);
             
             BaseProjectile projScript = bullet.GetComponent<BaseProjectile>();
-            // set special effect 
+
+            // set special effect for this weapons projectile...
             ShotgunProjectile shotgunScript = bullet.GetComponent<ShotgunProjectile>();
             shotgunScript.knockbackForce = knockbackForce; // set knock back force for shotgun shell...
 
             if (projScript != null)
             {
-                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints, isSpecialEffect);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints, isSpecialEffect, debuffData);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }

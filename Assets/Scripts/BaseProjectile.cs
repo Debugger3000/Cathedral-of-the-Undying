@@ -6,6 +6,7 @@ public abstract class BaseProjectile : MonoBehaviour
     public float damage = 10;
     public int weaponPoints = 10;
     public bool isSpecialEffect = false;
+    public WeaponDebuffData debuffData;
     protected Rigidbody2D rb; // grab projectile gameObject rigidbody
     void Awake()
     {
@@ -13,21 +14,24 @@ public abstract class BaseProjectile : MonoBehaviour
     }
 
 
-    public void SetAttributes(float speed, float damage, int weaponPoints, bool isSpecialEffect)
+    public void SetAttributes(float speed, float damage, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData)
     {
         Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
         this.weaponPoints = weaponPoints; // set weaponPoints
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
+        this.debuffData = debuffData; // set weapon debuff data...
     }
 
-    public abstract EnemyStatsCopy SpecialEffect(GameObject enemy, EnemyStatsCopy enemyStats, BaseProjectile projectile);
+    // Effects to apply to a unit hit by the projectile
+    // can be a debuff or direct effect to unit (knockback, stun, etc....)
+    public abstract DebuffController SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile);
 
-    public virtual void EnemyHit(GameObject target)
+    // default projectile on hit logic - projectile gets destroyed
+    // Implement in child projectile class if there is special on hit effect...
+    public virtual void OnEnemyHit(GameObject target)
     {
-
-
         Destroy(target); // destroy projectile...
     }
 
@@ -38,11 +42,11 @@ public abstract class BaseProjectile : MonoBehaviour
         rb.linearVelocity = transform.up * speed; 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // // Update is called once per frame
+    // void Update()
+    // {
         
-    }
+    // }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -51,22 +55,14 @@ public abstract class BaseProjectile : MonoBehaviour
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
         {
             Debug.Log("Hit an environment Layer!");
-            HandleHit(gameObject);
+            OnEnemyHit(gameObject);
         }
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
         {
             Debug.Log("Hit an enemy with player projectile !!!");
-            EnemyHit(gameObject);
+            OnEnemyHit(gameObject);
             // point multiplier needs to be increased
             PointMultiplier.Instance.AddPoint(weaponPoints); // add weapon points...
         }
     }
-
-    void HandleHit(GameObject target)
-    {
-        // Add damage logic here
-        Destroy(target); // Destroy the bullet
-    }
-
-    
 }

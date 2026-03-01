@@ -23,6 +23,7 @@ MonoBehaviour:
   weaponPenetration: 10
   weaponPoints: 10
   isSpecialEffect: 1
+  debuffData: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
   pelletCount: 5
   spreadAngle: 15
   knockbackForce: 9

@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     private float maxHealth = 100f;
     private float currentHealth;
-
+    private float armour = 10f;
+    private StatsCopy statsCopy; // copy of data to apply effects too...
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         // weaponControl.Equip(data);
 
         currentHealth = maxHealth; // set currentHealth
+        statsCopy = new StatsCopy(maxHealth, moveSpeed, armour);
     }
 
     // Player collision logic
@@ -170,8 +172,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // This makes for much smoother collisions
-        float moveX = moveInput.x * moveSpeed;
-        float moveY = moveInput.y * moveSpeed;
+        float moveX = moveInput.x * statsCopy.moveSpeed;
+        float moveY = moveInput.y * statsCopy.moveSpeed;
         rb.linearVelocity = new Vector2(moveX, moveY);
 
         // call aim player with fixed frames...
