@@ -5,6 +5,7 @@ public abstract class BaseProjectile : MonoBehaviour
     public float speed = 20f;
     public float damage = 10;
     public int weaponPoints = 10;
+    public bool isSpecialEffect = false;
     protected Rigidbody2D rb; // grab projectile gameObject rigidbody
     void Awake()
     {
@@ -12,15 +13,16 @@ public abstract class BaseProjectile : MonoBehaviour
     }
 
 
-    public void SetAttributes(float speed, float damage, int weaponPoints)
+    public void SetAttributes(float speed, float damage, int weaponPoints, bool isSpecialEffect)
     {
         Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
         this.weaponPoints = weaponPoints; // set weaponPoints
+        this.isSpecialEffect = isSpecialEffect; // special effect flag...
     }
 
-    public abstract void SpecialEffect();
+    public abstract EnemyStatsCopy SpecialEffect(GameObject enemy, EnemyStatsCopy enemyStats, BaseProjectile projectile);
 
     public virtual void EnemyHit(GameObject target)
     {

@@ -12,10 +12,11 @@ public class Projectile : BaseProjectile
     // }
 
     //
-    public override void SpecialEffect()
+    public override EnemyStatsCopy SpecialEffect(GameObject enemy, EnemyStatsCopy enemyStats, BaseProjectile projectile)
     {
-        Debug.Log("The fireball exploded in a radius!");
-        // Add explosion particles or area-of-effect damage here
+        Debug.Log("Basic projectile no effect...");
+        
+        return enemyStats;
     }
 
     // Use FixedUpdate for physics-based velocity

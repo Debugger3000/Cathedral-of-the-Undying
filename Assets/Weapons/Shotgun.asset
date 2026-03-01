@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunData
   weaponName: Shotgun
-  projectilePrefab: {fileID: 1258052255578545577, guid: 57d721f686e27244288417c9174d578c, type: 3}
+  projectilePrefab: {fileID: 2998432818825421932, guid: 91105e8733a98a14bb822fb2e345a42e, type: 3}
   weaponPrefab: {fileID: 7061523503901339698, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
   weaponSprite: {fileID: 21300156, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
   fireRate: 0.5
@@ -21,5 +21,8 @@ MonoBehaviour:
   weaponDamage: 10
   initialWeaponAmmo: 999
   weaponPenetration: 10
+  weaponPoints: 10
+  isSpecialEffect: 1
   pelletCount: 5
   spreadAngle: 15
+  knockbackForce: 9

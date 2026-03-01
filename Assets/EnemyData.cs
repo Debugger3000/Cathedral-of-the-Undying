@@ -1,11 +1,17 @@
 using UnityEngine;
 
+
+
+
+
+
+
 // [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Guns/Weapon Data")]
 public abstract class EnemyData : ScriptableObject
 {
-    public string enemyName; // weapon name...
+    public string enemyName; // enemy name...
 
-    public float damage = 10f; // weapons damage
+    public float damage = 10f; // enemy damage
 
     public float attackRange = 2f;       // How far the raycast goes
     public float windUpTime = 2f;       // Raycast detection to attack time
@@ -16,30 +22,21 @@ public abstract class EnemyData : ScriptableObject
     public float maxHealth = 100f;
 
     public float armour = 10f;
+    // Armour
+        // Armour should subtract flat from weapon damage
+            // if armour makes weapon damage == 0, then we should buffer with a minimal percent of damage such as 5%... 
+        // armour pen should subtract flat amount from armour
+        // if Armour = 20
+        // armour pen = 10 and damage is 15 
+        // 20 - 10 = 10 armour --> 10 - 15 damage = gun does 5 damage ?
     public float moveSpeed = 2f;
     public float rotationSpeed = 3f;
     
     
     // public GameObject projectilePrefab; // projectile prefab for weapon
-    public GameObject enemyPrefab; // weapon prefab
+    public GameObject enemyPrefab; // enemy prefab
 
     public GameObject attackHitbox;
-
-    //public Sprite weaponSprite; // weapon visual for UI
-    // private Transform muzzlePoint;
-    // public float muzzleOffset = 0.4f;
-
-
-    //public float fireRate = 0.5f; // fire rate
-    //public float bulletSpeed = 20f; // bullet speed
-    
-    //public int initialWeaponAmmo = 999; // weapons initial ammo... ?????
-
-    //public float weaponPenetration = 10f; // if we introduce enemy armour 
-
-    // upgrade level 1 - 3
-    //public int upgradeLevel = 1;
-
 
     public virtual void EnemyHitByPlayerAttack()
     {
@@ -51,7 +48,7 @@ public abstract class EnemyData : ScriptableObject
     public virtual void BasicAttack(Transform muzzle)
     {
         //
-            Debug.Log("Enemy basic attack called...");
+        Debug.Log("Enemy basic attack called...");
 
             // basic enemy attack
             // small raycasted aoe cone infront of themselves when they collide or get close to player...
@@ -77,11 +74,6 @@ public abstract class EnemyData : ScriptableObject
     }
 
     // public abstract void Fire(Transform muzzle);
-
-
-    // pistol - level 1
-    // pistol - level 2
-    // pistol - level 3
 
 
 }
