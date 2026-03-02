@@ -5,16 +5,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+// if we want a dot, we just need lifetime..
+
+
+// Applies a flat deduction on statsCopy based on lifetime...
 [System.Serializable]
 public class ActiveDebuff
 {
-    public WeaponDebuffData Data;
+    public WeaponDebuffData data;
+    public StatsCopy debuffedStats;
     public float timeRemaining;
 
-    public ActiveDebuff(WeaponDebuffData data)
+    public ActiveDebuff(WeaponDebuffData data, StatsCopy debuffedStats)
     {
-        Data = data;
+        this.data = data;
         timeRemaining = data.lifetime;
+        this.debuffedStats = debuffedStats;
     }
 }
 
@@ -31,6 +37,8 @@ public class ActiveDebuff
 // some effect ID
 // when effect ends we compare its statsCopy to original unit stats, and remove debuff by grabbing differential of debuff properties
     // cannot set back to original cause other debuffs would be affected
+
+// 
 
 [System.Serializable]
 public class StatsCopy
@@ -197,40 +205,110 @@ public abstract class EnemyController : MonoBehaviour
         // Loop backwards so we can safely remove items while iterating
         for (int i = activeDebuffs.Count - 1; i >= 0; i--)
         {
-            activeDebuffs[i].timeRemaining -= Time.deltaTime;
+            // check if debuff is a dot... if so, then we need to drop health 
+            ActiveDebuff debuff = activeDebuffs[i];
+        
+            // before
+            int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
 
-            if (activeDebuffs[i].timeRemaining <= 0)
+            debuff.timeRemaining -= Time.deltaTime;
+
+            // after to check whole seconds...
+            int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
+
+            // dot logic, and when whole seconds are hit. Damage should happen
+            if (secondsAfter < secondsBefore && debuff.timeRemaining > 0)
             {
-                RemoveDebuff(activeDebuffs[i].Data);
+                if (debuff.data.isDot) // Assuming your data has this bool
+                {
+                    ApplyDotDamage(debuff.data.effectIntensity);
+                }
+            }
+
+            // debuff should be removed
+            if (debuff.timeRemaining <= 0)
+            {
+                if (debuff.data.isDot) // dots last tick should be when it expires
+                {
+                    ApplyDotDamage(debuff.data.effectIntensity);
+                }
+                RemoveDebuff(debuff.data, debuff.debuffedStats); // remove debuff from queue
                 activeDebuffs.RemoveAt(i);
             }
+            // debuff still good, check to reapply effects if better debuffs died
+            else
+            {
+                CheckSimilarDebuffs(debuff.debuffedStats);
+            }
+            Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
         }
     }
 
     public void AddDebuff(DebuffController data)
     {
         // Optional: Check if debuff already exists to refresh timer instead of stacking
-        var existing = activeDebuffs.Find(d => d.Data.debuffId == data.debuffData.debuffId);
+        ActiveDebuff existing = activeDebuffs.Find(d => d.data.debuffId == data.debuffData.debuffId);
         if (existing != null)
         {
             existing.timeRemaining = data.debuffData.lifetime;
             return;
         }
 
-        activeDebuffs.Add(new ActiveDebuff(data.debuffData));
+        // lets stack debuff hehe
+        activeDebuffs.Add(new ActiveDebuff(data.debuffData, data.debuffedStats));
         // Apply initial stat changes here if needed
-        statsCopy = data.debuffedStats;
-        Debug.Log($"Debuff move speed is {data.debuffedStats.moveSpeed}...........");
-        Debug.Log($"ORIGINAL move speed is {enemyData.moveSpeed}...........");
+        //statsCopy = data.debuffedStats; // this sets everything to just this single debuff stats
+
+        // Need to apply debuff properties to statsCopy in piece meal
+        // if normal moveSpeed does not equal debuff, we apply
+        // 70% moveSpeed + 50% moveSpeed
+        CheckSimilarDebuffs(data.debuffedStats);
+
+
+        // Debug.Log($"Debuff move speed is {data.debuffedStats.moveSpeed}...........");
+        // Debug.Log($"ORIGINAL move speed is {enemyData.moveSpeed}...........");
 
     }
 
-    private void RemoveDebuff(WeaponDebuffData data)
+    private void CheckSimilarDebuffs(StatsCopy debuffedStats)
+    {
+        if (enemyData.moveSpeed != debuffedStats.moveSpeed)
+        {
+            // apply moveSpeed debuff to statsCopy
+            // apply higher percent debuff
+            if(statsCopy.moveSpeed > debuffedStats.moveSpeed)
+            {
+                statsCopy.moveSpeed = debuffedStats.moveSpeed; // apply worse debuff...
+            }
+        }
+
+        // check armour too
+        if (enemyData.armour != debuffedStats.armour)
+        {
+            // apply armour debuff to statsCopy
+            if(statsCopy.armour > debuffedStats.armour)
+            {
+                statsCopy.armour = debuffedStats.armour; // apply worse debuff...
+            }
+        }
+    }
+
+
+    private void RemoveDebuff(WeaponDebuffData data,StatsCopy debuffedStats)
     {
         Debug.Log($"Debuff {data.debuffId} expired.");
         // Logic to revert statsCopy back to original values
         statsCopy.moveSpeed = enemyData.moveSpeed;
         statsCopy.armour = enemyData.armour;
+
+        // apply lesser debuffs when larger ones are removed...
+        //CheckSimilarDebuffs(debuffedStats);
+    }
+
+    // apply dot damage...
+    private void ApplyDotDamage(float dotPercent)
+    {
+        currentHealth -= enemyData.maxHealth * dotPercent; // subtract dot damage from health... 
     }
 
 

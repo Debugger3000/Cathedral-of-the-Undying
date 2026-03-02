@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6807f7efe19526041b913a744fcd8618, type: 3}
-  m_Name: DebuffSlow01
+  m_Name: DebuffSlow02
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDebuffData
-  debuffId: slow-01
-  displayName: slowness
+  debuffId: slow-02
+  displayName: slowerness
   description: 
-  lifetime: 10
-  effectIntensity: 0.33
+  lifetime: 4
+  effectIntensity: 0.75
   isDot: 0
   overlayEffectPrefab: {fileID: 0}

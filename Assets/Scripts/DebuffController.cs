@@ -10,6 +10,8 @@ public class DebuffController
     public WeaponDebuffData debuffData;
     public StatsCopy debuffedStats;
 
+    public bool isDot = false; // if debuff is a dot, logic applies differently...
+
 
     public DebuffController(WeaponDebuffData debuffData, StatsCopy debuffedStats)
     {

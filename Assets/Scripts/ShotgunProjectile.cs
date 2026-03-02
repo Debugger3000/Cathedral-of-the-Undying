@@ -5,6 +5,9 @@ public class ShotgunProjectile : BaseProjectile
 
     public float knockbackForce; // knockback for shotgun pellets
 
+    // half movement speed for person hit
+
+
     // this is shotgun projectile
     // shoot 3 bullets
     // knockback effect
@@ -21,7 +24,8 @@ public class ShotgunProjectile : BaseProjectile
             Debug.Log($"knockback force is: {knockbackForce}");
             
         }
-        StatsCopy debuffedStats = new StatsCopy(enemyStats.currentHealth, enemyStats.moveSpeed, enemyStats.armour);
+        float debuffedMoveSpeed = enemyStats.moveSpeed - (enemyStats.moveSpeed * debuffData.effectIntensity); 
+        StatsCopy debuffedStats = new StatsCopy(enemyStats.currentHealth, debuffedMoveSpeed, enemyStats.armour);
 
         return new DebuffController(debuffData, debuffedStats);
     }

@@ -12,7 +12,10 @@ public class WeaponDebuffData : ScriptableObject
 
     [Header("Settings")]
     public float lifetime; // How long the debuff lasts on the target
-    public float effectIntensity; // Optional: Damage per tick or % slow
+    // This needs to be a percent - 0.05 - 0.95
+    public float effectIntensity; // expressed as %
+    public bool isDot;
+
     
     // Add logic here later for visual effects (VFX) or Icons
     public GameObject overlayEffectPrefab;

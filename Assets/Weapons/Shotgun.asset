@@ -18,12 +18,12 @@ MonoBehaviour:
   weaponSprite: {fileID: 21300156, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
   fireRate: 0.5
   bulletSpeed: 20
-  weaponDamage: 10
+  weaponDamage: 5
   initialWeaponAmmo: 999
   weaponPenetration: 10
   weaponPoints: 10
   isSpecialEffect: 1
-  debuffData: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
+  debuffData: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
   pelletCount: 5
   spreadAngle: 15
   knockbackForce: 9
