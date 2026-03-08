@@ -7,6 +7,8 @@ public class Spawner : MonoBehaviour
 
     // -------------------------------
     public EnemyData shamblerData; // currently hardcodedd
+
+    public EnemyData shooterData; // currently hardcodedd
     // -------------------------------
     public float spawnInterval = 3f; // Set your delay here
     private float timer;
@@ -25,9 +27,9 @@ public class Spawner : MonoBehaviour
 
         if (timer >= spawnInterval)
         {
-            GameObject unit = Instantiate(shamblerData.enemyPrefab, transform.position, transform.rotation);
+            GameObject unit = Instantiate(shooterData.enemyPrefab, transform.position, transform.rotation);
             timer = 0f; // Reset the timer
-            unit.GetComponent<EnemyController>().enemyData = shamblerData;
+            unit.GetComponent<EnemyController>().enemyData = shooterData;
         }
     }
 }

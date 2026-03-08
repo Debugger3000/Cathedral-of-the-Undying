@@ -110,6 +110,32 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        else if (other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
+        {
+            Debug.Log("Enemy projectile hit player............");
+
+            if (other.TryGetComponent<BaseProjectile>(out var baseProjectileScript))
+            {
+                Debug.Log($"Hit by {other.gameObject.name} for {baseProjectileScript.damage} damage!");
+
+                PlayerTakeDamage(baseProjectileScript.damage); // player takes damage from projectile
+
+                // apply whatever special effects of hitbox attack to player
+                // check if enemy has hitbox Special effects
+                // if (attackHitboxScript.isSpecialEffect)
+                // {
+                //     StartCoroutine(HitBoxSpecialEffect(attackHitboxScript)); // apply special effects
+                // }
+
+                if (baseProjectileScript.isSpecialEffect)
+                {
+                    StartCoroutine(ProjectileSpecialEffect(baseProjectileScript));
+                }
+
+
+            }
+
+        }
         // player runs into a weapon box...
         else if(other.gameObject.layer == LayerMask.NameToLayer("WeaponBox"))
         {
@@ -141,6 +167,23 @@ public class PlayerController : MonoBehaviour
         // Apply the knockback/effect and set statsCopy
         // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
         Tuple<WeaponDebuffData, StatsCopy> debuffTuple = attackHitboxScript.HitBoxSpecialEffect(gameObject, statsCopy);
+
+        WeaponDebuffData data = debuffTuple.Item1;
+        StatsCopy stats = debuffTuple.Item2;
+        playerDebuffController.SetDebuff(data,stats);
+
+        // Wait for a short duration so the physics force actually moves the object
+        yield return new WaitForSeconds(0.2f); 
+        
+        isAffected = false;
+    }
+
+    private IEnumerator ProjectileSpecialEffect(BaseProjectile projectile)
+    {
+        isAffected = true; 
+        // Apply the knockback/effect and set statsCopy
+        // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
+        Tuple<WeaponDebuffData, StatsCopy> debuffTuple = projectile.SpecialEffect(gameObject,statsCopy,projectile);
 
         WeaponDebuffData data = debuffTuple.Item1;
         StatsCopy stats = debuffTuple.Item2;

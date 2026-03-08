@@ -5,4 +5,7 @@ public class ShamblerData : EnemyData
 {
     // Shambler most basic unit...
     // Only needs default stats with no special overrides
+
+    // OVERRIDE DEFAULT ENEMY BEHAVIOUR WITHIN HERE
+
 }

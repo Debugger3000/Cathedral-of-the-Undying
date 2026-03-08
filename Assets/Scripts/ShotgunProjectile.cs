@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShotgunProjectile : BaseProjectile
 {
-
+    
     public float knockbackForce; // knockback for shotgun pellets
 
     // half movement speed for person hit

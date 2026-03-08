@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b12bc90fa9a1bd9448977d961538aaaa, type: 3}
+  m_Name: Shooter
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterData
+  enemyName: Shooter
+  maxHealth: 100
+  armour: 10
+  moveSpeed: 2
+  rotationSpeed: 3
+  isHitBoxSpecialEffect: 0
+  isProjectileSpecialEffect: 1
+  damage: 10
+  projectileDamage: 10
+  projectileMoveSpeed: 10
+  attackRange: 5
+  windUpTime: 1
+  attackCooldown: 1.5
+  hitboxLifetime: 1
+  attackAngle: 45
+  debuffDataHitBox: {fileID: 0}
+  debuffProjectile: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
+  projectilePrefab: {fileID: 3774707043043979430, guid: 36a350f3ad239d54fb8d5c2b1f694ce8, type: 3}
+  enemyPrefab: {fileID: 3005685310217838477, guid: a000a810cec287845b5e5a39eb868fbe, type: 3}
+  attackHitbox: {fileID: 0}

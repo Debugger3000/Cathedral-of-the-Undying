@@ -20,7 +20,8 @@ public abstract class BaseWeapon : MonoBehaviour
         
     }
 
-    // Fire from here to control fire time and have weaponInstance...
+    // Fire WRAPPER
+    // Call default fire behaviour defined within WeaponData
     public void Fire()
     {
         if (Time.time >= nextFireTime)

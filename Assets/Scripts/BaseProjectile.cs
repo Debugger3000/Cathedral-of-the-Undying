@@ -16,7 +16,7 @@ public abstract class BaseProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-
+    // PLAYER PROJECTILE SETTER
     public void SetAttributes(float speed, float damage, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData)
     {
         Debug.Log($"Set base projectile attributres too: {speed} {damage}");
@@ -26,6 +26,18 @@ public abstract class BaseProjectile : MonoBehaviour
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
         this.debuffData = debuffData; // set weapon debuff data...
     }
+
+    // ENEMY PROJECTILE SETTER
+    public void SetEnemyAttributes(float speed, float damage, bool isSpecialEffect, WeaponDebuffData debuffData)
+    {
+        Debug.Log($"Set base projectile attributres too: {speed} {damage}");
+        this.speed = speed;
+        this.damage = damage;
+        this.isSpecialEffect = isSpecialEffect; // special effect flag...
+        this.debuffData = debuffData; // set weapon debuff data...
+    }
+
+
 
     // Effects to apply to a unit hit by the projectile
     // can be a debuff or direct effect to unit (knockback, stun, etc....)
@@ -37,6 +49,18 @@ public abstract class BaseProjectile : MonoBehaviour
     {
         Destroy(target); // destroy projectile...
     }
+
+    public virtual void OnPlayerHit(GameObject target)
+    {
+        Destroy(target); // destroy projectile...
+    }
+
+    public virtual void OnEnvironmentHit(GameObject target)
+    {
+        Destroy(target); // destroy projectile...
+    }
+
+
 
     // Use FixedUpdate for physics-based velocity
     void FixedUpdate()
@@ -57,7 +81,7 @@ public abstract class BaseProjectile : MonoBehaviour
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
         {
             Debug.Log("Hit an environment Layer!");
-            OnEnemyHit(gameObject);
+            OnEnvironmentHit(gameObject);
         }
         // Player Projectiles that hit enemy
         else if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
@@ -71,7 +95,7 @@ public abstract class BaseProjectile : MonoBehaviour
         else if (LayerMask.LayerToName(collision.gameObject.layer) == "Player")
         {
             Debug.Log("Enemy projectile hit player");
-            OnEnemyHit(gameObject);
+            OnPlayerHit(gameObject);
         }
     }
 }

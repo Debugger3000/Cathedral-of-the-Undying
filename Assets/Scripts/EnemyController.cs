@@ -56,9 +56,9 @@ public abstract class EnemyController : MonoBehaviour
 
     // Child class Implemented Methods
     protected abstract void Die(); // unit death
-    protected abstract void ExecuteAttackLogic(); // units attack pattern
+    //protected abstract void ExecuteAttackLogic(); // units attack pattern
 
-    protected abstract void SpecialHitBoxAttackEffect(GameObject player, StatsCopy playerStats); // special effect on enemy hitbox attack
+    // protected abstract void SpecialHitBoxAttackEffect(GameObject player, StatsCopy playerStats); // special effect on enemy hitbox attack
     //protected abstract void SpecialProjectileEffect(GameObject player, StatsCopy playerStats, BaseProjectile projectile); // special 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -87,7 +87,7 @@ public abstract class EnemyController : MonoBehaviour
         // }
     }
 
-
+    // Projectile special effect ONTO enemy unit
     // special effect method
     // Coroutine to cause delay so special effects can influence unit movement
     private IEnumerator ApplySpecialEffectProjectile(BaseProjectile projectile)
@@ -116,39 +116,7 @@ public abstract class EnemyController : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if (target == null || isAttacking || isAffected) return; // no target 
-
-        HandleRotation(); // rotate eneny
-        
-        // Check if we can attack
-        if (Time.time >= nextAttackTime)
-        {
-            // 
-            // if some enemies don't use raycasts to trigger attacks.
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
-
-            if (hit.collider != null)
-            {
-                Debug.Log($"Enemy is using its basic attack.... stage1");
-                StartCoroutine(AttackSequence());
-            }
-            else
-            {
-                MoveTowardsPlayer();
-            }
-        }
-        else
-        {
-            MoveTowardsPlayer();
-        }
-
-        // check debuff status
-        // HandleDebuffTimers(); 
-        statsCopy = enemyDebuffController.HandleDebuffTimers(); // set stats on debuff timer
-        TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
-    }
+    
 
     private IEnumerator AttackSequence()
     {
@@ -159,7 +127,7 @@ public abstract class EnemyController : MonoBehaviour
 
         // 
         //ExecuteAttackLogic();
-        enemyData.BasicAttack(transform);
+        enemyData.AttackController(transform); // call unit attack controller..
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);
@@ -199,23 +167,69 @@ public abstract class EnemyController : MonoBehaviour
     }
 
 
-    
-    // Movement rotation
-    void HandleRotation()
+
+    // Update lifetime 
+    void Update()
     {
-        Vector3 direction = target.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+        if (target == null || isAttacking || isAffected) return; // no target 
+
+        // DefaultHandleRotation(); // rotate eneny
+        enemyData.DefaultRotation(target,transform);
+        
+        // Check if we can attack
+        if (Time.time >= nextAttackTime)
+        {
+
+            // detection logic
+
+            // attack sequence logic
+
+            // 
+            // if some enemies don't use raycasts to trigger attacks.
+            // RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
+            RaycastHit2D hit = enemyData.DefaultDetection(transform,enemyData);
+
+            if (hit.collider != null)
+            {
+                Debug.Log($"Enemy is using its basic attack.... stage1");
+                StartCoroutine(AttackSequence());
+            }
+            else
+            {
+                // DefaultMoveTowardsPlayer();
+                enemyData.DefaultMovement(target,transform,rb,statsCopy.moveSpeed);
+            }
+        }
+        else
+        {
+            // DefaultMoveTowardsPlayer();
+            enemyData.DefaultMovement(target,transform,rb,statsCopy.moveSpeed);
+        }
+
+        // check debuff status
+        // HandleDebuffTimers(); 
+        statsCopy = enemyDebuffController.HandleDebuffTimers(); // set stats on debuff timer
+        TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
     }
 
+
+    
+    // Movement rotation
+    // protected void DefaultHandleRotation()
+    // {
+    //     Vector3 direction = target.position - transform.position;
+    //     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    //     transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+    // }
+
     // Movement position
-    void MoveTowardsPlayer()
-    {
-        Vector2 direction = (target.position - transform.position).normalized;
-        //Vector2 newPosition = Vector2.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.deltaTime);
-        // rb.MovePosition(newPosition);
-        rb.linearVelocity = direction * statsCopy.moveSpeed;
-    }
+    // protected void DefaultMoveTowardsPlayer()
+    // {
+    //     Vector2 direction = (target.position - transform.position).normalized;
+    //     //Vector2 newPosition = Vector2.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.deltaTime);
+    //     // rb.MovePosition(newPosition);
+    //     rb.linearVelocity = direction * statsCopy.moveSpeed;
+    // }
 
     // attack hitbox visual
     private void OnDrawGizmos()
