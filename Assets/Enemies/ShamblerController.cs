@@ -4,7 +4,7 @@ public class ShamblerController : EnemyController
     // enemy units implement own death
     protected override void Die()
     {
-        // Shamblers might explode or leave a puddle
+        // Shamblers might explode or do something on death...
         Destroy(gameObject);
     }
 
@@ -23,21 +23,21 @@ public class ShamblerController : EnemyController
 
         GameObject hitbox = Instantiate(enemyData.attackHitbox, spawnPosition, spawnRotation); // generate hitbox
 
-        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(enemyData.damage, enemyData.hitboxLifetime);
-        // // The logic you wanted: Check circle then filter by angle
-        // Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(transform.position, enemyData.attackRange, LayerMask.GetMask("Player"));
-
-        // foreach (var player in hitPlayers)
-        // {
-        //     Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
-            
-        //     // Using the forward vector (transform.up) to see if player is in the "slice"
-        //     if (Vector3.Angle(transform.up, dirToPlayer) < enemyData.attackAngle / 2f)
-        //     {
-        //         // player.GetComponent<PlayerHealth>().TakeDamage(enemyData.damage);
-        //         Debug.Log("Shambler hit the player with a cone attack!");
-        //     }
-        // }
-        //Destroy(hitbox,2f); // destroy hitbox after attack...
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(enemyData.damage, enemyData.hitboxLifetime, enemyData.isHitBoxSpecialEffect, enemyData.debuffDataHitBox);
+        
+        Destroy(hitbox,1f); // destroy hitbox after attack...
     }
+
+    // on hitbox hit, we apply special effect..
+    protected override void SpecialHitBoxAttackEffect(GameObject player, StatsCopy playerStats)
+    {
+        
+    }
+
+    // on projectile hit, apply enemies special effects...
+    // protected override void SpecialProjectileEffect(GameObject player, StatsCopy playerStats, BaseProjectile projectile)
+    // {
+        
+    // }
+
 }

@@ -19,6 +19,9 @@ public abstract class EnemyData : ScriptableObject
     public float hitboxLifetime = 1.0f; // how long the hitbox visual should be shown
     public float attackAngle = 45f;
 
+    public WeaponDebuffData debuffDataHitBox;
+    public bool isHitBoxSpecialEffect = false;
+
     public float maxHealth = 100f;
 
     public float armour = 10f;
@@ -36,8 +39,9 @@ public abstract class EnemyData : ScriptableObject
     // public GameObject projectilePrefab; // projectile prefab for weapon
     public GameObject enemyPrefab; // enemy prefab
 
-    public GameObject attackHitbox;
+    public GameObject attackHitbox; // hitbox prefab visual
 
+    // probably dont need here
     public virtual void EnemyHitByPlayerAttack()
     {
         
@@ -45,32 +49,26 @@ public abstract class EnemyData : ScriptableObject
 
     // Default basic attack
     // can use this for normal melee attacks
-    public virtual void BasicAttack(Transform muzzle)
+    public virtual void BasicAttack(Transform transform)
     {
         //
         Debug.Log("Enemy basic attack called...");
+        // Debug.Log("Shambler performs a Cone Slam!");
+        Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
 
-            // basic enemy attack
-            // small raycasted aoe cone infront of themselves when they collide or get close to player...
+        // 1. Get the rotation
+        Quaternion spawnRotation = transform.rotation;
 
+        // 2. Calculate a position slightly in front of the enemy face
+        // 'transform.up' is the direction the enemy is facing. 
+        // Multiply by 0.5f or 1.0f to push it out.
+        Vector3 spawnPosition = transform.position + (transform.up * 1.5f);
 
+        GameObject hitbox = Instantiate(attackHitbox, spawnPosition, spawnRotation); // generate hitbox
 
-
-            // set fire rate time for next fire
-            // nextFireTime = Time.time + (1f / currentWeaponData.weaponData.fireRate);
-
-            // Instantiate the specific projectile for THIS gun
-            //GameObject bullet = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
-            
-            // Pass the stats from the gun to the projectile script
-            //BaseProjectile projScript = bullet.GetComponent<BaseProjectile>();
-            // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
-            // if (projScript != null)
-            // {
-            //     //projScript.SetAttributes(bulletSpeed, weaponDamage);
-            //     // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
-            //     // projScript.damage = currentWeaponData.weaponData.weaponDamage;
-            // }
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
+        
+        Destroy(hitbox,1f); // destroy hitbox after attack...
     }
 
     // public abstract void Fire(Transform muzzle);

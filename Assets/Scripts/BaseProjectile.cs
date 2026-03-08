@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 
+
+// Enemies can also use this class
 public abstract class BaseProjectile : MonoBehaviour
 {
     public float speed = 20f;
@@ -26,7 +29,7 @@ public abstract class BaseProjectile : MonoBehaviour
 
     // Effects to apply to a unit hit by the projectile
     // can be a debuff or direct effect to unit (knockback, stun, etc....)
-    public abstract DebuffController SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile);
+    public abstract Tuple<WeaponDebuffData, StatsCopy> SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile);
 
     // default projectile on hit logic - projectile gets destroyed
     // Implement in child projectile class if there is special on hit effect...
@@ -50,19 +53,25 @@ public abstract class BaseProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("projectile detection.........");
-        // base environment projectile destruction
+        // Any and all projectiles that collide with environment
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
         {
             Debug.Log("Hit an environment Layer!");
             OnEnemyHit(gameObject);
         }
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
+        // Player Projectiles that hit enemy
+        else if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
         {
             Debug.Log("Hit an enemy with player projectile !!!");
             OnEnemyHit(gameObject);
             // point multiplier needs to be increased
             PointMultiplier.Instance.AddPoint(weaponPoints); // add weapon points...
+        }
+        // EnemyProjectiles that hit player
+        else if (LayerMask.LayerToName(collision.gameObject.layer) == "Player")
+        {
+            Debug.Log("Enemy projectile hit player");
+            OnEnemyHit(gameObject);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShotgunProjectile : BaseProjectile
@@ -11,7 +12,7 @@ public class ShotgunProjectile : BaseProjectile
     // this is shotgun projectile
     // shoot 3 bullets
     // knockback effect
-    public override DebuffController SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile)
+    public override Tuple<WeaponDebuffData, StatsCopy> SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile)
     {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
 
@@ -24,9 +25,9 @@ public class ShotgunProjectile : BaseProjectile
             Debug.Log($"knockback force is: {knockbackForce}");
             
         }
-        float debuffedMoveSpeed = enemyStats.moveSpeed - (enemyStats.moveSpeed * debuffData.effectIntensity); 
+        float debuffedMoveSpeed = enemyStats.moveSpeed - (enemyStats.moveSpeed * debuffData.effectIntensity);
         StatsCopy debuffedStats = new StatsCopy(enemyStats.currentHealth, debuffedMoveSpeed, enemyStats.armour);
 
-        return new DebuffController(debuffData, debuffedStats);
+        return new Tuple<WeaponDebuffData, StatsCopy>(debuffData, debuffedStats);
     }
 }

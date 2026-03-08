@@ -39,35 +39,35 @@ public class Weapon : BaseWeapon
     //     Debug.Log("Now holding: " + newData.weaponData.weaponName);
     // }
 
-    public override void Fire()
-    {
-        // check firerate
-        if (Time.time >= nextFireTime)
-        {
+    // public override void Fire()
+    // {
+    //     // check firerate
+    //     if (Time.time >= nextFireTime)
+    //     {
 
-            // currentWeaponData.weaponData.DefaultFire(muzzlePoint);
-            WeaponInstance weapon = GetWeaponInstance();
-            weapon.weaponData.Fire(muzzlePoint);
-            //
-            // Debug.Log("Pew!");
+    //         // currentWeaponData.weaponData.DefaultFire(muzzlePoint);
+    //         WeaponInstance weapon = GetWeaponInstance();
+    //         weapon.weaponData.Fire(muzzlePoint);
+    //         //
+    //         // Debug.Log("Pew!");
 
-            // // set fire rate time for next fire
-            nextFireTime = Time.time + (1f / weapon.weaponData.fireRate);
+    //         // // set fire rate time for next fire
+    //         nextFireTime = Time.time + (1f / weapon.weaponData.fireRate);
 
-            // // Instantiate the specific projectile for THIS gun
-            // GameObject bullet = Instantiate(currentWeaponData.weaponData.projectilePrefab, muzzlePoint.position, muzzlePoint.rotation);
+    //         // // Instantiate the specific projectile for THIS gun
+    //         // GameObject bullet = Instantiate(currentWeaponData.weaponData.projectilePrefab, muzzlePoint.position, muzzlePoint.rotation);
             
-            // // Pass the stats from the gun to the projectile script
-            // BaseProjectile projScript = bullet.GetComponent<BaseProjectile>();
-            // // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
-            // if (projScript != null)
-            // {
-            //     projScript.SetAttributes(currentWeaponData.weaponData.bulletSpeed, currentWeaponData.weaponData.weaponDamage);
-            //     // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
-            //     // projScript.damage = currentWeaponData.weaponData.weaponDamage;
-            // }
-        }
-    }
+    //         // // Pass the stats from the gun to the projectile script
+    //         // BaseProjectile projScript = bullet.GetComponent<BaseProjectile>();
+    //         // // bullet.TryGetComponent(out BaseProjectile baseProjectileScript)
+    //         // if (projScript != null)
+    //         // {
+    //         //     projScript.SetAttributes(currentWeaponData.weaponData.bulletSpeed, currentWeaponData.weaponData.weaponDamage);
+    //         //     // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
+    //         //     // projScript.damage = currentWeaponData.weaponData.weaponDamage;
+    //         // }
+    //     }
+    // }
 
     // Update is called once per frame
     // void Update()

@@ -1,5 +1,8 @@
 
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,6 +36,11 @@ public class PlayerController : MonoBehaviour
     private float currentHealth;
     private float armour = 10f;
     private StatsCopy statsCopy; // copy of data to apply effects too...
+    // public List<ActiveDebuff> activeDebuffs = new List<ActiveDebuff>();
+
+    private DebuffController playerDebuffController;
+
+    private bool isAffected = false; // for special effects 
 
     private void Awake()
     {
@@ -42,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
         currentHealth = maxHealth; // set currentHealth
         statsCopy = new StatsCopy(maxHealth, moveSpeed, armour);
+        playerDebuffController = new DebuffController(statsCopy);
     }
 
     // Player collision logic
@@ -73,6 +82,10 @@ public class PlayerController : MonoBehaviour
         // enemy projectiles...
     }
 
+
+    // To Detect certain trigger interactions
+    // Enemy hitboxes
+    // Weapon Boxes
     private void OnTriggerEnter2D(Collider2D other) 
     {
         
@@ -83,7 +96,17 @@ public class PlayerController : MonoBehaviour
             if (other.TryGetComponent<AttackHitboxController>(out var attackHitboxScript))
             {
                 Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
-                PlayerTakeDamage(attackHitboxScript.damage);
+
+                PlayerTakeDamage(attackHitboxScript.damage); // player takes damage
+
+                // apply whatever special effects of hitbox attack to player
+                // check if enemy has hitbox Special effects
+                if (attackHitboxScript.isSpecialEffect)
+                {
+                    StartCoroutine(HitBoxSpecialEffect(attackHitboxScript)); // apply special effects
+                }
+
+
             }
 
         }
@@ -110,7 +133,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Debuff / Special effects on attacks
+    private IEnumerator HitBoxSpecialEffect(AttackHitboxController attackHitboxScript)
+    {
+        isAffected = true; 
+        
+        // Apply the knockback/effect and set statsCopy
+        // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
+        Tuple<WeaponDebuffData, StatsCopy> debuffTuple = attackHitboxScript.HitBoxSpecialEffect(gameObject, statsCopy);
 
+        WeaponDebuffData data = debuffTuple.Item1;
+        StatsCopy stats = debuffTuple.Item2;
+        playerDebuffController.SetDebuff(data,stats);
+
+        // Wait for a short duration so the physics force actually moves the object
+        yield return new WaitForSeconds(0.2f); 
+        
+        isAffected = false;
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Player takes damage
     public void PlayerTakeDamage(float damage)
     {
         currentHealth -= damage; // subtract
@@ -119,8 +163,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
-    //---
+    //------------------------------------
     // Player Inputs
     //
     // 'Q' - user input to change weapon
@@ -164,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
                 // initialize prefab - projectile script takes over...
                 //Instantiate(curProjectile, muzzlePos, muzzlePoint.rotation);
-                weaponControl.Fire(); // fire weapon via Weapon Class method
+                weaponControl.GetWeaponInstance().weaponData.Fire(weaponControl.muzzlePoint); // fire weapon via Weapon Class method
             }
         }
     }
@@ -178,12 +221,16 @@ public class PlayerController : MonoBehaviour
 
         // call aim player with fixed frames...
         AimPlayer();
+
+        // check debuff statuses
+        statsCopy = playerDebuffController.HandleDebuffTimers(); // set stats on debuff timer logic
+        PlayerTakeDamage(playerDebuffController.HandleDotTimers()); // apply dot damage
     }
 
-    private void Update()
-    {
+    // private void Update()
+    // {
         
-    }
+    // }
 
     // mouse aim function
     private void AimPlayer()

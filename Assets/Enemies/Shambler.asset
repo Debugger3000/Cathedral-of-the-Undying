@@ -17,7 +17,10 @@ MonoBehaviour:
   attackRange: 0.75
   windUpTime: 0.5
   attackCooldown: 1.5
+  hitboxLifetime: 1
   attackAngle: 45
+  debuffDataHitBox: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
+  isHitBoxSpecialEffect: 1
   maxHealth: 100
   armour: 10
   moveSpeed: 2

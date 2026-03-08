@@ -12,7 +12,7 @@ public abstract class BaseWeapon : MonoBehaviour
 
     private WeaponInstance currentWeaponData;
 
-    private float nextFireTime = 0f;
+    private float nextFireTime = 0f; // wepaon fire rate...
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,8 +20,26 @@ public abstract class BaseWeapon : MonoBehaviour
         
     }
 
-    // child weapon classes should implement there own type of firing...
-    public abstract void Fire();
+    // Fire from here to control fire time and have weaponInstance...
+    public void Fire()
+    {
+        if (Time.time >= nextFireTime)
+        {
+
+            WeaponInstance weapon = GetWeaponInstance();
+
+            weapon.weaponData.Fire(muzzlePoint); // instantiate bullet within WeaponData
+            // then BaseProjectile takes over
+
+            //
+            // Debug.Log("Pew!");
+
+            // // set fire rate time for next fire
+            nextFireTime = Time.time + (1f / weapon.weaponData.fireRate);
+        
+            //weaponControl.GetWeaponInstance().weaponData.Fire(weaponControl.muzzlePoint);
+        }
+    }
 
     void SetDamage()
     {

@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 
-public class Projectile : BaseProjectile
+public class BasicHitBox : AttackHitboxController
 {
-
-
-    //
-    public override Tuple<WeaponDebuffData, StatsCopy> SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile)
+    
+    // implement its special effect here...
+    public override Tuple<WeaponDebuffData, StatsCopy> HitBoxSpecialEffect(GameObject enemy, StatsCopy enemyStats)
     {
 
         float debuffedMoveSpeed = enemyStats.moveSpeed - (enemyStats.moveSpeed * debuffData.effectIntensity); 
