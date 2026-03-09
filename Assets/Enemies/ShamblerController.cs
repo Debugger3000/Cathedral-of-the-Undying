@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 public class ShamblerController : EnemyController
 {
@@ -6,6 +7,25 @@ public class ShamblerController : EnemyController
     {
         // Shamblers might explode or do something on death...
         Destroy(gameObject);
+    }
+
+    // if child enemy class wants to change their attack Sequence they can...
+    protected override IEnumerator AttackSequence()
+    {
+        isAttacking = true;
+        
+        // 1. Wind up - Every enemy pauses briefly
+        yield return new WaitForSeconds(enemyData.windUpTime);
+
+        // 
+        //ExecuteAttackLogic();
+        enemyData.AttackController(transform); // call unit attack controller..
+
+        // 3. Recovery / Cooldown
+        yield return new WaitForSeconds(enemyData.attackCooldown);
+        
+        nextAttackTime = Time.time + enemyData.attackCooldown;
+        isAttacking = false;
     }
 
     // protected override void ExecuteAttackLogic()

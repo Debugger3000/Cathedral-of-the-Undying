@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +24,8 @@ public abstract class EnemyController : MonoBehaviour
 
     // apply debuff to data, set a timer for that effect, in update check array for timers hitting zero, normalize 
 
-    private float nextAttackTime;
-    private bool isAttacking = false;
+    public float nextAttackTime;
+    public bool isAttacking = false;
 
     private bool isAffected = false; // for special effects 
 
@@ -35,36 +36,27 @@ public abstract class EnemyController : MonoBehaviour
     public GameObject healthBarPrefab;
     public Image healthBarFill;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    // On enemy unit awake...
     void Awake()
     {
         myTransform = transform; // assign own transform
         rb = GetComponent<Rigidbody2D>(); // get rigidbody
         target = GameObject.FindGameObjectWithTag("Player").transform; // get player transform to follow...
         currentHealth = enemyData.maxHealth; // set health...
-        // healthBarPrefab.SetActive = false;
-
-        // set enemy stats copy
-        statsCopy = new StatsCopy(enemyData.maxHealth, enemyData.moveSpeed, enemyData.armour);
-
+        statsCopy = new StatsCopy(enemyData.maxHealth, enemyData.moveSpeed, enemyData.armour); // set enemy stats copy
         enemyDebuffController = new DebuffController(statsCopy); // debuff controller for enemy unit
-
-        // Canvas canvas = GetComponentInChildren<Canvas>();
-        // canvas.worldCamera = Camera.main;
     }
 
     // Child class Implemented Methods
     protected abstract void Die(); // unit death
-    //protected abstract void ExecuteAttackLogic(); // units attack pattern
+    protected abstract IEnumerator AttackSequence(); // children define their attack sequence
 
-    // protected abstract void SpecialHitBoxAttackEffect(GameObject player, StatsCopy playerStats); // special effect on enemy hitbox attack
-    //protected abstract void SpecialProjectileEffect(GameObject player, StatsCopy playerStats, BaseProjectile projectile); // special 
-
+    //------
+    // OnTrigger 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Enemy unit hit by something");
-        // base environment projectile destruction
+        // Player projectile hit enemy 
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Projectile")
         {
             // Debug.Log("Hit an environment Layer!");
@@ -79,17 +71,27 @@ public abstract class EnemyController : MonoBehaviour
                 StartCoroutine(ApplySpecialEffectProjectile(projectile));                
             }
         }
-        // if (LayerMask.LayerToName(collision.gameObject.layer) == "Player")
-        // {
-        //     Debug.Log("Enemy !!!");
-        //     //EnemyHit(gameObject);
-            
-        // }
+        else if(LayerMask.LayerToName(collision.gameObject.layer) == "PlayerAttack")
+        {
+            if (collision.TryGetComponent<AttackHitboxController>(out var attackHitboxScript))
+            {
+                Debug.Log($"Hit by {collision.gameObject.name} for {attackHitboxScript.damage} damage!");
+
+                TakeDamage(attackHitboxScript.damage); // player takes damage
+
+                // apply whatever special effects of hitbox attack to player
+                // check if enemy has hitbox Special effects
+                if (attackHitboxScript.isSpecialEffect)
+                {
+                    StartCoroutine(HitBoxSpecialEffect(attackHitboxScript)); // apply special effects
+                }
+            }
+        }
+        
     }
 
+    //------
     // Projectile special effect ONTO enemy unit
-    // special effect method
-    // Coroutine to cause delay so special effects can influence unit movement
     private IEnumerator ApplySpecialEffectProjectile(BaseProjectile projectile)
     {
         isAffected = true; 
@@ -98,16 +100,9 @@ public abstract class EnemyController : MonoBehaviour
         // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
         Tuple<WeaponDebuffData, StatsCopy> debuffTuple = projectile.SpecialEffect(gameObject, statsCopy, projectile);
 
-        // Tuple<WeaponDebuffData, StatsCopy> debuffTuple = attackHitboxScript.HitBoxSpecialEffect(gameObject, statsCopy);
-
         WeaponDebuffData data = debuffTuple.Item1;
         StatsCopy stats = debuffTuple.Item2;
         enemyDebuffController.SetDebuff(data,stats);
-        
-        // statsCopy = debuffController.debuffedStats; // set debuffed stats...
-        // apply timer for this particular debuff...
-        // 2. Register the debuff into our tracking list
-        //AddDebuff(debuffController);
 
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
@@ -115,59 +110,26 @@ public abstract class EnemyController : MonoBehaviour
         isAffected = false;
     }
 
-
-    
-
-    private IEnumerator AttackSequence()
+    // Debuff / Special effects on attacks
+    private IEnumerator HitBoxSpecialEffect(AttackHitboxController attackHitboxScript)
     {
-        isAttacking = true;
+        isAffected = true; 
         
-        // 1. Wind up - Every enemy pauses briefly
-        yield return new WaitForSeconds(enemyData.windUpTime);
+        // Apply the knockback/effect and set statsCopy
+        // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
+        Tuple<WeaponDebuffData, StatsCopy> debuffTuple = attackHitboxScript.HitBoxSpecialEffect(gameObject, statsCopy);
 
-        // 
-        //ExecuteAttackLogic();
-        enemyData.AttackController(transform); // call unit attack controller..
+        WeaponDebuffData data = debuffTuple.Item1;
+        StatsCopy stats = debuffTuple.Item2;
+        enemyDebuffController.SetDebuff(data,stats);
 
-        // 3. Recovery / Cooldown
-        yield return new WaitForSeconds(enemyData.attackCooldown);
+        // Wait for a short duration so the physics force actually moves the object
+        yield return new WaitForSeconds(0.2f); 
         
-        nextAttackTime = Time.time + enemyData.attackCooldown;
-        isAttacking = false;
+        isAffected = false;
     }
 
-    
-
-    // receive flat damage...
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount; // subtract health with normal (0-100)
-        Debug.Log($"Damage taken is: {amount}");
-
-        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
-
-        if (currentHealth <= 0)
-        {
-            // Random
-            // Weapon Box drop on enemy death
-            // roll 50% chance that a weapon box drops...
-            if (UnityEngine.Random.value <= 0.5f)
-            {
-                GameController instance = GameController.Instance;
-                // have unit drop a box...
-                GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
-                WeaponName weaponName = instance.GetWeaponBoxDropName();
-                Debug.Log($"weapon name for box drop is: {weaponName}");
-                box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
-            }
-            
-            // unit dies...
-            Die(); // call Die function implemented by specific unit controller
-        } 
-    }
-
-
-
+    //------
     // Update lifetime 
     void Update()
     {
@@ -212,25 +174,34 @@ public abstract class EnemyController : MonoBehaviour
         TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
     }
 
+    // receive flat damage...
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount; // subtract health with normal (0-100)
+        Debug.Log($"Damage taken is: {amount}");
 
-    
-    // Movement rotation
-    // protected void DefaultHandleRotation()
-    // {
-    //     Vector3 direction = target.position - transform.position;
-    //     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    //     transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-    // }
+        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
 
-    // Movement position
-    // protected void DefaultMoveTowardsPlayer()
-    // {
-    //     Vector2 direction = (target.position - transform.position).normalized;
-    //     //Vector2 newPosition = Vector2.MoveTowards(rb.position, target.position, enemyData.moveSpeed * Time.deltaTime);
-    //     // rb.MovePosition(newPosition);
-    //     rb.linearVelocity = direction * statsCopy.moveSpeed;
-    // }
-
+        if (currentHealth <= 0)
+        {
+            // Random
+            // Weapon Box drop on enemy death
+            // roll 50% chance that a weapon box drops...
+            if (UnityEngine.Random.value <= 0.5f)
+            {
+                GameController instance = GameController.Instance;
+                // have unit drop a box...
+                GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+                WeaponName weaponName = instance.GetWeaponBoxDropName();
+                Debug.Log($"weapon name for box drop is: {weaponName}");
+                box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
+            }
+            
+            // unit dies...
+            Die(); // call Die function implemented by specific unit controller
+        } 
+    }
+   
     // attack hitbox visual
     private void OnDrawGizmos()
     {

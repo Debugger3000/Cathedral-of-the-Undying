@@ -9,9 +9,9 @@ public class ShotgunProjectile : BaseProjectile
     // half movement speed for person hit
 
 
-    // this is shotgun projectile
-    // shoot 3 bullets
-    // knockback effect
+    // Shotgun special effect
+    // Called from Unit that gets hit by this projectile
+    // Affect unit with this function via gameobject or debuff...
     public override Tuple<WeaponDebuffData, StatsCopy> SpecialEffect(GameObject enemy, StatsCopy enemyStats, BaseProjectile projectile)
     {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();

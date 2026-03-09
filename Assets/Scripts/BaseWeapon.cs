@@ -22,23 +22,16 @@ public abstract class BaseWeapon : MonoBehaviour
 
     // Fire WRAPPER
     // Call default fire behaviour defined within WeaponData
-    public void Fire()
+    public void PlayerAttackWithWeapon(Transform playerTransform)
     {
+        // fireRate / cooldown of attack
         if (Time.time >= nextFireTime)
         {
-
-            WeaponInstance weapon = GetWeaponInstance();
-
-            weapon.weaponData.Fire(muzzlePoint); // instantiate bullet within WeaponData
-            // then BaseProjectile takes over
-
-            //
-            // Debug.Log("Pew!");
-
-            // // set fire rate time for next fire
-            nextFireTime = Time.time + (1f / weapon.weaponData.fireRate);
-        
-            //weaponControl.GetWeaponInstance().weaponData.Fire(weaponControl.muzzlePoint);
+            // weapon.weaponData.Fire(muzzlePoint); // instantiate bullet within WeaponData
+            currentWeaponData.weaponData.AttackController(playerTransform,muzzlePoint);
+            
+            // set fire rate time / cooldown
+            nextFireTime = Time.time + (1f / currentWeaponData.weaponData.fireRate);
         }
     }
 

@@ -242,15 +242,7 @@ public class PlayerController : MonoBehaviour
         {
             if (weaponControl != null)
             {
-                // shootInput = context.ReadValue<>();
-                Debug.Log("Shoot input / spacebar pressed !");
-
-                // get muzzle pos
-                // Vector3 muzzlePos = muzzlePoint.position;
-
-                // initialize prefab - projectile script takes over...
-                //Instantiate(curProjectile, muzzlePos, muzzlePoint.rotation);
-                weaponControl.GetWeaponInstance().weaponData.Fire(weaponControl.muzzlePoint); // fire weapon via Weapon Class method
+                weaponControl.PlayerAttackWithWeapon(transform);
             }
         }
     }

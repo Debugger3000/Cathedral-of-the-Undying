@@ -11,7 +11,7 @@ public class ShotgunData : WeaponData
     public float knockbackForce = 5f; // knockback force on rb impulse
     // public float fireRate = 0.5f;
 
-    public override void Fire(Transform muzzle) 
+    public override void FireProjectile(Transform muzzle) 
     {
         // produce 5 shotgun projectiles
         for (int i = 0; i < pelletCount; i++)
