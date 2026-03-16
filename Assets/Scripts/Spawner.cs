@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
 
         if (timer >= spawnInterval)
         {
-            GameObject unit = Instantiate(shooterData.enemyPrefab, transform.position, transform.rotation);
+            GameObject unit = Instantiate(shooterData.enemyPrefab, spawnLocation.position, spawnLocation.rotation);
             timer = 0f; // Reset the timer
             unit.GetComponent<EnemyController>().enemyData = shooterData;
         }

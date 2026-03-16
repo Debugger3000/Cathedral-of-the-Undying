@@ -21,7 +21,7 @@ TagManager:
   - WeaponBox
   - EnemyProjectile
   - PlayerAttack
-  - 
+  - SpawnBarrier
   - 
   - 
   - 
@@ -44,8 +44,14 @@ TagManager:
   - name: Environment
     uniqueID: 2941936613
     locked: 0
+  - name: EnvironmentNonObjects
+    uniqueID: 3542996013
+    locked: 0
   - name: Player
     uniqueID: 1049840429
+    locked: 0
+  - name: EnvironmentObjects
+    uniqueID: 17255149
     locked: 0
   - name: Enemy
     uniqueID: 3126594401

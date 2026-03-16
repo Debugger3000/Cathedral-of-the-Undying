@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
     [Header("UI")]
     public UIManager uiManager;
 
+
+    // map grid size
+    // 24 (h) x 44 (w)
+
     void Awake()
     {
         Instance = this; // Set the GameController reference 
