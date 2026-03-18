@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1168372895
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 3301383579229164996}
   - component: {fileID: 1002664938581524448}
   - component: {fileID: 2170781947721051115}
+  - component: {fileID: 1399778011536957416}
   m_Layer: 10
   m_Name: Shambler
   m_TagString: Untagged
@@ -220,8 +221,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShamblerController
   healthBarTransform: {fileID: 0}
   enemyData: {fileID: 11400000, guid: ba941e26f8ba02a47b356ae9bc5e35d3, type: 2}
+  nextAttackTime: 0
+  isAttacking: 0
   healthBarPrefab: {fileID: 3093374798188767458}
   healthBarFill: {fileID: 3107952856951029327}
+--- !u!114 &1399778011536957416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813305964766610418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
+  m_ShadowGroup: 0
+  m_Priority: 0
+  m_ComponentVersion: 5
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 000000002d4b933ee5635aaf4d59f59e
+  m_ShapePath:
+  - {x: -0.52576095, y: -0.28103125, z: 0}
+  - {x: -0.29391187, y: 0.074943185, z: 0}
+  - {x: 0.010540605, y: 0.56440246, z: 0}
+  - {x: 0.525761, y: -0.2939118, z: 0}
+  m_ShapePathHash: 1864971262
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 0}
+  m_ShadowShape2DProvider:
+    rid: -2
+  m_ShadowCastingSource: 1
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: 0.000000059604645, y: 0.13524532, z: 0}
+      m_Extent: {x: 0.525761, y: 0.42915714, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 1
+  m_PreviousShadowShape2DSource: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &7884493450124244923
 GameObject:
   m_ObjectHideFlags: 0

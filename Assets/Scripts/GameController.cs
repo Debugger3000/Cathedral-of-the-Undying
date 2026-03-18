@@ -51,18 +51,11 @@ public class GameController : MonoBehaviour
         }
 
         // equip player with starter weapon...
-            // add to inventory
-            // equip to weapon
-        WeaponInstance firstWeaponInstance = weaponDataBaseGame.GetStarterWeapon();
-        Debug.Log($"first weapon instance: {firstWeaponInstance}");
-        inventory.WeaponPickUp(firstWeaponInstance);
+        WeaponInstance firstWeaponInstance = weaponDataBaseGame.GetStarterWeapon(); // get weapon instance
+        inventory.WeaponPickUp(firstWeaponInstance); // add to inventory
         playerWeapon.Equip(firstWeaponInstance); // equip player with weapon
         uiManager.UpdateCurrentWeaponDisplay(firstWeaponInstance.weaponData.weaponSprite); // update ui
-        // equip shotgun too for testing
-        // WeaponInstance shotgunInstance = weaponDataBaseGame.GetShotgun();
-        // inventory.WeaponPickUp(shotgunInstance);
-        // playerWeapon.Equip(shotgunInstance); // equip player with weapon
-        // uiManager.UpdateCurrentWeaponDisplay(shotgunInstance.weaponData.weaponSprite);
+        
     }
 
     // Weapon functions
