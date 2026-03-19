@@ -135,7 +135,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         if (target == null || isAttacking || isAffected) return; // no target 
 
-        // DefaultHandleRotation(); // rotate eneny
+        // rotate enemy towards player at all times...
         enemyData.DefaultRotation(target,transform);
         
         // Check if we can attack
@@ -160,6 +160,7 @@ public abstract class EnemyController : MonoBehaviour
             {
                 // DefaultMoveTowardsPlayer();
                 enemyData.DefaultMovement(target,transform,rb,statsCopy.moveSpeed);
+                
             }
         }
         else
@@ -170,8 +171,12 @@ public abstract class EnemyController : MonoBehaviour
 
         // check debuff status
         // HandleDebuffTimers(); 
-        statsCopy = enemyDebuffController.HandleDebuffTimers(); // set stats on debuff timer
-        TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
+        if(enemyDebuffController.activeDebuffs.Count > 0)
+        {
+            statsCopy = enemyDebuffController.HandleDebuffTimers(); // set stats on debuff timer
+            TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
+        }
+        
     }
 
     // receive flat damage...
