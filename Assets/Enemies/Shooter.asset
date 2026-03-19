@@ -22,7 +22,7 @@ MonoBehaviour:
   damage: 10
   projectileDamage: 10
   projectileMoveSpeed: 10
-  attackRange: 5
+  attackRange: 20
   windUpTime: 1
   attackCooldown: 1.5
   hitboxLifetime: 1
