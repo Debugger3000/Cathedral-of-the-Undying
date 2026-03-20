@@ -11,6 +11,12 @@ public class ShotgunData : WeaponData
     public float knockbackForce = 5f; // knockback force on rb impulse
     // public float fireRate = 0.5f;
 
+
+    protected override void FireProjectileSound()
+    {
+        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+    }
+
     public override void FireProjectile(Transform muzzle) 
     {
         // produce 5 shotgun projectiles
@@ -38,5 +44,6 @@ public class ShotgunData : WeaponData
         }
 
         Debug.Log($"Fired {pelletCount} pellets from {muzzle.name}");
+        FireProjectileSound();
     }
 }

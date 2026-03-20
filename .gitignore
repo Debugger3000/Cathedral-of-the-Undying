@@ -12,6 +12,18 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+
+# Ignore Assets (Audio) - just ignore one folder and everything within instead...
+/[Aa]ssets/IgnoreMeAssets/
+/[Aa]ssets/IgnoreMeAssets.meta
+
+#/[Aa]ssets/NPC or Player/
+#/[Aa]ssets/Sci-Fi_Guns_Game-Of-Weapons/
+#/[Aa]ssets/SD Soundtracks - Album of Elements/
+#/[Aa]ssets/NPC or Player/
+#/[Aa]ssets/A.M.P. DEMO/
+
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta

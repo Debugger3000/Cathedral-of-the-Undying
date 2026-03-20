@@ -82,6 +82,11 @@ public class PlayerController : MonoBehaviour
         // enemy projectiles...
     }
 
+    private void PlayPlayerHitAudio()
+    {
+        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerHitByAttackGrunt); // player hit grunt
+    }
+
 
     // To Detect certain trigger interactions
     // Enemy hitboxes
@@ -106,7 +111,8 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(HitBoxSpecialEffect(attackHitboxScript)); // apply special effects
                 }
 
-
+                // player grunts on hit
+                PlayPlayerHitAudio();
             }
 
         }
@@ -132,6 +138,8 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(ProjectileSpecialEffect(baseProjectileScript));
                 }
 
+                // player grunts on hit
+                PlayPlayerHitAudio();
 
             }
 

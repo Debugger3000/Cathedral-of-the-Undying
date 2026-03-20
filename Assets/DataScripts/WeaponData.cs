@@ -45,6 +45,8 @@ public abstract class WeaponData : ScriptableObject
         FireProjectile(muzzleTransform); // default attack is projectile
     }
 
+    protected abstract void FireProjectileSound();
+
     // Default fire behaviour
     // One round shots...
     // effects will be put onto projectiles
@@ -52,6 +54,7 @@ public abstract class WeaponData : ScriptableObject
     {
         //
             Debug.Log("Pew!");
+            FireProjectileSound(); // sound of weapon...
 
             // set fire rate time for next fire
             // nextFireTime = Time.time + (1f / currentWeaponData.weaponData.fireRate);
@@ -70,6 +73,8 @@ public abstract class WeaponData : ScriptableObject
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }
     }
+
+    
 
     public virtual void HitBoxAttack(Transform playerTransform)
     {

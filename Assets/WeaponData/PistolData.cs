@@ -14,4 +14,8 @@ public class PistolData : WeaponData
 
     
     // }
+    protected override void FireProjectileSound()
+    {
+        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+    }
 }
