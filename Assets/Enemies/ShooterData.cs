@@ -8,8 +8,8 @@ public class ShooterData : EnemyData
 
     // OVERRIDE DEFAULT ENEMY BEHAVIOUR WITHIN HERE
 
-    public override void AttackController(Transform transform)
+    public override void AttackController(Transform transform, Transform playerTarget)
     {
-        BasicProjectileFire(transform); // just perform a basic projectile attack
+        BasicProjectileFire(transform,playerTarget); // just perform a basic projectile attack
     }
 }

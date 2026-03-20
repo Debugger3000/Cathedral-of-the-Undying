@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class ShooterController : EnemyController
+public class TrackerController : EnemyController
 {
-    
     protected override void Die()
     {
         // Shamblers might explode or do something on death...
@@ -20,7 +19,7 @@ public class ShooterController : EnemyController
 
         // 
         //ExecuteAttackLogic();
-        enemyData.AttackController(transform,target); // call unit attack controller..
+        enemyData.AttackController(transform, target); // call unit attack controller.. from enemyData / unitData
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);

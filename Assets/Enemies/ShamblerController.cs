@@ -19,7 +19,7 @@ public class ShamblerController : EnemyController
 
         // 
         //ExecuteAttackLogic();
-        enemyData.AttackController(transform); // call unit attack controller..
+        enemyData.AttackController(transform,target); // call unit attack controller..
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);

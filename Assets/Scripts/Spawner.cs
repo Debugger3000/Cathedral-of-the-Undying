@@ -36,7 +36,11 @@ public class Spawner : MonoBehaviour
             {
                 unitIndex = 1;
             }
-            else
+            else if(unitIndex == 1)
+            {
+                unitIndex = 2;
+            }
+            else if (unitIndex == 2)
             {
                 unitIndex = 0;
             }
