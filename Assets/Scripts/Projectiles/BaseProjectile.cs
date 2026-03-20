@@ -11,6 +11,7 @@ public abstract class BaseProjectile : MonoBehaviour
     public bool isSpecialEffect = false;
     public WeaponDebuffData debuffData;
     protected Rigidbody2D rb; // grab projectile gameObject rigidbody
+    protected Transform playerTarget;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,13 +29,14 @@ public abstract class BaseProjectile : MonoBehaviour
     }
 
     // ENEMY PROJECTILE SETTER
-    public void SetEnemyAttributes(float speed, float damage, bool isSpecialEffect, WeaponDebuffData debuffData)
+    public void SetEnemyAttributes(float speed, float damage, bool isSpecialEffect, WeaponDebuffData debuffData, Transform playerTarget)
     {
         Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
         this.debuffData = debuffData; // set weapon debuff data...
+        this.playerTarget = playerTarget;
     }
 
 
@@ -60,13 +62,18 @@ public abstract class BaseProjectile : MonoBehaviour
         Destroy(target); // destroy projectile...
     }
 
+    protected virtual void ProjectileMovement()
+    {
+        // We set velocity directly to ensure it moves at a constant speed
+        rb.linearVelocity = transform.up * speed; 
+    }
+
 
 
     // Use FixedUpdate for physics-based velocity
     void FixedUpdate()
     {
-        // We set velocity directly to ensure it moves at a constant speed
-        rb.linearVelocity = transform.up * speed; 
+        ProjectileMovement(); // projectile movement
     }
 
     // // Update is called once per frame

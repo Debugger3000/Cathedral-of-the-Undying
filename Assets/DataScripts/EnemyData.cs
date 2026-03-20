@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 
 
@@ -79,14 +80,14 @@ public abstract class EnemyData : ScriptableObject
 
 
     // Use this if to control attack sequencing for a enemy unit...
-    public virtual void AttackController(Transform transform)
+    public virtual void AttackController(Transform transform, Transform target)
     {
-        BasicHitBoxAttack(transform); // perform basic hitbox attack
+        BasicHitBoxAttack(transform, target); // perform basic hitbox attack
     }
 
     // Default hitbox basic attack
     // can use this for normal melee attacks
-    public virtual void BasicHitBoxAttack(Transform transform)
+    public virtual void BasicHitBoxAttack(Transform transform, Transform target)
     {
         //
         Debug.Log("Enemy basic attack called...");
@@ -108,7 +109,7 @@ public abstract class EnemyData : ScriptableObject
         Destroy(hitbox,1f); // destroy hitbox after attack...
     }
 
-    public virtual void BasicProjectileFire(Transform muzzle)
+    public virtual void BasicProjectileFire(Transform muzzle, Transform target)
     {
 
         GameObject bullet = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
@@ -119,7 +120,8 @@ public abstract class EnemyData : ScriptableObject
         if (projScript != null)
         {
             
-            projScript.SetEnemyAttributes(projectileMoveSpeed, projectileDamage, isProjectileSpecialEffect, debuffProjectile);
+            Debug.Log($"Enemyjust shot a PORJECTILE HAHAHAHAHAA");
+            projScript.SetEnemyAttributes(projectileMoveSpeed, projectileDamage, isProjectileSpecialEffect, debuffProjectile, target);
             // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
             // projScript.damage = currentWeaponData.weaponData.weaponDamage;
         }

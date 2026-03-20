@@ -11,8 +11,8 @@ using UnityEngine.UI;
 public abstract class EnemyController : MonoBehaviour
 {
     // Base Settings
-    private Transform target; // player transform
-    private Transform myTransform;
+    protected Transform target; // player transform
+    // private Transform myTransform;
     public Transform healthBarTransform; // can set on enemy prefab...
     private Rigidbody2D rb;
     public EnemyData enemyData; // Drag your ShamblerData or BossData here
@@ -24,8 +24,8 @@ public abstract class EnemyController : MonoBehaviour
 
     // apply debuff to data, set a timer for that effect, in update check array for timers hitting zero, normalize 
 
-    public float nextAttackTime;
-    public bool isAttacking = false;
+    protected float nextAttackTime;
+    protected bool isAttacking = false;
 
     private bool isAffected = false; // for special effects 
 
@@ -39,7 +39,7 @@ public abstract class EnemyController : MonoBehaviour
     // On enemy unit awake...
     void Awake()
     {
-        myTransform = transform; // assign own transform
+        //myTransform = transform; // assign own transform
         rb = GetComponent<Rigidbody2D>(); // get rigidbody
         target = GameObject.FindGameObjectWithTag("Player").transform; // get player transform to follow...
         currentHealth = enemyData.maxHealth; // set health...
