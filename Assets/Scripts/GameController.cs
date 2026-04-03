@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameController : MonoBehaviour
     private PlayerController playerController;
     private Weapon playerWeapon;
     public static GameController Instance; // The global reference
+
+    public Armour armourClass = new Armour(); // run all damage through this armour deduction filter 
     
 
     [Header("Player")]
@@ -37,10 +40,21 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start in GameController.........................................");
-        playerInstance = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity); // set GameObject for player
-        playerController = playerInstance.GetComponent<PlayerController>(); // set PlayerController for reference
-        playerWeapon = playerInstance.GetComponentInChildren<Weapon>(); // set playerWeapon for reference
+        try
+        {
+            Debug.Log("Start in GameController.........................................");
+            playerInstance = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity); // set GameObject for player
+            Debug.Log($"playerinstance is: {playerInstance}");
+            playerController = playerInstance.GetComponent<PlayerController>(); // set PlayerController for reference
+            playerWeapon = playerInstance.GetComponentInChildren<Weapon>(); // set playerWeapon for reference
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log($"Error in GameController Start: {e}");
+            throw;
+        }
+    
+        
 
 
         // Tell Cinemachine to track this new instance
@@ -69,11 +83,26 @@ public class GameController : MonoBehaviour
 
 
     // UI
+    public void AddPlayerDebuffUI(WeaponDebuffData data)
+    {
+        // give to UI Manager
+        uiManager.AddEffect(data);
+    }
+
+    public void RemovePlayerDebuffUI(WeaponDebuffData data)
+    {
+        uiManager.RemoveEffect(data);
+    }
+
+
+
     public void PlayerDamaged(float currentHealth)
     {
+        Debug.Log($"Player took damage: {currentHealth}");
         // player is dead
         if(currentHealth <= 0f)    
         {
+            Debug.Log("Player died.......................");
             Destroy(playerInstance); // kill player model...
             // player dead
             // have a nice delay and the enemies swarming..
@@ -82,6 +111,8 @@ public class GameController : MonoBehaviour
         }
         uiManager.UpdatePlayerHealth(currentHealth); // update player UI health bar
     }
+
+
 
     // weapon box drop
     public WeaponName GetWeaponBoxDropName()

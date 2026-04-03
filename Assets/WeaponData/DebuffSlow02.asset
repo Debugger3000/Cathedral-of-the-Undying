@@ -18,4 +18,5 @@ MonoBehaviour:
   lifetime: 4
   effectIntensity: 0.75
   isDot: 0
-  overlayEffectPrefab: {fileID: 0}
+  damage: 0
+  overlayEffectPrefab: {fileID: 7709340318742998087, guid: ff12d787ee95ea34eb25f0dd4130dd69, type: 3}

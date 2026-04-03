@@ -13,17 +13,23 @@ MonoBehaviour:
   m_Name: Shambler
   m_EditorClassIdentifier: Assembly-CSharp::ShamblerData
   enemyName: Shambler
+  maxHealth: 100
+  armour: 0
+  moveSpeed: 6
+  rotationSpeed: 3
   damage: 10
+  armourPenetration: 10
+  projectileMoveSpeed: 10
+  projectileDamage: 10
+  isProjectileSpecialEffect: 0
+  debuffProjectile: {fileID: 0}
   attackRange: 0.75
-  windUpTime: 0.5
+  windUpTime: 0.25
   attackCooldown: 1.5
   hitboxLifetime: 1
   attackAngle: 45
-  debuffDataHitBox: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
   isHitBoxSpecialEffect: 1
-  maxHealth: 100
-  armour: 10
-  moveSpeed: 2
-  rotationSpeed: 3
+  debuffDataHitBox: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
+  projectilePrefab: {fileID: 0}
   enemyPrefab: {fileID: 5813305964766610418, guid: cb75b65c7416ca94eaca9d9da515fa43, type: 3}
   attackHitbox: {fileID: 7819302047958935761, guid: 0da6eaaf580998643bd5d0dd0bf42b89, type: 3}

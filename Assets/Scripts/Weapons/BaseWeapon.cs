@@ -14,6 +14,8 @@ public abstract class BaseWeapon : MonoBehaviour
 
     private float nextFireTime = 0f; // wepaon fire rate...
 
+    // ammo amounts are just ignored...
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

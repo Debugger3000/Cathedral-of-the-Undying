@@ -15,20 +15,21 @@ MonoBehaviour:
   enemyName: Tracker
   maxHealth: 100
   armour: 0
-  moveSpeed: 2
+  moveSpeed: 3
   rotationSpeed: 3
-  isHitBoxSpecialEffect: 0
-  isProjectileSpecialEffect: 0
   damage: 10
-  projectileDamage: 10
+  armourPenetration: 10
   projectileMoveSpeed: 10
+  projectileDamage: 10
+  isProjectileSpecialEffect: 0
+  debuffProjectile: {fileID: 0}
   attackRange: 15
-  windUpTime: 1
+  windUpTime: 0.1
   attackCooldown: 1.5
   hitboxLifetime: 1
   attackAngle: 45
+  isHitBoxSpecialEffect: 0
   debuffDataHitBox: {fileID: 0}
-  debuffProjectile: {fileID: 0}
   projectilePrefab: {fileID: 4702425798299637114, guid: c9d2b5e8bc675e841b6ba7c068db1fea, type: 3}
   enemyPrefab: {fileID: 3233262169838350469, guid: 1a56e47b93fa14845b17fdb569c6f6bc, type: 3}
   attackHitbox: {fileID: 0}

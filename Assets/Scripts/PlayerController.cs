@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
 
-                PlayerTakeDamage(attackHitboxScript.damage); // player takes damage
+                PlayerTakeDamage(attackHitboxScript.damage, attackHitboxScript.armourPenetration); // player takes damage
 
                 // apply whatever special effects of hitbox attack to player
                 // check if enemy has hitbox Special effects
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"Hit by {other.gameObject.name} for {baseProjectileScript.damage} damage!");
 
-                PlayerTakeDamage(baseProjectileScript.damage); // player takes damage from projectile
+                PlayerTakeDamage(baseProjectileScript.damage, baseProjectileScript.armourPenetration); // player takes damage from projectile
 
                 // apply whatever special effects of hitbox attack to player
                 // check if enemy has hitbox Special effects
@@ -180,6 +180,9 @@ public class PlayerController : MonoBehaviour
         StatsCopy stats = debuffTuple.Item2;
         playerDebuffController.SetDebuff(data,stats);
 
+        // Affect Player UI with debuff
+        GameController.Instance.AddPlayerDebuffUI(data);
+
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
@@ -197,6 +200,9 @@ public class PlayerController : MonoBehaviour
         StatsCopy stats = debuffTuple.Item2;
         playerDebuffController.SetDebuff(data,stats);
 
+        // Affect Player UI with debuff
+        GameController.Instance.AddPlayerDebuffUI(data);
+
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
@@ -205,11 +211,21 @@ public class PlayerController : MonoBehaviour
 
 
     // -------------------------------------------------------------------------
-    // Player takes damage
-    public void PlayerTakeDamage(float damage)
+    // Player takes damage with armour reduction applied...
+    public void PlayerTakeDamage(float damage, float armourPenetration)
     {
-        currentHealth -= damage; // subtract
-        GameController.Instance.PlayerDamaged(currentHealth); // trigger UI update
+        // run through armour calculations first...
+        float damageTaken = GameController.Instance.armourClass.armourDeductionBase(armour, armourPenetration, damage);
+        Debug.Log($"Player took damage: {damageTaken}");
+        currentHealth -= damageTaken; // subtract
+        GameController.Instance.PlayerDamaged(currentHealth); // update UI for player health bar + check death condition
+
+    }
+    // flat damage for dots and other sources
+    public void FlatPlayerTakeDamage(float damageTaken)
+    {
+        currentHealth -= damageTaken; // subtract
+        GameController.Instance.PlayerDamaged(currentHealth); // update UI for player health bar + check death condition
 
     }
 
@@ -265,9 +281,19 @@ public class PlayerController : MonoBehaviour
         // call aim player with fixed frames...
         AimPlayer();
 
-        // check debuff statuses
-        statsCopy = playerDebuffController.HandleDebuffTimers(); // set stats on debuff timer logic
-        PlayerTakeDamage(playerDebuffController.HandleDotTimers()); // apply dot damage
+        // only do debuff logic when player has debuffs
+        if(playerDebuffController.activeDebuffs.Count > 0)
+        {
+            // check debuff statuses
+            statsCopy = playerDebuffController.HandleDebuffTimers("player"); // when we remove DEBUFFS
+            float dotDamageAggregate = playerDebuffController.HandleDotTimers(); // dot damage aggregate
+            if(dotDamageAggregate != 0)
+            {
+                FlatPlayerTakeDamage(dotDamageAggregate); // apply dot damage
+            }
+        }
+        
+        
     }
 
     // private void Update()

@@ -14,21 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShooterData
   enemyName: Shooter
   maxHealth: 100
-  armour: 10
-  moveSpeed: 2
+  armour: 0
+  moveSpeed: 3
   rotationSpeed: 3
-  isHitBoxSpecialEffect: 0
-  isProjectileSpecialEffect: 1
   damage: 10
-  projectileDamage: 10
+  armourPenetration: 10
   projectileMoveSpeed: 10
+  projectileDamage: 10
+  isProjectileSpecialEffect: 1
+  debuffProjectile: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
   attackRange: 20
   windUpTime: 1
   attackCooldown: 1.5
   hitboxLifetime: 1
   attackAngle: 45
+  isHitBoxSpecialEffect: 0
   debuffDataHitBox: {fileID: 0}
-  debuffProjectile: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
   projectilePrefab: {fileID: 3774707043043979430, guid: 36a350f3ad239d54fb8d5c2b1f694ce8, type: 3}
   enemyPrefab: {fileID: 3005685310217838477, guid: a000a810cec287845b5e5a39eb868fbe, type: 3}
   attackHitbox: {fileID: 0}

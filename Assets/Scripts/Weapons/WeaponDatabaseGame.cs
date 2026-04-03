@@ -7,6 +7,7 @@ using UnityEngine;
 public enum WeaponName {
     Pistol,
     Shotgun,
+    Orb,
     SniperRifle,
     AutoPistol,
     MagicWand

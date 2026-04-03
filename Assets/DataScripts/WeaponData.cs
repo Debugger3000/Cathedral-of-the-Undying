@@ -13,7 +13,7 @@ public abstract class WeaponData : ScriptableObject
     public float bulletSpeed = 20f; // bullet speed
     public float weaponDamage = 10f; // weapons damage
     public int initialWeaponAmmo = 999; // weapons initial ammo... ?????
-    public float weaponPenetration = 10f; // if we introduce enemy armour 
+    public float armourPenetration = 10f; // if we introduce enemy armour 
     public int weaponPoints = 10; // how much this weapons projectiles should increment the point multiplier...
 
     public bool isSpecialEffect = false; // weapon has special effect on projectiles or on hit
@@ -53,7 +53,7 @@ public abstract class WeaponData : ScriptableObject
     public virtual void FireProjectile(Transform muzzle)
     {
         //
-            Debug.Log("Pew!");
+            //Debug.Log("Pew!");
             FireProjectileSound(); // sound of weapon...
 
             // set fire rate time for next fire
@@ -68,7 +68,7 @@ public abstract class WeaponData : ScriptableObject
             if (projScript != null)
             {
                 
-                projScript.SetAttributes(bulletSpeed, weaponDamage, weaponPoints, isSpecialEffect, debuffData);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, armourPenetration, weaponPoints, isSpecialEffect, debuffData);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }
@@ -79,9 +79,9 @@ public abstract class WeaponData : ScriptableObject
     public virtual void HitBoxAttack(Transform playerTransform)
     {
         //
-        Debug.Log("Enemy basic attack called...");
+        //Debug.Log("Enemy basic attack called...");
         // Debug.Log("Shambler performs a Cone Slam!");
-        Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
+        //Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
 
         // 1. Get the rotation
         Quaternion spawnRotation = playerTransform.rotation;
@@ -93,7 +93,7 @@ public abstract class WeaponData : ScriptableObject
 
         GameObject hitbox = Instantiate(attackHitbox, spawnPosition, spawnRotation); // generate hitbox
 
-        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(HitBoxDamage, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(HitBoxDamage, armourPenetration, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
         
         Destroy(hitbox,1f); // destroy hitbox after attack...
     }

@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class AttackHitboxController : MonoBehaviour
 {
     public float damage; // supplied by enemyData
+    public float armourPenetration; //
     public float hitboxLifetime; // supplied by enemyData
 
     public WeaponDebuffData debuffData; // debuff data is there is a special effect on the attack
@@ -20,9 +21,10 @@ public abstract class AttackHitboxController : MonoBehaviour
         // // Auto-destruct like we discussed earlier
         // Destroy(gameObject, hitboxLifetime); 
     }
-    public void Setup(float dmg, float life, bool isHitBoxSpecialEffect, WeaponDebuffData debuffData)
+    public void Setup(float dmg, float armourPenetration, float life, bool isHitBoxSpecialEffect, WeaponDebuffData debuffData)
     {
         damage = dmg;
+        this.armourPenetration = armourPenetration;
         hitboxLifetime = life;
         isSpecialEffect = isHitBoxSpecialEffect;
         this.debuffData = debuffData;

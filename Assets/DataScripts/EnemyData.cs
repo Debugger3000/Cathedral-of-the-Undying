@@ -4,16 +4,12 @@ using UnityEngine.InputSystem.Interactions;
 
 
 
-
-
-
 // [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Guns/Weapon Data")]
 public abstract class EnemyData : ScriptableObject
 {
     [Header("General Stats")]
     public string enemyName; // enemy name...
     public float maxHealth = 100f; // max health
-    public float armour = 10f;
     // Armour
         // Armour should subtract flat from weapon damage
             // if armour makes weapon damage == 0, then we should buffer with a minimal percent of damage such as 5%... 
@@ -21,29 +17,32 @@ public abstract class EnemyData : ScriptableObject
         // if Armour = 20
         // armour pen = 10 and damage is 15 
         // 20 - 10 = 10 armour --> 10 - 15 damage = gun does 5 damage ?
+    public float armour = 10f;
+    
     public float moveSpeed = 2f;
     public float rotationSpeed = 3f;
 
-    [Header("Attack Flags")]
-    // public bool hasHitBoxAttack = false; // flag for what type of attack unit has
-    // public bool hasProjectileAttack = false;
-    public bool isHitBoxSpecialEffect = false;
-    public bool isProjectileSpecialEffect = false;
-
-    [Header("Attack Stats")]
+    [Header("Base Attack Stats")]
     public float damage = 10f; // enemy damage for hitbox
-    public float projectileDamage = 10f; // projectile damage
-    public float projectileMoveSpeed = 10f;
+    public float armourPenetration = 1.0f;
+    
 
+    [Header("Projectile Attack Stats")]
+    public float projectileMoveSpeed = 10f;
+    public float projectileDamage = 10f; // projectile damage
+    public bool isProjectileSpecialEffect = false;
+    public WeaponDebuffData debuffProjectile;
+
+
+    [Header("Hitbox Attack Stats")]
     public float attackRange = 2f;       // How far the raycast / detection goes
     public float windUpTime = 2f;       // Raycast detection to attack time
     public float attackCooldown = 1.5f;  // Time between attacks
     public float hitboxLifetime = 1.0f; // how long the hitbox visual should be shown
     public float attackAngle = 45f;
-
+    public bool isHitBoxSpecialEffect = false;
     public WeaponDebuffData debuffDataHitBox;
 
-    public WeaponDebuffData debuffProjectile;
     
 
     [Header("Prefabs")]
@@ -104,7 +103,7 @@ public abstract class EnemyData : ScriptableObject
 
         GameObject hitbox = Instantiate(attackHitbox, spawnPosition, spawnRotation); // generate hitbox
 
-        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, armourPenetration, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
         
         Destroy(hitbox,1f); // destroy hitbox after attack...
     }
@@ -121,13 +120,10 @@ public abstract class EnemyData : ScriptableObject
         {
             
             Debug.Log($"Enemyjust shot a PORJECTILE HAHAHAHAHAA");
-            projScript.SetEnemyAttributes(projectileMoveSpeed, projectileDamage, isProjectileSpecialEffect, debuffProjectile, target);
+            projScript.SetEnemyAttributes(projectileMoveSpeed, projectileDamage, armourPenetration, isProjectileSpecialEffect, debuffProjectile, target);
             // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
             // projScript.damage = currentWeaponData.weaponData.weaponDamage;
         }
-        
     }
-
-
 }
 

@@ -7,6 +7,7 @@ public abstract class BaseProjectile : MonoBehaviour
 {
     public float speed = 20f;
     public float damage = 10;
+    public float armourPenetration;
     public int weaponPoints = 10;
     public bool isSpecialEffect = false;
     public WeaponDebuffData debuffData;
@@ -18,22 +19,24 @@ public abstract class BaseProjectile : MonoBehaviour
     }
 
     // PLAYER PROJECTILE SETTER
-    public void SetAttributes(float speed, float damage, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData)
+    public void SetAttributes(float speed, float damage, float armourPenetration, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData)
     {
-        Debug.Log($"Set base projectile attributres too: {speed} {damage}");
+        //Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
+        this.armourPenetration = armourPenetration;
         this.weaponPoints = weaponPoints; // set weaponPoints
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
         this.debuffData = debuffData; // set weapon debuff data...
     }
 
     // ENEMY PROJECTILE SETTER
-    public void SetEnemyAttributes(float speed, float damage, bool isSpecialEffect, WeaponDebuffData debuffData, Transform playerTarget)
+    public void SetEnemyAttributes(float speed, float damage, float armourPenetration, bool isSpecialEffect, WeaponDebuffData debuffData, Transform playerTarget)
     {
-        Debug.Log($"Set base projectile attributres too: {speed} {damage}");
+        //Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
         this.damage = damage;
+        this.armourPenetration = armourPenetration;
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
         this.debuffData = debuffData; // set weapon debuff data...
         this.playerTarget = playerTarget;

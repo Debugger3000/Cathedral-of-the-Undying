@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,12 @@ public class UIManager : MonoBehaviour
     public Image multiplierPointsProgressBar;
     public Image multiplierTimerProgressBar;
     public TextMeshProUGUI multiplierLevelText;
-    public char multiplierlevelCharacter = 'X'; 
+    public char multiplierlevelCharacter = 'X';
+
+    [Header("Debuff Queue")]
+    [SerializeField] private Transform effectTray; // 
+    private Dictionary<string, GameObject> activeIcons = new(); // hold queue of icons...
+
     void Start()
     {
         
@@ -29,6 +35,29 @@ public class UIManager : MonoBehaviour
     {
         
     }
+
+    // add debuff
+    public void AddEffect(WeaponDebuffData data)
+    {
+        
+        if (activeIcons.ContainsKey(data.debuffId)) return;
+
+        var icon = Instantiate(data.overlayEffectPrefab, effectTray);
+        activeIcons[data.debuffId] = icon; // key - debuffId / value - prefab icon
+        Debug.Log($"Added player debuff ICON: {activeIcons}");
+    }
+
+    // remove debuff
+    public void RemoveEffect(WeaponDebuffData data)
+    {
+        if (activeIcons.TryGetValue(data.debuffId, out var icon))
+        {
+            activeIcons.Remove(data.debuffId);
+            Destroy(icon); // remove debuff icon...
+        }
+        Debug.Log($"Added player debuff ICON: {activeIcons}");
+    }
+
 
     public void UpdateCurrentWeaponDisplay(Sprite weaponSprite)
     {

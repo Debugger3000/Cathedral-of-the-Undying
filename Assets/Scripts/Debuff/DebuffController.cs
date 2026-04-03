@@ -44,12 +44,15 @@ public class DebuffController
 
         // add debuff
         AddDebuff(debuffData,debuffedStats);
+
+        // affect UI
     }
 
 
 
     // debuff stuff
-    public StatsCopy HandleDebuffTimers()
+    // sourceType - 'player', 'enemy'
+    public StatsCopy HandleDebuffTimers(string sourceType)
     {
         // Loop backwards so we can safely remove items while iterating
         for (int i = activeDebuffs.Count - 1; i >= 0; i--)
@@ -65,23 +68,15 @@ public class DebuffController
             // after to check whole seconds...
             int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
 
-            // dot logic, and when whole seconds are hit. Damage should happen
-            if (secondsAfter < secondsBefore && debuff.timeRemaining > 0)
-            {
-                if (debuff.data.isDot) // Assuming your data has this bool
-                {
-                    //ApplyDotDamage(debuff.data.effectIntensity);
-                }
-            }
-
             // debuff should be removed
             if (debuff.timeRemaining <= 0)
             {
-                if (debuff.data.isDot) // dots last tick should be when it expires
-                {
-                    //ApplyDotDamage(debuff.data.effectIntensity);
-                }
+                
                 RemoveDebuff(debuff.data, debuff.debuffedStats); // remove debuff from queue
+                if (sourceType == "player")
+                {
+                    GameController.Instance.RemovePlayerDebuffUI(debuff.data); // remove debuff from player UI
+                }
                 activeDebuffs.RemoveAt(i);
             }
             // debuff still good, check to reapply effects if better debuffs died
@@ -118,7 +113,7 @@ public class DebuffController
             {
                 if (debuff.data.isDot) // Assuming your data has this bool
                 {
-                    dotDamageAggregate += normalHealth * debuff.data.effectIntensity;
+                    dotDamageAggregate += debuff.data.damage; // flat dot damage
                 }
             }
 
@@ -127,7 +122,7 @@ public class DebuffController
             {
                 if (debuff.data.isDot) // dots last tick should be when it expires
                 {
-                    dotDamageAggregate += normalHealth * debuff.data.effectIntensity;
+                    dotDamageAggregate += debuff.data.damage; // dot damage is flat
                 }
             }
             // debuff still good, check to reapply effects if better debuffs died

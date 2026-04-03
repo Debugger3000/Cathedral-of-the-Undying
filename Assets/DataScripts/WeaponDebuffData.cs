@@ -16,6 +16,8 @@ public class WeaponDebuffData : ScriptableObject
     public float effectIntensity; // expressed as %
     public bool isDot;
 
+    public float damage; // damage is there is any
+
     
     // Add logic here later for visual effects (VFX) or Icons
     public GameObject overlayEffectPrefab;

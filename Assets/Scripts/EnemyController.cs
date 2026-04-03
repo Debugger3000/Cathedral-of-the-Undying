@@ -55,7 +55,7 @@ public abstract class EnemyController : MonoBehaviour
     // OnTrigger 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Enemy unit hit by something");
+        //Debug.Log("Enemy unit hit by something");
         // Player projectile hit enemy 
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Projectile")
         {
@@ -63,7 +63,7 @@ public abstract class EnemyController : MonoBehaviour
 
             BaseProjectile projectile = collision.GetComponent<BaseProjectile>(); // grab projectiles damage
 
-            TakeDamage(projectile.damage); // unit should lose health...
+            TakeDamage(projectile.damage, projectile.armourPenetration); // unit should lose health...
 
             // check if projetile / weapon has a special effect to apply...
             if(projectile.isSpecialEffect)
@@ -75,9 +75,9 @@ public abstract class EnemyController : MonoBehaviour
         {
             if (collision.TryGetComponent<AttackHitboxController>(out var attackHitboxScript))
             {
-                Debug.Log($"Hit by {collision.gameObject.name} for {attackHitboxScript.damage} damage!");
+                //Debug.Log($"Hit by {collision.gameObject.name} for {attackHitboxScript.damage} damage!");
 
-                TakeDamage(attackHitboxScript.damage); // player takes damage
+                TakeDamage(attackHitboxScript.damage, attackHitboxScript.armourPenetration); // player takes damage
 
                 // apply whatever special effects of hitbox attack to player
                 // check if enemy has hitbox Special effects
@@ -173,14 +173,32 @@ public abstract class EnemyController : MonoBehaviour
         // HandleDebuffTimers(); 
         if(enemyDebuffController.activeDebuffs.Count > 0)
         {
-            statsCopy = enemyDebuffController.HandleDebuffTimers(); // set stats on debuff timer
-            TakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
+            statsCopy = enemyDebuffController.HandleDebuffTimers("enemy"); // set stats on debuff timer
+            FlatTakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
         }
         
     }
 
     // receive flat damage...
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damageAmount, float armourPenetration)
+    {
+        // armour reduction
+        float damageTaken = GameController.Instance.armourClass.armourDeductionBase(statsCopy.armour, armourPenetration, damageAmount);
+
+        currentHealth -= damageTaken; // subtract health with normal (0-100)
+        Debug.Log($"Damage taken is: {damageTaken}");
+
+        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
+
+        if (currentHealth <= 0)
+        {
+            DropWeaponBox(); // drop weapon box
+            Die(); // call Die function implemented by specific unit controller
+        } 
+    }
+
+    // flat damage taken... meant for dots + other sources
+    public void FlatTakeDamage(float amount)
     {
         currentHealth -= amount; // subtract health with normal (0-100)
         Debug.Log($"Damage taken is: {amount}");
@@ -189,22 +207,25 @@ public abstract class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            // Random
-            // Weapon Box drop on enemy death
-            // roll 50% chance that a weapon box drops...
-            if (UnityEngine.Random.value <= 0.5f)
-            {
-                GameController instance = GameController.Instance;
-                // have unit drop a box...
-                GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
-                WeaponName weaponName = instance.GetWeaponBoxDropName();
-                Debug.Log($"weapon name for box drop is: {weaponName}");
-                box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
-            }
-            
-            // unit dies...
+            DropWeaponBox(); // drop weapon box
             Die(); // call Die function implemented by specific unit controller
         } 
+    }
+
+    private void DropWeaponBox()
+    {
+        // Random
+        // Weapon Box drop on enemy death
+        // roll 50% chance that a weapon box drops...
+        if (UnityEngine.Random.value <= 0.5f)
+        {
+            GameController instance = GameController.Instance;
+            // have unit drop a box...
+            GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+            WeaponName weaponName = instance.GetWeaponBoxDropName();
+            Debug.Log($"weapon name for box drop is: {weaponName}");
+            box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
+        }
     }
    
     // attack hitbox visual
