@@ -11,7 +11,7 @@ public class ShooterController : EnemyController
     }
 
     // if child enemy class wants to change their attack Sequence they can...
-    protected override IEnumerator AttackSequence()
+    protected override IEnumerator AttackSequence(Transform bodyTransform)
     {
         isAttacking = true;
         
@@ -20,7 +20,7 @@ public class ShooterController : EnemyController
 
         // 
         //ExecuteAttackLogic();
-        enemyData.AttackController(transform,target); // call unit attack controller..
+        enemyData.AttackController(bodyTransform,target); // call unit attack controller..
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);

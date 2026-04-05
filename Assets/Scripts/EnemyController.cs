@@ -12,8 +12,7 @@ public abstract class EnemyController : MonoBehaviour
 {
     // Base Settings
     protected Transform target; // player transform
-    // private Transform myTransform;
-    public Transform healthBarTransform; // can set on enemy prefab...
+    public Transform bodyTransform; // for body sprite renderer of enemy
     private Rigidbody2D rb;
     public EnemyData enemyData; // Drag your ShamblerData or BossData here
 
@@ -32,9 +31,13 @@ public abstract class EnemyController : MonoBehaviour
     // Unit Stats
     protected float currentHealth;
 
-    // Enemy UI
-    public GameObject healthBarPrefab;
-    public Image healthBarFill;
+    [Header("UI")]
+    public GameObject healthBarPrefab; // healthbar prefab
+    public Image healthBarFill; // healthbar fill
+    [SerializeField] private Transform effectTray; // 
+    private Dictionary<string, GameObject> activeIcons = new(); // hold queue of icons...
+
+    
     
     // On enemy unit awake...
     void Awake()
@@ -49,7 +52,7 @@ public abstract class EnemyController : MonoBehaviour
 
     // Child class Implemented Methods
     protected abstract void Die(); // unit death
-    protected abstract IEnumerator AttackSequence(); // children define their attack sequence
+    protected abstract IEnumerator AttackSequence(Transform bodyTransform); // children define their attack sequence
 
     //------
     // OnTrigger 
@@ -104,6 +107,9 @@ public abstract class EnemyController : MonoBehaviour
         StatsCopy stats = debuffTuple.Item2;
         enemyDebuffController.SetDebuff(data,stats);
 
+        // Affect enemy UI with debuff
+        AddEffect(data);
+
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
@@ -123,6 +129,9 @@ public abstract class EnemyController : MonoBehaviour
         StatsCopy stats = debuffTuple.Item2;
         enemyDebuffController.SetDebuff(data,stats);
 
+        // Affect enemy UI with debuff
+        AddEffect(data);
+
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
@@ -136,7 +145,8 @@ public abstract class EnemyController : MonoBehaviour
         if (target == null || isAttacking || isAffected) return; // no target 
 
         // rotate enemy towards player at all times...
-        enemyData.DefaultRotation(target,transform);
+        // give 'Body' child 
+        enemyData.DefaultRotation(target,bodyTransform);
         
         // Check if we can attack
         if (Time.time >= nextAttackTime)
@@ -149,12 +159,12 @@ public abstract class EnemyController : MonoBehaviour
             // 
             // if some enemies don't use raycasts to trigger attacks.
             // RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
-            RaycastHit2D hit = enemyData.DefaultDetection(transform,enemyData);
+            RaycastHit2D hit = enemyData.DefaultDetection(bodyTransform,enemyData);
 
             if (hit.collider != null)
             {
                 Debug.Log($"Enemy is using its basic attack.... stage1");
-                StartCoroutine(AttackSequence());
+                StartCoroutine(AttackSequence(bodyTransform));
             }
             else
             {
@@ -174,7 +184,15 @@ public abstract class EnemyController : MonoBehaviour
         if(enemyDebuffController.activeDebuffs.Count > 0)
         {
             statsCopy = enemyDebuffController.HandleDebuffTimers("enemy"); // set stats on debuff timer
-            FlatTakeDamage(enemyDebuffController.HandleDotTimers()); // apply dot damage
+            if (statsCopy.enemyEffectsToRemove.Count > 0)
+            {
+                RemoveEffect(statsCopy.enemyEffectsToRemove);
+            }
+            float dotDamageAggregate = enemyDebuffController.HandleDotTimers(); // apply dot damage
+            if(dotDamageAggregate != 0)
+            {
+                FlatTakeDamage(dotDamageAggregate); // apply dot damage
+            }
         }
         
     }
@@ -227,6 +245,36 @@ public abstract class EnemyController : MonoBehaviour
             box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
         }
     }
+
+
+    // Enemy UI Debuff bar
+     // add debuff
+    public void AddEffect(WeaponDebuffData data)
+    {
+        
+        if (activeIcons.ContainsKey(data.debuffId)) return;
+
+        var icon = Instantiate(data.overlayEffectPrefab, effectTray);
+        activeIcons[data.debuffId] = icon; // key - debuffId / value - prefab icon
+        Debug.Log($"Added player debuff ICON: {activeIcons}");
+    }
+
+    // remove debuff
+    public void RemoveEffect(List<WeaponDebuffData> enemyEffects)
+    {
+        for(int i = 0; i <enemyEffects.Count; i++)
+        {
+
+            if (activeIcons.TryGetValue(enemyEffects[i].debuffId, out var icon))
+            {
+                activeIcons.Remove(enemyEffects[i].debuffId);
+                Destroy(icon);
+                enemyEffects.RemoveAt(i);
+            }
+        }
+        Debug.Log($"Added player debuff ICON: {activeIcons}");
+    }
+
    
     // attack hitbox visual
     private void OnDrawGizmos()

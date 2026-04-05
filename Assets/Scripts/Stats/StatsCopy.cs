@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,6 +13,8 @@ public class StatsCopy
     // public float damage;
     public float moveSpeed;
     public float armour;
+
+    public List<WeaponDebuffData> enemyEffectsToRemove = new List<WeaponDebuffData>();
     // public float attackCooldown;
 
     // Constructor to clone the ScriptableObject data into this instance

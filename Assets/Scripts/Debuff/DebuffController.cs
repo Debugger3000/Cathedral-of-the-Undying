@@ -54,6 +54,7 @@ public class DebuffController
     // sourceType - 'player', 'enemy'
     public StatsCopy HandleDebuffTimers(string sourceType)
     {
+
         // Loop backwards so we can safely remove items while iterating
         for (int i = activeDebuffs.Count - 1; i >= 0; i--)
         {
@@ -73,9 +74,15 @@ public class DebuffController
             {
                 
                 RemoveDebuff(debuff.data, debuff.debuffedStats); // remove debuff from queue
+                // UI
+                // Player - Enemy 
                 if (sourceType == "player")
                 {
                     GameController.Instance.RemovePlayerDebuffUI(debuff.data); // remove debuff from player UI
+                }
+                else if(sourceType == "enemy")
+                {
+                    stats.enemyEffectsToRemove.Add(debuff.data); // add effect to return stats for enemycontroller to deal with
                 }
                 activeDebuffs.RemoveAt(i);
             }
@@ -191,6 +198,8 @@ public class DebuffController
         // Logic to revert statsCopy back to original values
         stats.moveSpeed = normalmoveSpeed;
         stats.armour = normalArmour;
+
+        
 
         // apply lesser debuffs when larger ones are removed...
         //CheckSimilarDebuffs(debuffedStats);
