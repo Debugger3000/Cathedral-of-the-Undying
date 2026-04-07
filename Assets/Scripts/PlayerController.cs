@@ -25,11 +25,8 @@ public class PlayerController : MonoBehaviour
     
 
     [Header("Weapon")]
-    // projectile prefab spawn
     public BaseWeapon weaponControl; // Assign your gun object here
-    // public WeaponData Pistol;
-    //public GameObject curProjectile;
-    //public GameObject curWeapon;
+    private bool isFiring = false; // control held down space bar for shoot
 
     [Header("Health")]
     private float maxHealth = 100f;
@@ -262,13 +259,23 @@ public class PlayerController : MonoBehaviour
     public void OnShoot(InputAction.CallbackContext context)
     {
         // fire only on space press down
-        if (context.performed)
+        // if (context.performed)
+        // {
+        //     if (weaponControl != null)
+        //     {
+        //         weaponControl.PlayerAttackWithWeapon(transform);
+        //     }
+        // }
+        if (context.started) 
         {
-            if (weaponControl != null)
-            {
-                weaponControl.PlayerAttackWithWeapon(transform);
-            }
+            isFiring = true;
         }
+        else if (context.canceled) 
+        {
+            isFiring = false;
+        }
+
+        
     }
 
     private void FixedUpdate()
@@ -296,10 +303,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    // private void Update()
-    // {
+    private void Update()
+    {
+        if (weaponControl != null && isFiring)
+        {
+            weaponControl.PlayerAttackWithWeapon(transform);
+        }
         
-    // }
+    }
 
     // mouse aim function
     private void AimPlayer()

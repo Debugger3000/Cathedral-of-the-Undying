@@ -25,6 +25,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform effectTray; // 
     private Dictionary<string, GameObject> activeIcons = new(); // hold queue of icons...
 
+    [Header("Weapons")]
+    public Image fireRateBar;
+    public Image overHeatBar;
+
     void Start()
     {
         
@@ -122,4 +126,16 @@ public class UIManager : MonoBehaviour
         
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    // update current weapon fire rate cd UI
+    public void UpdateWeaponFireRate(float fireRateNormalized)
+    {
+        fireRateBar.fillAmount = fireRateNormalized;
+    }
+
+    public void UpdateWeaponOverHeat(float heatNormalized)
+    {
+        overHeatBar.fillAmount = heatNormalized;
+    }
+
 }

@@ -28,7 +28,7 @@ public abstract class AttackHitboxController : MonoBehaviour
         hitboxLifetime = life;
         isSpecialEffect = isHitBoxSpecialEffect;
         this.debuffData = debuffData;
-        Debug.Log($"Hitbox initialized with Damage: {damage} and Life: {hitboxLifetime}");
+        //Debug.Log($"Hitbox initialized with Damage: {damage} and Life: {hitboxLifetime}");
         //Destroy(gameObject, hitboxLifetime);
     }
 

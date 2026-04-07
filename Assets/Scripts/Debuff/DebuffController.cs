@@ -91,7 +91,7 @@ public class DebuffController
             {
                 CheckSimilarDebuffs(debuff.debuffedStats);
             }
-            Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
+            //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
         }
 
         // return stats 
@@ -137,7 +137,7 @@ public class DebuffController
             {
                 CheckSimilarDebuffs(debuff.debuffedStats);
             }
-            Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
+            //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
         }
         // return dot damage
         return dotDamageAggregate;
@@ -163,7 +163,7 @@ public class DebuffController
 
 
         // Debug.Log($"Debuff move speed is {data.debuffedStats.moveSpeed}...........");
-        Debug.Log($"ORIGINAL move speed is {stats.moveSpeed}...........");
+        //Debug.Log($"ORIGINAL move speed is {stats.moveSpeed}...........");
 
     }
 
@@ -194,7 +194,7 @@ public class DebuffController
 
     private void RemoveDebuff(WeaponDebuffData data,StatsCopy debuffedStats)
     {
-        Debug.Log($"Debuff {data.debuffId} expired.");
+        //Debug.Log($"Debuff {data.debuffId} expired.");
         // Logic to revert statsCopy back to original values
         stats.moveSpeed = normalmoveSpeed;
         stats.armour = normalArmour;

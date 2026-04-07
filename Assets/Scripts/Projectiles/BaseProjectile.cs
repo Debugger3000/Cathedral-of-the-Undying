@@ -90,13 +90,13 @@ public abstract class BaseProjectile : MonoBehaviour
         // Any and all projectiles that collide with environment
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
         {
-            Debug.Log("Hit an environment Layer!");
+            //Debug.Log("Hit an environment Layer!");
             OnEnvironmentHit(gameObject);
         }
         // Player Projectiles that hit enemy
         else if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemy")
         {
-            Debug.Log("Hit an enemy with player projectile !!!");
+            //Debug.Log("Hit an enemy with player projectile !!!");
             OnEnemyHit(gameObject);
             // point multiplier needs to be increased
             PointMultiplier.Instance.AddPoint(weaponPoints); // add weapon points...
@@ -104,7 +104,7 @@ public abstract class BaseProjectile : MonoBehaviour
         // EnemyProjectiles that hit player
         else if (LayerMask.LayerToName(collision.gameObject.layer) == "Player")
         {
-            Debug.Log("Enemy projectile hit player");
+            //Debug.Log("Enemy projectile hit player");
             OnPlayerHit(gameObject);
         }
     }

@@ -17,6 +17,8 @@ public class OrbData : WeaponData
         AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
     }
 
+    // override since default is a projectile
+    // implement hitbox based attack
     public override void AttackController(Transform playerTransform, Transform muzzleTransform) 
     {
         HitBoxAttack(playerTransform); // perform hitbox attack instead

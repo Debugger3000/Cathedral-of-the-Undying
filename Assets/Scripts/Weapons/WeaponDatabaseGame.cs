@@ -7,6 +7,7 @@ using UnityEngine;
 public enum WeaponName {
     Pistol,
     Shotgun,
+    Smg,
     Orb,
     SniperRifle,
     AutoPistol,
@@ -77,11 +78,6 @@ public class WeaponDatabaseGame : MonoBehaviour
     {
         return new WeaponInstance(startWeapon);
     }
-
-    // public WeaponInstance GetShotgun()
-    // {
-    //     return new WeaponInstance(GetWeaponByName(WeaponName.Shotgun));
-    // } 
 
     // return weapon instance pick up
     public WeaponInstance GetWeaponPickUp(WeaponName weaponName)

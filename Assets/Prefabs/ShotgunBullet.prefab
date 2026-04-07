@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9339623, g: 0.88687664, b: 0.21586865, a: 1}
+  m_Color: {r: 0.3301887, g: 0.14034685, b: 0.06385724, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunProjectile
   speed: 20
   damage: 10
+  armourPenetration: 0
   weaponPoints: 10
   isSpecialEffect: 0
   debuffData: {fileID: 0}

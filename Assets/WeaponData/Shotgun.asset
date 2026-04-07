@@ -13,17 +13,26 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunData
   weaponName: Shotgun
-  projectilePrefab: {fileID: 2998432818825421932, guid: 91105e8733a98a14bb822fb2e345a42e, type: 3}
-  weaponPrefab: {fileID: 7061523503901339698, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
-  weaponSprite: {fileID: 21300156, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
-  fireRate: 0.5
+  fireRate: 1
   bulletSpeed: 20
   weaponDamage: 5
   initialWeaponAmmo: 999
-  weaponPenetration: 10
+  armourPenetration: 10
   weaponPoints: 10
   isSpecialEffect: 1
   debuffData: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
+  hasOverHeat: 0
+  heatPerShot: 0.1
+  heatCoolDownRate: 0.5
+  overHeatCoolDown: 3
+  HitBoxDamage: 10
+  hitboxLifetime: 1
+  debuffDataHitBox: {fileID: 0}
+  isHitBoxSpecialEffect: 0
+  attackHitbox: {fileID: 0}
+  projectilePrefab: {fileID: 2998432818825421932, guid: 91105e8733a98a14bb822fb2e345a42e, type: 3}
+  weaponPrefab: {fileID: 7061523503901339698, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
+  weaponSprite: {fileID: 21300156, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
   pelletCount: 5
   spreadAngle: 15
   knockbackForce: 9

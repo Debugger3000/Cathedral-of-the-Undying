@@ -19,6 +19,14 @@ public abstract class WeaponData : ScriptableObject
     public bool isSpecialEffect = false; // weapon has special effect on projectiles or on hit
     public WeaponDebuffData debuffData; // weapon debuff effects...
 
+    [Header("Heat Settings")]
+    public bool hasOverHeat = false;
+    public float heatPerShot = 0.1f;    // 10 shots to overheat
+    public float heatCoolDownRate = 0.5f;   // How fast heat drops per second
+    public float overHeatCoolDown = 3f; // once overheated, how long to fire...
+    
+    
+
     [Header("Hitbox Stats")]
     public float HitBoxDamage = 10f;
     public float hitboxLifetime = 1f;
