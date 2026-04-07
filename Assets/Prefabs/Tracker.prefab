@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 3233262169838350469}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.09025, y: 0.85121, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -175,7 +175,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cfcb6f3ca9391804e8f6ce23e3a78eb2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -199,8 +199,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0075431466, y: 0.003771603}
-  m_Size: {x: 0.9676758, y: 1.9860021}
+  m_Offset: {x: 0, y: 0.1}
+  m_Size: {x: 0.65, y: 1.1}
   m_Direction: 0
 --- !u!114 &5778195053951616183
 MonoBehaviour:
@@ -215,10 +215,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrackerController
   bodyTransform: {fileID: 1329975735957394824}
-  healthBarTransform: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 05d27a29709b1314fbebcfb25ebf0379, type: 2}
   healthBarPrefab: {fileID: 3482141743580622924}
   healthBarFill: {fileID: 89204631960324290}
+  effectTray: {fileID: 0}
 --- !u!1 &4892007878867072711
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 4892007878867072711}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -300,7 +300,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: 21300090, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -328,11 +328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.76986
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.64758
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.z

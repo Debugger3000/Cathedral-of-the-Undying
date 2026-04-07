@@ -25,7 +25,7 @@ MonoBehaviour:
   debuffProjectile: {fileID: 0}
   attackRange: 15
   windUpTime: 0.1
-  attackCooldown: 1.5
+  attackCooldown: 0.5
   hitboxLifetime: 1
   attackAngle: 45
   isHitBoxSpecialEffect: 0

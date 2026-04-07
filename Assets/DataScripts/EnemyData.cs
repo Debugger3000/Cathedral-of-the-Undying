@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
@@ -51,13 +52,19 @@ public abstract class EnemyData : ScriptableObject
 
     public GameObject attackHitbox; // hitbox prefab visual
 
+    // Private Vars
+    private float avoidanceDirection = 0f;
+    private float avoidanceLockTimer = 0f;
+
 
     // rotation can be overridden by enemy data
     public virtual void DefaultRotation(Transform target, Transform unitTransform)
     {
+        // rotating enemy face towards player transform
         Vector3 direction = target.position - unitTransform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         unitTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+
     }
 
     // movement can be overridden
@@ -70,11 +77,91 @@ public abstract class EnemyData : ScriptableObject
         
     }
 
+    public virtual void AvoidanceMovement(Transform unitTransform, Rigidbody2D rb, float moveSpeed)
+    {
+        rb.linearVelocity = (Vector2)unitTransform.up * moveSpeed;
+    }
+
     // RAYCAST detection for player
     public virtual RaycastHit2D DefaultDetection(Transform transform, EnemyData enemyData)
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
         return hit;
+    }
+
+    // Environment detection
+    //
+    
+    public virtual (bool detected, float openAngle) EnvironmentDetection(Transform transform)
+    {
+        float rayDistance = 3f;
+        int mask = LayerMask.GetMask("Environment");
+        // Wide scan
+        float[] angles = { 0f, 15f, -15f, 30f, -30f, 45f, -45f, 60f, -60f, 90f, -90f };
+
+        List<float> blockedAngles = new List<float>();
+        List<float> openAngles = new List<float>();
+
+        foreach (float offset in angles)
+        {
+            Vector2 dir = Quaternion.Euler(0, 0, offset) * transform.up;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, rayDistance, mask);
+
+            if (hit.collider != null)
+                blockedAngles.Add(offset);
+            else
+                openAngles.Add(offset);
+        }
+
+        if (blockedAngles.Count == 0)
+            return (false, 0f);
+
+        if (openAngles.Count == 0)
+        {
+            // Everything blocked — just go backwards
+            return (true, 180f);
+        }
+
+        // Pick an open angle — prefer closest to center for shortest path
+        // But 30% chance to pick a random open angle for variety
+        float chosenAngle;
+        if (avoidanceLockTimer <= 0f)
+        {
+            if (Random.value < 0.7f)
+            {
+                // Closest open angle to center
+                openAngles.Sort((a, b) => Mathf.Abs(a).CompareTo(Mathf.Abs(b)));
+                chosenAngle = openAngles[0];
+            }
+            else
+            {
+                // Random open angle
+                chosenAngle = openAngles[Random.Range(0, openAngles.Count)];
+            }
+
+            avoidanceDirection = chosenAngle;
+            avoidanceLockTimer = Random.Range(0.8f, 1.5f);
+        }
+        else
+        {
+            avoidanceLockTimer -= Time.deltaTime;
+            chosenAngle = avoidanceDirection;
+        }
+
+        return (true, chosenAngle);
+    }
+
+    public virtual void EnvironmentAvoidanceRotation(Transform target, Transform unitTransform, float openAngle)
+    {
+        // Rotate toward the open space
+        Vector2 openDir = Quaternion.Euler(0, 0, openAngle) * unitTransform.up;
+
+        // Blend slightly toward player so it doesn't wander forever
+        Vector2 toPlayer = ((Vector2)target.position - (Vector2)unitTransform.position).normalized;
+        Vector2 desired = (openDir * 2f + toPlayer * 0.5f).normalized;
+
+        float angle = Mathf.Atan2(desired.y, desired.x) * Mathf.Rad2Deg;
+        unitTransform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
 

@@ -142,42 +142,43 @@ public abstract class EnemyController : MonoBehaviour
     // Update lifetime 
     void Update()
     {
-        if (target == null || isAttacking || isAffected) return; // no target 
+        if (target == null || isAttacking || isAffected) return;
 
-        // rotate enemy towards player at all times...
-        // give 'Body' child 
-        enemyData.DefaultRotation(target,bodyTransform);
-        
-        // Check if we can attack
-        if (Time.time >= nextAttackTime)
+        var (environmentDetected, openAngle) = enemyData.EnvironmentDetection(bodyTransform);
+
+        if (environmentDetected)
         {
-
-            // detection logic
-
-            // attack sequence logic
-
-            // 
-            // if some enemies don't use raycasts to trigger attacks.
-            // RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, enemyData.attackRange, LayerMask.GetMask("Player"));
-            RaycastHit2D hit = enemyData.DefaultDetection(bodyTransform,enemyData);
-
-            if (hit.collider != null)
-            {
-                Debug.Log($"Enemy is using its basic attack.... stage1");
-                StartCoroutine(AttackSequence(bodyTransform));
-            }
-            else
-            {
-                // DefaultMoveTowardsPlayer();
-                enemyData.DefaultMovement(target,transform,rb,statsCopy.moveSpeed);
-                
-            }
+            enemyData.EnvironmentAvoidanceRotation(target, bodyTransform, openAngle);
+            enemyData.AvoidanceMovement(bodyTransform, rb, statsCopy.moveSpeed);
         }
         else
         {
-            // DefaultMoveTowardsPlayer();
-            enemyData.DefaultMovement(target,transform,rb,statsCopy.moveSpeed);
+            enemyData.DefaultRotation(target, bodyTransform);
+            enemyData.DefaultMovement(target, transform, rb, statsCopy.moveSpeed);
         }
+
+        // Attack check
+        if (Time.time >= nextAttackTime)
+        {
+            RaycastHit2D hit = enemyData.DefaultDetection(bodyTransform, enemyData);
+            if (hit.collider != null)
+            {
+                StartCoroutine(AttackSequence(bodyTransform));
+                return; // attacking, don't move
+            }
+        }
+
+        // // Movement — one call only
+        // if (environmentCheck.collider != null)
+        // {
+        //     enemyData.AvoidanceMovement(bodyTransform, rb, statsCopy.moveSpeed);
+        // }
+        // else
+        // {
+        //     enemyData.DefaultMovement(target, transform, rb, statsCopy.moveSpeed);
+        // }
+
+
 
         // check debuff status
         // HandleDebuffTimers(); 

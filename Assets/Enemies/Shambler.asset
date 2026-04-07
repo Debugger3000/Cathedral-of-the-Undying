@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Shambler
   maxHealth: 100
   armour: 0
-  moveSpeed: 6
+  moveSpeed: 4
   rotationSpeed: 3
   damage: 10
   armourPenetration: 10

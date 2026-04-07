@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7615009123413840628}
   - component: {fileID: 2547824461297226272}
   - component: {fileID: 5536115902495488368}
+  - component: {fileID: 4267626772070806290}
   - component: {fileID: 8566638832202833326}
   - component: {fileID: 4925816863838152144}
   m_Layer: 10
@@ -71,10 +72,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3005685310217838477}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cfcb6f3ca9391804e8f6ce23e3a78eb2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -116,6 +117,43 @@ PolygonCollider2D:
       - {x: 0.49751365, y: -0.51462305}
       - {x: 0.4961145, y: 0.506011}
   m_UseDelaunayMesh: 1
+--- !u!70 &4267626772070806290
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3005685310217838477}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: cfcb6f3ca9391804e8f6ce23e3a78eb2, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.05}
+  m_Size: {x: 0.9, y: 1.2}
+  m_Direction: 0
 --- !u!114 &8566638832202833326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,10 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterController
   bodyTransform: {fileID: 9172508531705303430}
-  healthBarTransform: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 7001009351f06e745a780cda6fcbfec5, type: 2}
   healthBarPrefab: {fileID: 6881573297261215391}
   healthBarFill: {fileID: 7993788323987408401}
+  effectTray: {fileID: 0}
 --- !u!114 &4925816863838152144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 4173562355129716958}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,8 +304,8 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9339623, g: 0.24230155, b: 0.68042386, a: 1}
+  m_Sprite: {fileID: 21300066, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
+  m_Color: {r: 0.8773585, g: 0.7242346, b: 0.7242346, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -313,7 +351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.7}
+  m_AnchoredPosition: {x: 0, y: 1}
   m_SizeDelta: {x: 0.5, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5690335231041861097
@@ -409,11 +447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.07123995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.54501003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6984878671967073153, guid: 5f0c08a2fc360ec40afcd498294ed911, type: 3}
       propertyPath: m_LocalPosition.z
