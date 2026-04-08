@@ -32,18 +32,18 @@ public class Spawner : MonoBehaviour
             GameObject unit = Instantiate(enemyData.enemyPrefab, spawnLocation.position, spawnLocation.rotation);
 
             // simple switch to alternate between units
-            if(unitIndex == 0)
-            {
-                unitIndex = 1;
-            }
-            else if(unitIndex == 1)
-            {
-                unitIndex = 2;
-            }
-            else if (unitIndex == 2)
-            {
-                unitIndex = 0;
-            }
+            // if(unitIndex == 0)
+            // {
+            //     unitIndex = 1;
+            // }
+            // else if(unitIndex == 1)
+            // {
+            //     unitIndex = 0;
+            // }
+            // else if (unitIndex == 2)
+            // {
+            //     unitIndex = 0;
+            // }
 
             timer = 0f; // Reset the timer
             unit.GetComponent<EnemyController>().enemyData = enemyData; // set enemy unit data onto units live script

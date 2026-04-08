@@ -17,7 +17,7 @@ MonoBehaviour:
   bulletSpeed: 20
   weaponDamage: 5
   initialWeaponAmmo: 999
-  armourPenetration: 10
+  armourPenetration: 25
   weaponPoints: 10
   isSpecialEffect: 1
   debuffData: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}

@@ -48,100 +48,147 @@ public class DebuffController
         // affect UI
     }
 
+    public (StatsCopy, float) HandleDebuffTimers(string sourceType)
+    {
+        float dotDamageAggregate = 0f;
+
+        for (int i = activeDebuffs.Count - 1; i >= 0; i--)
+        {
+            ActiveDebuff debuff = activeDebuffs[i];
+
+            int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
+            debuff.timeRemaining -= Time.deltaTime;
+            int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
+
+            // dot tick on whole second crossing
+            if (secondsAfter < secondsBefore && debuff.timeRemaining > 0 && debuff.data.isDot)
+            {
+                dotDamageAggregate += debuff.data.damage;
+            }
+
+            if (debuff.timeRemaining <= 0)
+            {
+                if (debuff.data.isDot){
+                    dotDamageAggregate += debuff.data.damage; // last tick
+                }
+                RemoveDebuff(debuff.data, debuff.debuffedStats);
+                if (sourceType == "player")
+                    GameController.Instance.RemovePlayerDebuffUI(debuff.data);
+                else if (sourceType == "enemy")
+                    stats.enemyEffectsToRemove.Add(debuff.data);
+
+                activeDebuffs.RemoveAt(i);
+            }
+            else
+            {
+                CheckSimilarDebuffs(debuff.debuffedStats);
+            }
+        }
+
+        return (stats, dotDamageAggregate);
+    }
+
 
 
     // debuff stuff
     // sourceType - 'player', 'enemy'
-    public StatsCopy HandleDebuffTimers(string sourceType)
-    {
+    // public StatsCopy HandleDebuffTimers(string sourceType)
+    // {
 
-        // Loop backwards so we can safely remove items while iterating
-        for (int i = activeDebuffs.Count - 1; i >= 0; i--)
-        {
-            // check if debuff is a dot... if so, then we need to drop health 
-            ActiveDebuff debuff = activeDebuffs[i];
+    //     // Loop backwards so we can safely remove items while iterating
+    //     for (int i = activeDebuffs.Count - 1; i >= 0; i--)
+    //     {
+    //         // check if debuff is a dot... if so, then we need to drop health 
+    //         ActiveDebuff debuff = activeDebuffs[i];
         
-            // before
-            int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
+    //         // before
+    //         //int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
 
-            debuff.timeRemaining -= Time.deltaTime;
+    //         debuff.timeRemaining -= Time.deltaTime;
 
-            // after to check whole seconds...
-            int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
+    //         // after to check whole seconds...
+    //         //int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
 
-            // debuff should be removed
-            if (debuff.timeRemaining <= 0)
-            {
+    //         // debuff should be removed
+    //         if (debuff.timeRemaining <= 0)
+    //         {
                 
-                RemoveDebuff(debuff.data, debuff.debuffedStats); // remove debuff from queue
-                // UI
-                // Player - Enemy 
-                if (sourceType == "player")
-                {
-                    GameController.Instance.RemovePlayerDebuffUI(debuff.data); // remove debuff from player UI
-                }
-                else if(sourceType == "enemy")
-                {
-                    stats.enemyEffectsToRemove.Add(debuff.data); // add effect to return stats for enemycontroller to deal with
-                }
-                activeDebuffs.RemoveAt(i);
-            }
-            // debuff still good, check to reapply effects if better debuffs died
-            else
-            {
-                CheckSimilarDebuffs(debuff.debuffedStats);
-            }
-            //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
-        }
+    //             RemoveDebuff(debuff.data, debuff.debuffedStats); // remove debuff from queue
+    //             // UI
+    //             // Player - Enemy 
+    //             if (sourceType == "player")
+    //             {
+    //                 GameController.Instance.RemovePlayerDebuffUI(debuff.data); // remove debuff from player UI
+    //             }
+    //             else if(sourceType == "enemy")
+    //             {
+    //                 stats.enemyEffectsToRemove.Add(debuff.data); // add effect to return stats for enemycontroller to deal with
+    //             }
+    //             activeDebuffs.RemoveAt(i);
+    //         }
+    //         // debuff still good, check to reapply effects if better debuffs died
+    //         else
+    //         {
+    //             CheckSimilarDebuffs(debuff.debuffedStats);
+    //         }
+    //         //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
+    //     }
 
-        // return stats 
-        return stats;
-    }
+    //     // return stats 
+    //     return stats;
+    // }
 
-    public float HandleDotTimers()
-    {
-        float dotDamageAggregate = 0f;
-        // Loop backwards so we can safely remove items while iterating
-        for (int i = activeDebuffs.Count - 1; i >= 0; i--)
-        {
-            // check if debuff is a dot... if so, then we need to drop health 
-            ActiveDebuff debuff = activeDebuffs[i];
+    // public float HandleDotTimers()
+    // {
+    //     float dotDamageAggregate = 0f;
+    //     // Loop backwards so we can safely remove items while iterating
+    //     for (int i = activeDebuffs.Count - 1; i >= 0; i--)
+    //     {
+    //         // check if debuff is a dot... if so, then we need to drop health 
+    //         ActiveDebuff debuff = activeDebuffs[i];
+    //         Debug.Log($"Dot debuff is: {debuff}, debuff list is: {activeDebuffs.Count}");
+    //         //Debug.Log($"Dot isDot:{debuff.data.isDot}");
         
-            // before
-            int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
+    //         // before
+    //         int secondsBefore = Mathf.FloorToInt(debuff.timeRemaining);
 
-            debuff.timeRemaining -= Time.deltaTime;
+    //         //debuff.timeRemaining -= Time.deltaTime;
 
-            // after to check whole seconds...
-            int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
+    //         // after to check whole seconds...
+    //         int secondsAfter = Mathf.FloorToInt(debuff.timeRemaining);
 
-            // dot logic, and when whole seconds are hit. Damage should happen
-            if (secondsAfter < secondsBefore && debuff.timeRemaining > 0)
-            {
-                if (debuff.data.isDot) // Assuming your data has this bool
-                {
-                    dotDamageAggregate += debuff.data.damage; // flat dot damage
-                }
-            }
+    //         // dot logic, and when whole seconds are hit. Damage should happen
+    //         if (secondsAfter < secondsBefore && debuff.timeRemaining > 0)
+    //         {
+    //             Debug.Log($"Dot isDot:{debuff.data.isDot} &&& damage is {debuff.data.damage}");
+    //             if (debuff.data.isDot) // Assuming your data has this bool
+    //             {
+    //                 Debug.Log($"Dot firsty damage is {debuff.data.damage}");
+    //                 dotDamageAggregate += debuff.data.damage; // flat dot damage
+    //             }
+    //         }
 
-            // debuff should be removed
-            if (debuff.timeRemaining <= 0)
-            {
-                if (debuff.data.isDot) // dots last tick should be when it expires
-                {
-                    dotDamageAggregate += debuff.data.damage; // dot damage is flat
-                }
-            }
-            // debuff still good, check to reapply effects if better debuffs died
-            else
-            {
-                CheckSimilarDebuffs(debuff.debuffedStats);
-            }
-            //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
-        }
-        // return dot damage
-        return dotDamageAggregate;
-    }
+    //         // debuff should be removed
+    //         if (debuff.timeRemaining <= 0)
+    //         {
+    //             Debug.Log($"last tick damage................ && damage is {debuff.data.damage}");
+    //             if (debuff.data.isDot) // dots last tick should be when it expires
+    //             {   
+    //                 Debug.Log($"Dot LASTLy damage is {debuff.data.damage}");
+    //                 dotDamageAggregate += debuff.data.damage; // dot damage is flat
+    //             }
+    //         }
+    //         // debuff still good, check to reapply effects if better debuffs died
+    //         // else
+    //         // {
+    //         //     CheckSimilarDebuffs(debuff.debuffedStats);
+    //         // }
+    //         //Debug.Log($"Debuffs in list: {activeDebuffs.Count}");
+    //     }
+    //     Debug.Log($"Returning dot aggregate of: {dotDamageAggregate}");
+    //     // return dot damage
+    //     return dotDamageAggregate;
+    // }
 
     public void AddDebuff(WeaponDebuffData debuffData, StatsCopy debuffedStats)
     {

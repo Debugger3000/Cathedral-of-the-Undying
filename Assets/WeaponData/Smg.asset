@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Smg
   fireRate: 15
   bulletSpeed: 20
-  weaponDamage: 20
+  weaponDamage: 10
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 1

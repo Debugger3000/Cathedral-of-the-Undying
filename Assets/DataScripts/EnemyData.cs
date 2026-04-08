@@ -19,6 +19,10 @@ public abstract class EnemyData : ScriptableObject
         // armour pen = 10 and damage is 15 
         // 20 - 10 = 10 armour --> 10 - 15 damage = gun does 5 damage ?
     public float armour = 10f;
+
+    // shield
+    // uses armour value. So basically weapons without enough pen won't do anything to the shield
+    // public float shield = 100; // base shield health
     
     public float moveSpeed = 2f;
     public float rotationSpeed = 3f;
@@ -56,7 +60,8 @@ public abstract class EnemyData : ScriptableObject
     private float avoidanceDirection = 0f;
     private float avoidanceLockTimer = 0f;
 
-
+    // ----------------------
+    // Movement / Rotation Functions
     // rotation can be overridden by enemy data
     public virtual void DefaultRotation(Transform target, Transform unitTransform)
     {
@@ -90,8 +95,6 @@ public abstract class EnemyData : ScriptableObject
     }
 
     // Environment detection
-    //
-    
     public virtual (bool detected, float openAngle) EnvironmentDetection(Transform transform)
     {
         float rayDistance = 3f;
@@ -164,6 +167,8 @@ public abstract class EnemyData : ScriptableObject
         unitTransform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
+    //--------
+    // Attack functions
 
     // Use this if to control attack sequencing for a enemy unit...
     public virtual void AttackController(Transform transform, Transform target)
@@ -176,9 +181,9 @@ public abstract class EnemyData : ScriptableObject
     public virtual void BasicHitBoxAttack(Transform transform, Transform target)
     {
         //
-        Debug.Log("Enemy basic attack called...");
+       // Debug.Log("Enemy basic attack called...");
         // Debug.Log("Shambler performs a Cone Slam!");
-        Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
+        //Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
 
         // 1. Get the rotation
         Quaternion spawnRotation = transform.rotation;
@@ -192,7 +197,7 @@ public abstract class EnemyData : ScriptableObject
 
         hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, armourPenetration, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
         
-        Destroy(hitbox,1f); // destroy hitbox after attack...
+        Destroy(hitbox,hitboxLifetime); // destroy hitbox after attack...
     }
 
     public virtual void BasicProjectileFire(Transform muzzle, Transform target)

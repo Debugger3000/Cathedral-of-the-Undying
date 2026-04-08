@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1efb470ca30a66140b7784287ed198e3, type: 3}
+  m_Name: Sludger
+  m_EditorClassIdentifier: Assembly-CSharp::SludgerData
+  enemyName: Sludger
+  maxHealth: 100
+  armour: 10
+  moveSpeed: 2
+  rotationSpeed: 3
+  damage: 0
+  armourPenetration: 0
+  projectileMoveSpeed: 0
+  projectileDamage: 0
+  isProjectileSpecialEffect: 0
+  debuffProjectile: {fileID: 0}
+  attackRange: 5
+  windUpTime: 0.5
+  attackCooldown: 1.5
+  hitboxLifetime: 4
+  attackAngle: 90
+  isHitBoxSpecialEffect: 1
+  debuffDataHitBox: {fileID: 11400000, guid: caf60f41112486149b083520e9941a7a, type: 2}
+  projectilePrefab: {fileID: 0}
+  enemyPrefab: {fileID: 8648308049558972063, guid: ce7aecf1463c48d479fb59d9d3aed481, type: 3}
+  attackHitbox: {fileID: 8146494607395403104, guid: 87f79fe49e99c594cac2b6698328dff0, type: 3}

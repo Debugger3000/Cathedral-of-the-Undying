@@ -99,7 +99,11 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
 
-                PlayerTakeDamage(attackHitboxScript.damage, attackHitboxScript.armourPenetration); // player takes damage
+                // if hitbox has damage to it
+                if (attackHitboxScript.damage > 0)
+                {
+                    PlayerTakeDamage(attackHitboxScript.damage, attackHitboxScript.armourPenetration); // player takes damage
+                }
 
                 // apply whatever special effects of hitbox attack to player
                 // check if enemy has hitbox Special effects
@@ -221,8 +225,10 @@ public class PlayerController : MonoBehaviour
     // flat damage for dots and other sources
     public void FlatPlayerTakeDamage(float damageTaken)
     {
+        Debug.Log($"Flat damage to player is: {damageTaken} to health of: {currentHealth}");
         currentHealth -= damageTaken; // subtract
         GameController.Instance.PlayerDamaged(currentHealth); // update UI for player health bar + check death condition
+        Debug.Log($"flat dmg taken health is now: {currentHealth}");
 
     }
 
@@ -291,13 +297,19 @@ public class PlayerController : MonoBehaviour
         // only do debuff logic when player has debuffs
         if(playerDebuffController.activeDebuffs.Count > 0)
         {
-            // check debuff statuses
-            statsCopy = playerDebuffController.HandleDebuffTimers("player"); // when we remove DEBUFFS
-            float dotDamageAggregate = playerDebuffController.HandleDotTimers(); // dot damage aggregate
-            if(dotDamageAggregate != 0)
-            {
-                FlatPlayerTakeDamage(dotDamageAggregate); // apply dot damage
+            var (updatedStats, dotDmg) = playerDebuffController.HandleDebuffTimers("player");
+            statsCopy = updatedStats;
+            if (dotDmg != 0){
+                FlatPlayerTakeDamage(dotDmg);
             }
+
+            // check debuff statuses
+            // statsCopy = playerDebuffController.HandleDebuffTimers("player"); // when we remove DEBUFFS
+            // float dotDamageAggregate = playerDebuffController.HandleDotTimers(); // dot damage aggregate
+            // if(dotDamageAggregate > 0)
+            // {
+            //     FlatPlayerTakeDamage(dotDamageAggregate); // apply dot damage
+            // }
         }
         
         

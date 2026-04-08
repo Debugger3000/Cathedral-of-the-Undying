@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2012e1f2b6a018445ac8edd70b816f8b, type: 3}
+  m_Name: Shielder
+  m_EditorClassIdentifier: Assembly-CSharp::ShielderData
+  enemyName: Shielder
+  maxHealth: 150
+  armour: 25
+  moveSpeed: 3
+  rotationSpeed: 3
+  damage: 10
+  armourPenetration: 15
+  projectileMoveSpeed: 0
+  projectileDamage: 0
+  isProjectileSpecialEffect: 0
+  debuffProjectile: {fileID: 0}
+  attackRange: 2
+  windUpTime: 0.5
+  attackCooldown: 1
+  hitboxLifetime: 0.2
+  attackAngle: 75
+  isHitBoxSpecialEffect: 1
+  debuffDataHitBox: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
+  projectilePrefab: {fileID: 0}
+  enemyPrefab: {fileID: 4441442325774175228, guid: 5ba9d6c925dfeec48ba87568378e1e78, type: 3}
+  attackHitbox: {fileID: 4141662467309777608, guid: 0bc9723555499eb4d9114848503a5fce, type: 3}

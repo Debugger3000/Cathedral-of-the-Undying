@@ -8,6 +8,8 @@ public enum AudioKey
 {
     PlayerFiresProjectileWeapon,
     PlayerHitByAttackGrunt,
+    BlockedDamage,
+    EnemyDamaged
 }
 
 public class AudioManager : MonoBehaviour

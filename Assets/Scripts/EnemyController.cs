@@ -184,16 +184,27 @@ public abstract class EnemyController : MonoBehaviour
         // HandleDebuffTimers(); 
         if(enemyDebuffController.activeDebuffs.Count > 0)
         {
-            statsCopy = enemyDebuffController.HandleDebuffTimers("enemy"); // set stats on debuff timer
+            var (updatedStats, dotDmg) = enemyDebuffController.HandleDebuffTimers("enemy");
+            statsCopy = updatedStats;
             if (statsCopy.enemyEffectsToRemove.Count > 0)
             {
                 RemoveEffect(statsCopy.enemyEffectsToRemove);
             }
-            float dotDamageAggregate = enemyDebuffController.HandleDotTimers(); // apply dot damage
-            if(dotDamageAggregate != 0)
-            {
-                FlatTakeDamage(dotDamageAggregate); // apply dot damage
+
+            if (dotDmg != 0){
+                FlatTakeDamage(dotDmg);
             }
+
+            // statsCopy = enemyDebuffController.HandleDebuffTimers("enemy"); // set stats on debuff timer
+            // if (statsCopy.enemyEffectsToRemove.Count > 0)
+            // {
+            //     RemoveEffect(statsCopy.enemyEffectsToRemove);
+            // }
+            // float dotDamageAggregate = enemyDebuffController.HandleDotTimers(); // apply dot damage
+            // if(dotDamageAggregate != 0)
+            // {
+            //     FlatTakeDamage(dotDamageAggregate); // apply dot damage
+            // }
         }
         
     }
@@ -204,16 +215,31 @@ public abstract class EnemyController : MonoBehaviour
         // armour reduction
         float damageTaken = GameController.Instance.armourClass.armourDeductionBase(statsCopy.armour, armourPenetration, damageAmount);
 
-        currentHealth -= damageTaken; // subtract health with normal (0-100)
-        Debug.Log($"Damage taken is: {damageTaken}");
-
-        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
-
-        if (currentHealth <= 0)
+        if (damageTaken > 0)
         {
-            DropWeaponBox(); // drop weapon box
-            Die(); // call Die function implemented by specific unit controller
-        } 
+            // play audio
+            AudioManager.Instance.PlayAudioClip(AudioKey.EnemyDamaged);
+
+            currentHealth -= damageTaken; // subtract health with normal (0-100)
+            Debug.Log($"Damage taken is: {damageTaken}");
+
+            healthBarFill.fillAmount = currentHealth / enemyData.maxHealth; // make sure fill scales with enemies total health
+
+            if (currentHealth <= 0)
+            {
+                DropWeaponBox(); // drop weapon box
+                Die(); // call Die function implemented by specific unit controller
+            } 
+        }
+        else
+        {
+            // damage blocked, play audio for this...
+            AudioManager.Instance.PlayAudioClip(AudioKey.BlockedDamage);
+        }
+
+        
+
+        
     }
 
     // flat damage taken... meant for dots + other sources
@@ -222,7 +248,7 @@ public abstract class EnemyController : MonoBehaviour
         currentHealth -= amount; // subtract health with normal (0-100)
         Debug.Log($"Damage taken is: {amount}");
 
-        healthBarFill.fillAmount = currentHealth / 100; // set enemy units health bar fill amount
+        healthBarFill.fillAmount = currentHealth / enemyData.maxHealth; // set enemy units health bar fill amount
 
         if (currentHealth <= 0)
         {
