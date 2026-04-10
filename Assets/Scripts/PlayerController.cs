@@ -244,6 +244,12 @@ public class PlayerController : MonoBehaviour
             // rotate weapon in inventory...
             Debug.Log("Pressed Q to get inventory...");
             GameController.Instance.SwitchWeapon(); // call gameController to swap weapon...
+            Debug.Log("After sweapon has been swapped.....");
+            // if (weaponControl.GetWeaponInstance().weaponData.name == "Flamer")
+            // {
+            //     // slow movement down
+            //     statsCopy.moveSpeed = statsCopy.moveSpeed * weaponControl.GetWeaponInstance().weaponData.
+            // }
         }
     }
     
@@ -320,6 +326,11 @@ public class PlayerController : MonoBehaviour
         if (weaponControl != null && isFiring)
         {
             weaponControl.PlayerAttackWithWeapon(transform);
+        }
+        // weapon stops firing... do something
+        else if(weaponControl != null && !isFiring)
+        {
+            weaponControl.PlayerStopsAttackWithWeapon(transform);
         }
         
     }

@@ -64,10 +64,18 @@ public abstract class BaseWeapon : MonoBehaviour
             // check if weapon has OverHeated...
             if(currentHeat >= 1f)
             {
+                currentWeaponData.weaponData.StopAttackController(playerTransform,muzzlePoint);
                 isOverheated = true;
                 Debug.Log("Weapon has overheated...");
             }
         }
+    }
+
+    // default implementation
+    // simply calls function from weaponData to stop active hitbox...
+    public void PlayerStopsAttackWithWeapon(Transform playerTransform)
+    {
+        currentWeaponData.weaponData.StopAttackController(playerTransform,muzzlePoint);
     }
 
 

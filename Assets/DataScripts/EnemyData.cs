@@ -195,7 +195,7 @@ public abstract class EnemyData : ScriptableObject
 
         GameObject hitbox = Instantiate(attackHitbox, spawnPosition, spawnRotation); // generate hitbox
 
-        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, armourPenetration, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, armourPenetration, 0, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
         
         Destroy(hitbox,hitboxLifetime); // destroy hitbox after attack...
     }

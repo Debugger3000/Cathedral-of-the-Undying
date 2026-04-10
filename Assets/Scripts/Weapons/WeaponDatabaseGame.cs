@@ -10,6 +10,7 @@ public enum WeaponName {
     Smg,
     Orb,
     SniperRifle,
+    Flamer,
     MagicWand
 }
 

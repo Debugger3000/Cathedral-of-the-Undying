@@ -21,6 +21,6 @@ public class OrbData : WeaponData
     // implement hitbox based attack
     public override void AttackController(Transform playerTransform, Transform muzzleTransform) 
     {
-        HitBoxAttack(playerTransform); // perform hitbox attack instead
+        HitBoxAttack(playerTransform, muzzleTransform); // perform hitbox attack instead
     }
 }

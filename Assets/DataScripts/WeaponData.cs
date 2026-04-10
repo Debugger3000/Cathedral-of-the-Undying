@@ -43,6 +43,9 @@ public abstract class WeaponData : ScriptableObject
 
     public Sprite weaponSprite; // weapon visual for UI
 
+
+    protected GameObject activeHitbox;
+
     // upgrade level 1 - 3
     //public int upgradeLevel = 1;
 
@@ -51,6 +54,19 @@ public abstract class WeaponData : ScriptableObject
     public virtual void AttackController(Transform playerTransform, Transform muzzleTransform)
     {
         FireProjectile(muzzleTransform); // default attack is projectile
+    }
+
+
+    // Flamethrower implementation basically... Stop a hitbox from existing...
+    public virtual void StopAttackController(Transform playerTransform, Transform muzzleTransform)
+    {
+        if (activeHitbox != null)
+        {
+             Debug.Log($"STOPPING FLAMER ATTACK HITBOX.//...............");
+            Destroy(activeHitbox);
+            activeHitbox = null;
+             Debug.Log($"HIBOX: {activeHitbox}");
+        }
     }
 
     protected abstract void FireProjectileSound();
@@ -84,25 +100,28 @@ public abstract class WeaponData : ScriptableObject
 
     
 
-    public virtual void HitBoxAttack(Transform playerTransform)
+    public virtual void HitBoxAttack(Transform playerTransform, Transform muzzle)
     {
         //
         //Debug.Log("Enemy basic attack called...");
-        // Debug.Log("Shambler performs a Cone Slam!");
-        //Debug.Log($"Enemy is using its basic attack.... stage 2 hitbox instantiate");
+        Debug.Log($"Hitbox Attack Player: {muzzle} { playerTransform}");
+        Debug.Log($"Muzzle pos: {muzzle.position} rot: {muzzle.rotation} scale: {muzzle.lossyScale}");
 
-        // 1. Get the rotation
-        Quaternion spawnRotation = playerTransform.rotation;
+        
 
-        // 2. Calculate a position slightly in front of the enemy face
+        // Get the rotation
+        //Quaternion spawnRotation = playerTransform.rotation;
+
+        // Calculate a position slightly in front of the enemy face
         // 'transform.up' is the direction the enemy is facing. 
         // Multiply by 0.5f or 1.0f to push it out.
-        Vector3 spawnPosition = playerTransform.position + (playerTransform.up * 1.5f);
+        Vector3 spawnPosition = muzzle.position + (muzzle.up * 2f);
+        Debug.Log($"Spawn pos: {spawnPosition}");
 
-        GameObject hitbox = Instantiate(attackHitbox, spawnPosition, spawnRotation); // generate hitbox
+        GameObject hitbox = Instantiate(attackHitbox, spawnPosition, muzzle.rotation); // generate hitbox
 
-        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(HitBoxDamage, armourPenetration, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
-        
+        hitbox.GetComponentInChildren<AttackHitboxController>().Setup(HitBoxDamage, armourPenetration, weaponPoints, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
+        Debug.Log($"After hitvox created.........");
         Destroy(hitbox,1f); // destroy hitbox after attack...
     }
 
