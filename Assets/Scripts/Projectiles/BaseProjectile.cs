@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -13,13 +14,24 @@ public abstract class BaseProjectile : MonoBehaviour
     public WeaponDebuffData debuffData;
     protected Rigidbody2D rb; // grab projectile gameObject rigidbody
     protected Transform playerTarget;
+
+    public bool hasDistanceEffect;
+    public float distanceForDistanceEffect = 5f;
+    public bool distanceEffectTriggered = false;
+
+    public List<GameObject> childrenProjectiles = new List<GameObject>();
+
+    private Vector2 projectileStartPosition;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+       projectileStartPosition = rb.position;
     }
 
     // PLAYER PROJECTILE SETTER
-    public void SetAttributes(float speed, float damage, float armourPenetration, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData)
+    // Set From enemyData or weaponData
+    public void SetAttributes(float speed, float damage, float armourPenetration, int weaponPoints, bool isSpecialEffect, WeaponDebuffData debuffData, bool hasDistanceEffect, float distanceForDistanceEffect, List<GameObject> childrenProjectiles)
     {
         //Debug.Log($"Set base projectile attributres too: {speed} {damage}");
         this.speed = speed;
@@ -28,6 +40,9 @@ public abstract class BaseProjectile : MonoBehaviour
         this.weaponPoints = weaponPoints; // set weaponPoints
         this.isSpecialEffect = isSpecialEffect; // special effect flag...
         this.debuffData = debuffData; // set weapon debuff data...
+        this.hasDistanceEffect = hasDistanceEffect;
+        this.distanceForDistanceEffect = distanceForDistanceEffect;
+        this.childrenProjectiles = childrenProjectiles;
     }
 
     // ENEMY PROJECTILE SETTER
@@ -41,7 +56,6 @@ public abstract class BaseProjectile : MonoBehaviour
         this.debuffData = debuffData; // set weapon debuff data...
         this.playerTarget = playerTarget;
     }
-
 
 
     // Effects to apply to a unit hit by the projectile
@@ -77,13 +91,25 @@ public abstract class BaseProjectile : MonoBehaviour
     void FixedUpdate()
     {
         ProjectileMovement(); // projectile movement
+
+        // on certain distance do something
+        if (hasDistanceEffect && !distanceEffectTriggered)
+        {
+            float distance = Vector2.Distance(projectileStartPosition, rb.position);
+            if (distance >= distanceForDistanceEffect)
+            {
+                distanceEffectTriggered = !distanceEffectTriggered;
+                DistanceEffect(); // call distance effect...
+            }
+        }
     }
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
+
+    protected virtual void DistanceEffect()
+    {
+        // do something
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -20,7 +20,7 @@ public class ShooterController : EnemyController
 
         // 
         //ExecuteAttackLogic();
-        enemyData.AttackController(bodyTransform,target); // call unit attack controller..
+        enemyData.AttackController(bodyTransform,target,this); // call unit attack controller..
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6807f7efe19526041b913a744fcd8618, type: 3}
-  m_Name: SludgerDebuff
+  m_Name: DemonBeam
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDebuffData
-  debuffId: sludger-debuff
-  displayName: Sludger Debuff
-  description: Slow + dot is they enter AOE
-  lifetime: 5
-  effectIntensity: 0.25
+  debuffId: demon-beam
+  displayName: Demon Beam
+  description: Demon Beam tick per second dot while on player...
+  lifetime: 0.5
+  effectIntensity: 0
   isDot: 1
-  damage: 1
-  overlayEffectPrefab: {fileID: 1686296575368767779, guid: 2103a2d00f395aa42b1fb88a8de4e421, type: 3}
+  damage: 2.5
+  overlayEffectPrefab: {fileID: 7323552504746291881, guid: 59d97deeeca61584586338c72e1af466, type: 3}

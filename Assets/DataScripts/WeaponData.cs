@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Guns/Weapon Data")]
@@ -39,9 +40,14 @@ public abstract class WeaponData : ScriptableObject
     [Header("Prefabs")]
     public GameObject attackHitbox; // hitbox prefab visual
     public GameObject projectilePrefab; // projectile prefab for weapon
+    public List<GameObject> childrenProjectiles; // children projectiles, if any...
     public GameObject weaponPrefab; // weapon prefab
 
     public Sprite weaponSprite; // weapon visual for UI
+
+     [Header("Distance Effect")]
+    public bool hasDistanceEffect = false;
+    public float distanceForDistanceEffect = 5f;
 
 
     protected GameObject activeHitbox;
@@ -92,7 +98,7 @@ public abstract class WeaponData : ScriptableObject
             if (projScript != null)
             {
                 
-                projScript.SetAttributes(bulletSpeed, weaponDamage, armourPenetration, weaponPoints, isSpecialEffect, debuffData);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, armourPenetration, weaponPoints, isSpecialEffect, debuffData, hasDistanceEffect, distanceForDistanceEffect, childrenProjectiles);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }

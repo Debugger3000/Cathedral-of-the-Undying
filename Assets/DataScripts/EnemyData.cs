@@ -56,14 +56,20 @@ public abstract class EnemyData : ScriptableObject
 
     public GameObject attackHitbox; // hitbox prefab visual
 
+    public List<GameObject> attackHitboxList = new List<GameObject>(); // hitbox prefab visual
+
+    public Queue<int> attackQueue = new(new[] { 0, 0, 0 });
+
     // Private Vars
     private float avoidanceDirection = 0f;
     private float avoidanceLockTimer = 0f;
 
+    protected GameObject activeHitbox;
+    public int attackIndex = 0; // attack index for DEMON lmao yikes
     // ----------------------
     // Movement / Rotation Functions
     // rotation can be overridden by enemy data
-    public virtual void DefaultRotation(Transform target, Transform unitTransform)
+    public virtual void DefaultRotation(Transform target, Transform unitTransform, float rotationSpeed = 3f)
     {
         // rotating enemy face towards player transform
         Vector3 direction = target.position - unitTransform.position;
@@ -171,14 +177,23 @@ public abstract class EnemyData : ScriptableObject
     // Attack functions
 
     // Use this if to control attack sequencing for a enemy unit...
-    public virtual void AttackController(Transform transform, Transform target)
+    public virtual string AttackController(Transform transform, Transform target, MonoBehaviour owner)
     {
-        BasicHitBoxAttack(transform, target); // perform basic hitbox attack
+        BasicHitBoxAttack(transform, target,owner); // perform basic hitbox attack
+        return "attack";
     }
+
+    public virtual void EnemyStopsAttack(Transform transform, Transform target, MonoBehaviour owner)
+    {
+        // stop attack
+
+    }
+    
+    
 
     // Default hitbox basic attack
     // can use this for normal melee attacks
-    public virtual void BasicHitBoxAttack(Transform transform, Transform target)
+    public virtual void BasicHitBoxAttack(Transform transform, Transform target,MonoBehaviour owner)
     {
         //
        // Debug.Log("Enemy basic attack called...");
@@ -215,6 +230,17 @@ public abstract class EnemyData : ScriptableObject
             projScript.SetEnemyAttributes(projectileMoveSpeed, projectileDamage, armourPenetration, isProjectileSpecialEffect, debuffProjectile, target);
             // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
             // projScript.damage = currentWeaponData.weaponData.weaponDamage;
+        }
+    }
+
+
+    // Randomize
+    // For demon yikes...
+    public void RandomizeAttack()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            attackQueue.Enqueue(Random.Range(0, 2)); // 0 or 1
         }
     }
 }

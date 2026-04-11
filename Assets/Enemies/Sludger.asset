@@ -23,7 +23,7 @@ MonoBehaviour:
   projectileDamage: 0
   isProjectileSpecialEffect: 0
   debuffProjectile: {fileID: 0}
-  attackRange: 5
+  attackRange: 5.5
   windUpTime: 0.5
   attackCooldown: 1.5
   hitboxLifetime: 4

@@ -37,7 +37,7 @@ public class ShotgunData : WeaponData
 
             if (projScript != null)
             {
-                projScript.SetAttributes(bulletSpeed, weaponDamage, armourPenetration, weaponPoints, isSpecialEffect, debuffData);
+                projScript.SetAttributes(bulletSpeed, weaponDamage, armourPenetration, weaponPoints, isSpecialEffect, debuffData, hasDistanceEffect, distanceForDistanceEffect, childrenProjectiles);
                 // projScript.speed = currentWeaponData.weaponData.bulletSpeed;
                 // projScript.damage = currentWeaponData.weaponData.weaponDamage;
             }

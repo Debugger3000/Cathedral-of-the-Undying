@@ -21,15 +21,21 @@ MonoBehaviour:
   weaponPoints: 5
   isSpecialEffect: 0
   debuffData: {fileID: 0}
-  hasOverHeat: 0
+  hasOverHeat: 1
   heatPerShot: 0.1
   heatCoolDownRate: 0.5
-  overHeatCoolDown: 3
+  overHeatCoolDown: 1.5
   HitBoxDamage: 10
   hitboxLifetime: 1
   debuffDataHitBox: {fileID: 0}
   isHitBoxSpecialEffect: 0
   attackHitbox: {fileID: 0}
   projectilePrefab: {fileID: 4685574471552864385, guid: 44068b48f293d1844a18e9687cd2ef5d, type: 3}
+  childrenProjectiles:
+  - {fileID: 8431517622671502286, guid: 61821bf535616414cb39cd62154d866f, type: 3}
   weaponPrefab: {fileID: 6841649498370577020, guid: 6c9fa2d449684f648ae0b2b11ef3d380, type: 3}
   weaponSprite: {fileID: 21300148, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
+  hasDistanceEffect: 1
+  distanceForDistanceEffect: 3
+  spreadAngle: 45
+  splitCount: 3

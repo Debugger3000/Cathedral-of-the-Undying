@@ -8,8 +8,9 @@ public class ShooterData : EnemyData
 
     // OVERRIDE DEFAULT ENEMY BEHAVIOUR WITHIN HERE
 
-    public override void AttackController(Transform transform, Transform playerTarget)
+    public override string AttackController(Transform transform, Transform playerTarget, MonoBehaviour owner)
     {
         BasicProjectileFire(transform,playerTarget); // just perform a basic projectile attack
+        return "attack";
     }
 }

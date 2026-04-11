@@ -9,8 +9,9 @@ public class TrackerData : EnemyData
 
     // OVERRIDE DEFAULT ENEMY BEHAVIOUR WITHIN HERE
 
-    public override void AttackController(Transform transform, Transform target)
+    public override string AttackController(Transform transform, Transform target,MonoBehaviour owner)
     {
         BasicProjectileFire(transform, target); // leave this the same since we just want to shoot one projectile
+        return "attack";
     }
 }

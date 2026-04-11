@@ -19,7 +19,7 @@ public class TrackerController : EnemyController
 
         // 
         //ExecuteAttackLogic();
-        enemyData.AttackController(bodyTransform, target); // call unit attack controller.. from enemyData / unitData
+        enemyData.AttackController(bodyTransform, target,this); // call unit attack controller.. from enemyData / unitData
 
         // 3. Recovery / Cooldown
         yield return new WaitForSeconds(enemyData.attackCooldown);

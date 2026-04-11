@@ -36,6 +36,7 @@ public abstract class EnemyController : MonoBehaviour
     public Image healthBarFill; // healthbar fill
     [SerializeField] private Transform effectTray; // 
     private Dictionary<string, GameObject> activeIcons = new(); // hold queue of icons...
+    // private bool isFiring = false;
 
     
     
@@ -53,6 +54,21 @@ public abstract class EnemyController : MonoBehaviour
     // Child class Implemented Methods
     protected abstract void Die(); // unit death
     protected abstract IEnumerator AttackSequence(Transform bodyTransform); // children define their attack sequence
+    protected virtual IEnumerator StopAttack(Transform bodyTransform)
+    {
+    
+        isAttacking = false; // attack should stop...
+        // go on cooldown when we stop attack
+        yield return new WaitForSeconds(enemyData.attackCooldown);
+    }
+
+    
+
+    // protected virtual IEnumerator SecondaryAttackSequence(Transform bodyTransform)
+    // {
+    //     // do secondary attack...
+    //     yield return new WaitForSeconds(enemyData.attackCooldown);
+    // }
 
     //------
     // OnTrigger 
@@ -142,7 +158,20 @@ public abstract class EnemyController : MonoBehaviour
     // Update lifetime 
     void Update()
     {
-        if (target == null || isAttacking || isAffected) return;
+        if (target == null) return;
+
+        // Always rotate toward player (even while attacking)
+        if (isAttacking)
+        {
+            rb.linearVelocity = Vector2.zero; // stop movement
+            enemyData.DefaultRotation(target, bodyTransform, 0.5f);
+            return;
+        }
+        else
+        {
+            enemyData.DefaultRotation(target, bodyTransform);
+        }
+
 
         var (environmentDetected, openAngle) = enemyData.EnvironmentDetection(bodyTransform);
 
@@ -153,32 +182,28 @@ public abstract class EnemyController : MonoBehaviour
         }
         else
         {
-            enemyData.DefaultRotation(target, bodyTransform);
+            // enemyData.DefaultRotation(target, bodyTransform);
             enemyData.DefaultMovement(target, transform, rb, statsCopy.moveSpeed);
         }
 
         // Attack check
         if (Time.time >= nextAttackTime)
         {
+            Debug.Log($"ISaTTACKING: {isAttacking}");
             RaycastHit2D hit = enemyData.DefaultDetection(bodyTransform, enemyData);
-            if (hit.collider != null)
+            if (hit.collider != null && !isAttacking)
             {
+                Debug.Log($"DEMON ATTACK............");
                 StartCoroutine(AttackSequence(bodyTransform));
                 return; // attacking, don't move
             }
+            // else if(hit.collider != null && isAttacking)
+            // {
+            //     Debug.Log($"DEMONNN Stop attack....");
+            //     // weaponControl.PlayerStopsAttackWithWeapon(transform);
+            //     StartCoroutine(StopAttack(bodyTransform));
+            // }
         }
-
-        // // Movement — one call only
-        // if (environmentCheck.collider != null)
-        // {
-        //     enemyData.AvoidanceMovement(bodyTransform, rb, statsCopy.moveSpeed);
-        // }
-        // else
-        // {
-        //     enemyData.DefaultMovement(target, transform, rb, statsCopy.moveSpeed);
-        // }
-
-
 
         // check debuff status
         // HandleDebuffTimers(); 
@@ -194,19 +219,7 @@ public abstract class EnemyController : MonoBehaviour
             if (dotDmg != 0){
                 FlatTakeDamage(dotDmg);
             }
-
-            // statsCopy = enemyDebuffController.HandleDebuffTimers("enemy"); // set stats on debuff timer
-            // if (statsCopy.enemyEffectsToRemove.Count > 0)
-            // {
-            //     RemoveEffect(statsCopy.enemyEffectsToRemove);
-            // }
-            // float dotDamageAggregate = enemyDebuffController.HandleDotTimers(); // apply dot damage
-            // if(dotDamageAggregate != 0)
-            // {
-            //     FlatTakeDamage(dotDamageAggregate); // apply dot damage
-            // }
         }
-        
     }
 
     // receive flat damage...
