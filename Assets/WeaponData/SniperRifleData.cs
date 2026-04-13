@@ -8,7 +8,7 @@ public class SniperRifleData : WeaponData
     // gun shoot sound
     protected override void FireProjectileSound()
     {
-        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+        AudioManager.Instance.PlayAudioClip(AudioKey.SniperRifleFire);
     }
 
 }

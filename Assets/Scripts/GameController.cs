@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
     public Inventory inventory;
 
     public GameObject weaponBox;
+    public GameObject healBox;
 
     [Header("UI")]
     public UIManager uiManager;
@@ -126,6 +127,20 @@ public class GameController : MonoBehaviour
     {
         Debug.Log($"Player is picking up weaon in GAMECONTROLLER: {weaponName}");
         WeaponInstance weaponInstance = weaponDataBaseGame.GetWeaponPickUp(weaponName); // get weapon instance..
-        inventory.WeaponPickUp(weaponInstance); // add new weapon instance to inventory...
+
+        // if heal, then heal player...
+        if (weaponInstance.weaponData.weaponName == "PlayerHeal")
+        {
+            AudioManager.Instance.PlayAudioClip(AudioKey.HealCratePickUp);
+            playerController.HealPlayer(); // player heals 20 health
+
+        }
+        // if weapon add to inventory
+        else
+        {
+            AudioManager.Instance.PlayAudioClip(AudioKey.WeaponCratePickUp);
+            inventory.WeaponPickUp(weaponInstance); // add new weapon instance to inventory...
+        }
+
     }
 }

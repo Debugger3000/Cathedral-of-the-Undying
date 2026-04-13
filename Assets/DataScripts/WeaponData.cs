@@ -121,7 +121,7 @@ public abstract class WeaponData : ScriptableObject
         // Calculate a position slightly in front of the enemy face
         // 'transform.up' is the direction the enemy is facing. 
         // Multiply by 0.5f or 1.0f to push it out.
-        Vector3 spawnPosition = muzzle.position + (muzzle.up * 2f);
+        Vector3 spawnPosition = muzzle.position + (muzzle.up * 4f);
         Debug.Log($"Spawn pos: {spawnPosition}");
 
         GameObject hitbox = Instantiate(attackHitbox, spawnPosition, muzzle.rotation); // generate hitbox

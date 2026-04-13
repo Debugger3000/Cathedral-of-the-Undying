@@ -8,7 +8,7 @@ public class MagicWandData : WeaponData
 
     protected override void FireProjectileSound()
     {
-        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+        AudioManager.Instance.PlayAudioClip(AudioKey.MagicWandFire);
     }
 
     public override void FireProjectile(Transform muzzle) 

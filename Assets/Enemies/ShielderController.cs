@@ -5,6 +5,7 @@ public class ShielderController : EnemyController
     // enemy units implement own death
     protected override void Die()
     {
+        AudioManager.Instance.PlayAudioClip(AudioKey.EnemyDied);
         // Shamblers might explode or do something on death...
         Destroy(gameObject);
     }
@@ -19,6 +20,7 @@ public class ShielderController : EnemyController
 
         // 
         //ExecuteAttackLogic();
+        AudioManager.Instance.PlayAudioClip(AudioKey.EnemyMeleeAttack);
         enemyData.AttackController(bodyTransform,target,this); // call unit attack controller..
 
         // 3. Recovery / Cooldown

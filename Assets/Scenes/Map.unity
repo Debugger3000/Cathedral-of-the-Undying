@@ -505,13 +505,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   audioMappings:
   - key: 1
-    clip: {fileID: 8300000, guid: aa48101fd9bd24b82af88afb182a9bf5, type: 3}
+    clip: {fileID: 8300000, guid: d38ac60dcd91471468ad25032754b4a3, type: 3}
   - key: 0
-    clip: {fileID: 8300000, guid: 45f827a69760b8043b7fe4e2e2e32214, type: 3}
-  - key: 2
+    clip: {fileID: 8300000, guid: 3987c233811781f44b205fc28ecfb5b9, type: 3}
+  - key: 10
     clip: {fileID: 8300000, guid: c36c80ab59845104db4fba00bac48f03, type: 3}
-  - key: 3
+  - key: 11
     clip: {fileID: 8300000, guid: 9fdd3f081620b8c489779d690415841d, type: 3}
+  - key: 2
+    clip: {fileID: 8300000, guid: 5375002d724afba45a877fd3955d8f5d, type: 3}
+  - key: 3
+    clip: {fileID: 8300000, guid: 18186805115e3914fa2ce3310eac7da8, type: 3}
+  - key: 4
+    clip: {fileID: 8300000, guid: 53cab3056487a164eb2f322989c952e1, type: 3}
+  - key: 5
+    clip: {fileID: 8300000, guid: 53cab3056487a164eb2f322989c952e1, type: 3}
+  - key: 9
+    clip: {fileID: 8300000, guid: a853798cb7e8aed498ed57812d53c15f, type: 3}
+  - key: 6
+    clip: {fileID: 8300000, guid: 87a2e502ddd174591af0e35f76e448a2, type: 3}
+  - key: 7
+    clip: {fileID: 8300000, guid: 304d546b80cae47fb872be812b98b2c8, type: 3}
+  - key: 8
+    clip: {fileID: 8300000, guid: a853798cb7e8aed498ed57812d53c15f, type: 3}
+  - key: 12
+    clip: {fileID: 8300000, guid: cdaf11df91900c94e8ab5564310743c9, type: 3}
+  - key: 13
+    clip: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
+  - key: 14
+    clip: {fileID: 8300000, guid: 7d23708a86bb4ce43b581fa5456a8c00, type: 3}
+  - key: 15
+    clip: {fileID: 8300000, guid: 1aef6e4bb7a84c544bebc40ada0d48ce, type: 3}
+  - key: 16
+    clip: {fileID: 8300000, guid: f3dfefc1883da444a855f97e13dedb49, type: 3}
+  - key: 17
+    clip: {fileID: 8300000, guid: 076c674d9627d49d7bc9428ecb754613, type: 3}
   sfxSource: {fileID: 1998527729}
 --- !u!1 &55821876
 GameObject:
@@ -64172,6 +64200,7 @@ MonoBehaviour:
   weaponDataBaseGame: {fileID: 2057533551}
   inventory: {fileID: 2108508719}
   weaponBox: {fileID: 2916868469267405726, guid: ff17f751b3359104ebe85ccddabf7271, type: 3}
+  healBox: {fileID: 1297051152451800009, guid: 77f86d16d4ebfa84f85c808906a6f958, type: 3}
   uiManager: {fileID: 1793004884}
 --- !u!4 &1538793412
 Transform:
@@ -69425,21 +69454,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b3cfe1c70fc7e43acd62983085cc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  startWeapon: {fileID: 11400000, guid: 23ca5f5fedc970243ae95a7efc64b582, type: 2}
+  startWeapon: {fileID: 11400000, guid: 15aee0bc3addd9147818cb9769f1f402, type: 2}
   baseWeapons:
   - {fileID: 11400000, guid: 7b02d37ec7157224185c04be425dcf24, type: 2}
-  - {fileID: 11400000, guid: fd15b96ff44c4eb48976c23fe8023f8f, type: 2}
   - {fileID: 11400000, guid: 66871c9075b306544970f1e2cf2aa0fe, type: 2}
+  - {fileID: 11400000, guid: fd15b96ff44c4eb48976c23fe8023f8f, type: 2}
   - {fileID: 11400000, guid: 3fda275e53f2b4145979ff95beeb002d, type: 2}
+  - {fileID: 11400000, guid: ae1e2034b2b62344b96a3500934f56fd, type: 2}
+  - {fileID: 11400000, guid: 23ca5f5fedc970243ae95a7efc64b582, type: 2}
   weaponConfigs:
   - weaponName: 1
     dropLevel: 2
   - weaponName: 2
-    dropLevel: 1
+    dropLevel: 4
   - weaponName: 3
-    dropLevel: 1
+    dropLevel: 5
   - weaponName: 4
-    dropLevel: 1
+    dropLevel: 7
+  - weaponName: 5
+    dropLevel: 8
+  - weaponName: 6
+    dropLevel: 9
+  - weaponName: 7
+    dropLevel: 0
 --- !u!4 &2057533552
 Transform:
   m_ObjectHideFlags: 0

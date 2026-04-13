@@ -11,7 +11,7 @@ public class FlamerData : WeaponData
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void FireProjectileSound()
     {
-        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+        AudioManager.Instance.PlayAudioClip(AudioKey.FlamerFire);
     }
 
     // override since default is a projectile

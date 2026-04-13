@@ -230,8 +230,16 @@ public abstract class EnemyController : MonoBehaviour
 
         if (damageTaken > 0)
         {
-            // play audio
-            AudioManager.Instance.PlayAudioClip(AudioKey.EnemyDamaged);
+            if (enemyData.enemyName == "Demon")
+            {
+                AudioManager.Instance.PlayAudioClip(AudioKey.DemonHurt);
+            }
+            else
+            {
+                // play audio
+                AudioManager.Instance.PlayAudioClip(AudioKey.EnemyDamaged);
+            }
+            
 
             currentHealth -= damageTaken; // subtract health with normal (0-100)
             Debug.Log($"Damage taken is: {damageTaken}");
@@ -279,8 +287,17 @@ public abstract class EnemyController : MonoBehaviour
         {
             GameController instance = GameController.Instance;
             // have unit drop a box...
-            GameObject box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
             WeaponName weaponName = instance.GetWeaponBoxDropName();
+            GameObject box;
+            if (weaponName == WeaponName.PlayerHeal)
+            {
+                box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+            }
+            else
+            {
+                box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+            }
+            
             Debug.Log($"weapon name for box drop is: {weaponName}");
             box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
         }

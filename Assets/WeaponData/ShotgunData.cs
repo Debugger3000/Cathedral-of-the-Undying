@@ -14,7 +14,7 @@ public class ShotgunData : WeaponData
 
     protected override void FireProjectileSound()
     {
-        AudioManager.Instance.PlayAudioClip(AudioKey.PlayerFiresProjectileWeapon);
+        AudioManager.Instance.PlayAudioClip(AudioKey.ShotgunFire);
     }
 
     public override void FireProjectile(Transform muzzle) 

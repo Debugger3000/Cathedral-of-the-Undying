@@ -335,6 +335,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void HealPlayer()
+    {
+        currentHealth += 20;
+    }
+
     // mouse aim function
     private void AimPlayer()
     {

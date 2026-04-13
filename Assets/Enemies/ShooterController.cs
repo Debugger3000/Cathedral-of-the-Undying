@@ -6,6 +6,7 @@ public class ShooterController : EnemyController
     
     protected override void Die()
     {
+        AudioManager.Instance.PlayAudioClip(AudioKey.EnemyDied);
         // Shamblers might explode or do something on death...
         Destroy(gameObject);
     }

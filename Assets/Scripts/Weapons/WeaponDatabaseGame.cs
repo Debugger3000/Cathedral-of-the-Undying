@@ -11,7 +11,8 @@ public enum WeaponName {
     Orb,
     SniperRifle,
     Flamer,
-    MagicWand
+    MagicWand,
+    PlayerHeal
 }
 
 // Class data structure for ALL weapons and their drop level in relation to points multiplayer

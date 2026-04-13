@@ -8,8 +8,22 @@ public enum AudioKey
 {
     PlayerFiresProjectileWeapon,
     PlayerHitByAttackGrunt,
+    SmgFire,
+    ShotgunFire,
+    SniperRifleFire,
+    FlamerFire,
+    WeaponCratePickUp,
+    HealCratePickUp,
+    EnemyFire,
+    MagicWandFire,
     BlockedDamage,
-    EnemyDamaged
+    EnemyDamaged,
+    EnemyDied,
+    DemonCircleAttack,
+    DemonBeamAttack,
+    DemonHurt,
+    DemonDied,
+    EnemyMeleeAttack
 }
 
 public class AudioManager : MonoBehaviour
