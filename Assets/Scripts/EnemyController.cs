@@ -291,7 +291,7 @@ public abstract class EnemyController : MonoBehaviour
             GameObject box;
             if (weaponName == WeaponName.PlayerHeal)
             {
-                box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
+                box = Instantiate(instance.healBox, transform.position, transform.rotation);
             }
             else
             {

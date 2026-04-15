@@ -6,6 +6,7 @@ public class WeaponBox : MonoBehaviour
     public WeaponName weaponName;
 
     public float boxLifeTime; // lifetime of box until it destroys itself ?
+    private float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,6 +45,13 @@ public class WeaponBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (boxLifeTime > 0)
+        {
+            timer += Time.deltaTime; // Adds the time passed since last frame
+            if (timer >= boxLifeTime)
+            {
+                SelfDestruct();
+            }
+        }
     }
 }

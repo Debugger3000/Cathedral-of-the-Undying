@@ -53,26 +53,39 @@ public class WeaponDatabaseGame : MonoBehaviour
 
     public WeaponName GetWeaponDrop(int level)
     {
-        Debug.Log($"multiplier level is: {level}");
-        List<WeaponDropEntry> availableWeaponDrops = new List<WeaponDropEntry>();
-        // see which weapons are able to drop based on points multiplier
-        foreach (WeaponDropEntry entry in weaponConfigs)
+        // 20% chance to get a heal box instead of a weapon...
+        int healOrWeaponRoll = UnityEngine.Random.Range(0, 4);
+        if(healOrWeaponRoll == 0)
         {
-            // if weapon is available... and its not a pistol...
-            // point multiplier level must be equal or greater than a weapons dropLevel...
-            //
-            if (level >= entry.dropLevel && entry.weaponName != WeaponName.Pistol)
-            {
-                availableWeaponDrops.Add(entry);
-            }
+            return WeaponName.PlayerHeal;
         }
-        // int hee = Random
-        // add to a list...
-        int roll = UnityEngine.Random.Range(0, availableWeaponDrops.Count);
-        Debug.Log($"roll is: {roll} and avaialble weapons count is: {availableWeaponDrops.Count}");
+        else
+        {
+            Debug.Log($"multiplier level is: {level}");
+            List<WeaponDropEntry> availableWeaponDrops = new List<WeaponDropEntry>();
+            // see which weapons are able to drop based on points multiplier
+            foreach (WeaponDropEntry entry in weaponConfigs)
+            {
+                // if weapon is available... and its not a pistol...
+                // point multiplier level must be equal or greater than a weapons dropLevel...
+                //
+                if (level >= entry.dropLevel && entry.weaponName != WeaponName.Pistol)
+                {
+                    availableWeaponDrops.Add(entry);
+                }
+            }
+            // int hee = Random
+            // add to a list...
+            int roll = UnityEngine.Random.Range(0, availableWeaponDrops.Count);
+            Debug.Log($"roll is: {roll} and avaialble weapons count is: {availableWeaponDrops.Count}");
+            Debug.Log($"Weapon drop is: {availableWeaponDrops[roll].weaponName}");
 
-        // return weapon instance...
-        return availableWeaponDrops[roll].weaponName;
+            // return weapon instance...
+            return availableWeaponDrops[roll].weaponName;
+        }
+
+
+        
     }
 
     public WeaponInstance GetStarterWeapon()
