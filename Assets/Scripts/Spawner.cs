@@ -68,6 +68,22 @@ public class Spawner : MonoBehaviour
 
     //private int unitIndex = 0; // index to alternate between two units for now
 
+    // PROCEDURAL SPAWNER   
+    private bool proceduralSpawnSwitch = false;
+    private SpawnerEntry proceduralEnemyList = new SpawnerEntry();
+    public int proceduralEnemyListSize = 10;
+    private int demonCap = 3; // cap at 3 demons
+
+    private Dictionary<int, EnemyName> enemyNameMap = new Dictionary<int, EnemyName>
+    {
+        { 0, EnemyName.Shambler },
+        { 1, EnemyName.Shooter },
+        { 2, EnemyName.Tracker },
+        { 3, EnemyName.Sludger },
+        { 4, EnemyName.Shielder },
+        { 5, EnemyName.Demon }
+    };
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // void Start()
     // {
@@ -81,66 +97,106 @@ public class Spawner : MonoBehaviour
 
         // might need switch for passing this block when we move to PROCEDURAL.
         // -------------
-
-        if (timer >= spawnRounds[curRoundIndex].intervalBetweenSpawns)
-        {
+        if (!proceduralSpawnSwitch)
+        {   
+            // check to see if rounds are over
             // Check our pre determined rounds, and if index is within range of rounds list
             if (curRoundIndex < spawnRounds.Count)
             {
-                // spawn enemies for our round
-                SpawnerEntry curRound = spawnRounds[curRoundIndex];
-                // make sure timesToSpawn is greater than 0...
-                // we still have x amount of times to spawn our pattern
-                if (curRound.timesToSpawnPattern > 0)
-                    {
-                        
-                    // spawn our current index...
-                    int curSpawnIndex = curRound.curEnemyIndex; // get spawn index
-                    Transform spawnLocation = DetermineSpawnType(curRound.spawnSettings); // get spawn location
-                    EnemyData curEnemyData = GetEnemyDataFromName(curRound.enemyToSpawn[curSpawnIndex]); // get enemy data
-                    GameObject unit = Instantiate(curEnemyData.enemyPrefab, spawnLocation.position, spawnLocation.rotation); // set prefab instantiate
-                    unit.GetComponent<EnemyController>().enemyData = curEnemyData; // set enemy unit data onto units live script
+                if (timer >= spawnRounds[curRoundIndex].intervalBetweenSpawns)
+                {
+                
+                    // spawn enemies for our round
+                    SpawnerEntry curRound = spawnRounds[curRoundIndex];
+                    // make sure timesToSpawn is greater than 0...
+                    // we still have x amount of times to spawn our pattern
+                    if (curRound.timesToSpawnPattern > 0)
+                        {
+                            
+                        // spawn our current index...
+                        int curSpawnIndex = curRound.curEnemyIndex; // get spawn index
+                        Transform spawnLocation = DetermineSpawnType(curRound.spawnSettings); // get spawn location
+                        EnemyData curEnemyData = GetEnemyDataFromName(curRound.enemyToSpawn[curSpawnIndex]); // get enemy data
+                        GameObject unit = Instantiate(curEnemyData.enemyPrefab, spawnLocation.position, spawnLocation.rotation); // set prefab instantiate
+                        unit.GetComponent<EnemyController>().enemyData = curEnemyData; // set enemy unit data onto units live script
 
-                    // spawn pattern index check
-                    if (curSpawnIndex == curRound.enemyToSpawn.Count-1)
-                    {
-                        // spawn index is on last index of spawn pattern... 
-                        curRound.curEnemyIndex = 0; // reset to 0
-                        curRound.timesToSpawnPattern -= 1; // decrement timesToSpawn
+                        // spawn pattern index check
+                        if (curSpawnIndex == curRound.enemyToSpawn.Count-1)
+                        {
+                            // spawn index is on last index of spawn pattern... 
+                            curRound.curEnemyIndex = 0; // reset to 0
+                            curRound.timesToSpawnPattern -= 1; // decrement timesToSpawn
+                        }
+                        else
+                        {
+                            curRound.curEnemyIndex += 1; // increment curEnemyIndex
+                        }
+                        timer = 0f; // Reset the timer
                     }
+                    // times to spawn is now 0, so we need to go to next round...
                     else
                     {
-                        curRound.curEnemyIndex += 1; // increment curEnemyIndex
+                        curRoundIndex += 1; // Go to next round
+                        Debug.Log($"CURROUNDINDEX: {curRoundIndex}");
                     }
-                    timer = 0f; // Reset the timer
-                }
-                // times to spawn is now 0, so we need to go to next round...
-                else
-                {
-                    curRoundIndex += 1; // Go to next round
                 }
             }
-            
+            // outside of rounds, go to procedural
+                else
+                {
+                    proceduralSpawnSwitch = true; // flip to procedural spawner...
+                    Debug.Log($"switch for procedural switch: {proceduralSpawnSwitch}");
+                    GenerateProceduralEnemyList();
+                    timer = 0f; // Reset the timer
+                    
+                }
+        }
+        // PROCEDURAL SPAWNER
+        else
+        {
+            Debug.Log($"within procedural block...");
+            // make sure procedural list is populated
+            if (proceduralEnemyList.enemyToSpawn.Count == 10)
+            {
+                Debug.Log($"within 2nd procedural block... : {proceduralEnemyList.enemyToSpawn.Count}");
+                // check timer
+                if (timer >= proceduralEnemyList.intervalBetweenSpawns)
+                {
+                    Debug.Log($"within 3rd procedural block... : {proceduralEnemyList.intervalBetweenSpawns}");
+                    //
+                    // 
+                    if(proceduralEnemyList.timesToSpawnPattern > 0)
+                    {
+                        Debug.Log($"within 4th procedural block... : SPAWNING AN ENEMY....");
+                        // spawn our current index...
+                        int curSpawnIndex = proceduralEnemyList.curEnemyIndex; // get spawn index
+                        Transform spawnLocation = DetermineSpawnType(proceduralEnemyList.spawnSettings); // get spawn location
+                        EnemyData curEnemyData = GetEnemyDataFromName(proceduralEnemyList.enemyToSpawn[curSpawnIndex]); // get enemy data
+                        GameObject unit = Instantiate(curEnemyData.enemyPrefab, spawnLocation.position, spawnLocation.rotation); // set prefab instantiate
+                        unit.GetComponent<EnemyController>().enemyData = curEnemyData; // set enemy unit data onto units live script
 
-            //EnemyData enemyData = enemyList[unitIndex];
-            //GameObject unit = Instantiate(enemyData.enemyPrefab, topSpawnLocation.position, topSpawnLocation.rotation);
-
-            // simple switch to alternate between units
-            // if(unitIndex == 0)
-            // {
-            //     unitIndex = 1;
-            // }
-            // else if(unitIndex == 1)
-            // {
-            //     unitIndex = 0;
-            // }
-            // else if (unitIndex == 2)
-            // {
-            //     unitIndex = 0;
-            // }
-
-            //timer = 0f; // Reset the timer
-            //unit.GetComponent<EnemyController>().enemyData = enemyData; // set enemy unit data onto units live script
+                        // spawn pattern index check
+                        if (curSpawnIndex == proceduralEnemyList.enemyToSpawn.Count-1)
+                        {
+                            // spawn index is on last index of spawn pattern... 
+                            proceduralEnemyList.curEnemyIndex = 0; // reset to 0
+                            proceduralEnemyList.timesToSpawnPattern -= 1; // decrement timesToSpawn
+                        }
+                        else
+                        {
+                            proceduralEnemyList.curEnemyIndex += 1; // increment curEnemyIndex
+                        }
+                        timer = 0f; // Reset the timer
+                    }
+                    // times to spawn has reached 0, so we make new list...
+                    else
+                    {
+                        Debug.Log($"gENERATING NEW LIST FROM WITHIN PROCREDURAL BLOCKER");
+                        GenerateProceduralEnemyList(); // generate new list
+                        timer = 0f; // Reset the timer
+                    }
+                }
+            }
         }
     }
 
@@ -193,4 +249,51 @@ public class Spawner : MonoBehaviour
         return null;
     }
 
+    private int GenerateRandomNumber(int baseSize, int size)
+    {
+        return Random.Range(baseSize, size);
+    }
+
+
+    // PROCEDURAL SPAWNER
+
+    private void GenerateProceduralEnemyList()
+    {
+        Debug.Log("GENERATING PROCEDURAL LSIT....");
+        // spawn at least one demon per list
+        int indexToSpawnDemon = GenerateRandomNumber(0,11);
+        
+        proceduralEnemyList.enemyToSpawn = new List<EnemyName>(); // initialize list
+        // randomize time times from 0 - 5
+        for(int i = 0; i < proceduralEnemyListSize; i++)
+        {
+            // add demon
+            if (i == indexToSpawnDemon)
+            {
+                proceduralEnemyList.enemyToSpawn.Add(EnemyName.Demon); // add demon
+            }
+            else
+            {
+                int index = GenerateRandomNumber(0,enemyList.Count);
+                EnemyName enemyName = enemyNameMap[index]; // grab enemyName
+
+                proceduralEnemyList.enemyToSpawn.Add(enemyName); // enemy name to list
+                
+            }
+            
+        }
+        // one time settings per spawnEntry
+        proceduralEnemyList.timesToSpawnPattern = GenerateRandomNumber(2,4); // spawn pattern 2 - 4 times
+        proceduralEnemyList.intervalBetweenSpawns = GenerateRandomNumber(1,3); // interval always 3..
+        int spawnLocationType = GenerateRandomNumber(0,2);
+        if (spawnLocationType == 0)
+        {
+            proceduralEnemyList.spawnSettings = SpawnSettings.FlipFlop;
+        }
+        else
+        {
+            proceduralEnemyList.spawnSettings = SpawnSettings.Randomize;
+        }
+        Debug.Log($"PROCEDURAL LSIT: {proceduralEnemyList}");
+    }
 }
