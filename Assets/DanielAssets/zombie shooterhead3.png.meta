@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6cf4647b91871764892ff8feafe5ba07
+guid: 5775080cea1a82e4e88c9835d3f0712e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2451260557778898031
-    second: zombie shooterhead_0
+      213: 8205617188767389021
+    second: zombie shooterhead3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: zombie shooterhead_0
+      name: zombie shooterhead3_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1
-        width: 32
-        height: 29
+        x: 2
+        y: 0
+        width: 29
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6c465e6d70a40220800000000000000
-      internalID: 2451260557778898031
+      spriteID: d55d153ab5530e170800000000000000
+      internalID: 8205617188767389021
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      zombie shooterhead_0: 2451260557778898031
+      zombie shooterhead3_0: 8205617188767389021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
