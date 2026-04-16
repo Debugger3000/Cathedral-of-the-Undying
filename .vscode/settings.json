@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Cathedral-of-the-Undying.slnx"
+    "dotnet.defaultSolution": "CathedraloftheUndying.slnx"
 }

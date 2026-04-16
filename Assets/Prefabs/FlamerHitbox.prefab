@@ -116,7 +116,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.8396226, g: 0.49143368, b: 0.059407253, a: 0.84313726}
+  m_Color: {r: 0.8396226, g: 0.49143368, b: 0.059407253, a: 0.92156863}
   m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 2
@@ -211,5 +211,6 @@ MonoBehaviour:
   damage: 0
   armourPenetration: 0
   hitboxLifetime: 0
+  weaponPoints: 10
   debuffData: {fileID: 0}
   isSpecialEffect: 0
