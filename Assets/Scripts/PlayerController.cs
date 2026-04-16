@@ -337,7 +337,11 @@ public class PlayerController : MonoBehaviour
 
     public void HealPlayer()
     {
-        currentHealth += 20;
+        float healthAfter =  currentHealth + 20;
+        if (healthAfter >= 100)
+        {
+            currentHealth = 100;
+        }
     }
 
     // mouse aim function
