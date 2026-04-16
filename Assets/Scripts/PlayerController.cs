@@ -342,6 +342,11 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = 100;
         }
+        else
+        {
+            currentHealth = healthAfter;
+        }
+        GameController.Instance.uiManager.UpdatePlayerHealth(currentHealth);
     }
 
     // mouse aim function
