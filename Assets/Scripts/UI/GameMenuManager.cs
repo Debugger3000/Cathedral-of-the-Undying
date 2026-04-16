@@ -11,6 +11,7 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private GameObject menuOverlay;
     [SerializeField] private GameObject menuPage;
     [SerializeField] private GameObject howToPlayPage;
+    [SerializeField] private GameObject deathPage;
 
     [Header("Menu Buttons")]
     [SerializeField] private Button howToPlayButton;
@@ -21,6 +22,11 @@ public class GameMenuManager : MonoBehaviour
     [Header("How To Play Buttons")]
     [SerializeField] private Button howToPlayBackButton;
 
+    [Header("On Death Buttons")]
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button goToMainMenuButton;
+    [SerializeField] private Button exitGameButtonOnDeath;
+
     private void OnEnable()
     {
         menuButton.onClick.AddListener(OnMenuClicked);
@@ -29,6 +35,9 @@ public class GameMenuManager : MonoBehaviour
         exitGameButton.onClick.AddListener(OnExitGameClicked);
         resumeButton.onClick.AddListener(OnResumeClicked);
         howToPlayBackButton.onClick.AddListener(OnHowToPlayBackClicked);
+        newGameButton.onClick.AddListener(OnNewGameClicked);
+        goToMainMenuButton.onClick.AddListener(OnMainMenuClicked);
+        exitGameButtonOnDeath.onClick.AddListener(OnExitGameClicked);
     }
 
     private void OnDisable()
@@ -39,6 +48,9 @@ public class GameMenuManager : MonoBehaviour
         exitGameButton.onClick.RemoveListener(OnExitGameClicked);
         resumeButton.onClick.RemoveListener(OnResumeClicked);
         howToPlayBackButton.onClick.RemoveListener(OnHowToPlayBackClicked);
+        newGameButton.onClick.RemoveListener(OnNewGameClicked);
+        goToMainMenuButton.onClick.RemoveListener(OnMainMenuClicked);
+        exitGameButtonOnDeath.onClick.RemoveListener(OnExitGameClicked);
     }
 
     private void Start()
@@ -94,4 +106,18 @@ public class GameMenuManager : MonoBehaviour
         howToPlayPage.SetActive(false);
         Time.timeScale = 1f;
     }
+
+    public void DeathMenu()
+    {
+        menuOverlay.SetActive(true);
+        menuPage.SetActive(false);
+        howToPlayPage.SetActive(false);
+        deathPage.SetActive(true); //
+    }
+
+    private void OnNewGameClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 }

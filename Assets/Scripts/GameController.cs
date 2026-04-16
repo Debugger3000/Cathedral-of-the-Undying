@@ -30,6 +30,8 @@ public class GameController : MonoBehaviour
     [Header("UI")]
     public UIManager uiManager;
 
+    public GameMenuManager gameMenuManager;
+
 
     // map grid size
     // 24 (h) x 44 (w)
@@ -105,6 +107,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Player died.......................");
             Destroy(playerInstance); // kill player model...
+            gameMenuManager.DeathMenu(); // run death menu...
             // player dead
             // have a nice delay and the enemies swarming..
             // cue death music / text saying player has died...
