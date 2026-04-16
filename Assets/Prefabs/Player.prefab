@@ -263,6 +263,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e47152d6-965b-4a3a-a51a-8b5e8fb65f22
     m_ActionName: 'Player/Inventory[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 70bd1597-6875-4177-adc2-c81b365864a7
+    m_ActionName: 'UI/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7db761e3-a6f3-42b6-a123-4c74617cd445
+    m_ActionName: 'UI/Point[/Mouse/position]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -280,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c705b094503a847b6ba4dcc7522765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
+  moveSpeed: 6
   aimPivot: {fileID: 5845462923879602104}
   weaponControl: {fileID: 3579168855464684704}
 --- !u!58 &1886884686456405417

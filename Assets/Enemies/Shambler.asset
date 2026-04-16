@@ -28,8 +28,8 @@ MonoBehaviour:
   attackCooldown: 1.5
   hitboxLifetime: 1
   attackAngle: 45
-  isHitBoxSpecialEffect: 1
-  debuffDataHitBox: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
+  isHitBoxSpecialEffect: 0
+  debuffDataHitBox: {fileID: 0}
   projectilePrefab: {fileID: 0}
   enemyPrefab: {fileID: 5813305964766610418, guid: cb75b65c7416ca94eaca9d9da515fa43, type: 3}
   attackHitbox: {fileID: 7819302047958935761, guid: 0da6eaaf580998643bd5d0dd0bf42b89, type: 3}

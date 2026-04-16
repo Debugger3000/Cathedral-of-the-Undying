@@ -24,7 +24,7 @@ MonoBehaviour:
   hasOverHeat: 1
   heatPerShot: 0.2
   heatCoolDownRate: 0.5
-  overHeatCoolDown: 1.5
+  overHeatCoolDown: 2
   HitBoxDamage: 10
   hitboxLifetime: 1
   debuffDataHitBox: {fileID: 0}

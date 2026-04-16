@@ -11,7 +11,7 @@ public class WeaponInstance
     public int curAmmo;
 
     // other attributes that a weapon instance should hold... such as cooldown
-    private bool isOnCooldown = false;
+    //private bool isOnCooldown = false;
 
     public float currentHeatInstance = 0f;
     public bool isOverHeatedInstance = false;

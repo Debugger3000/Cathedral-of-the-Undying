@@ -26,7 +26,7 @@ public abstract class EnemyController : MonoBehaviour
     protected float nextAttackTime;
     protected bool isAttacking = false;
 
-    private bool isAffected = false; // for special effects 
+    //private bool isAffected = false; // for special effects 
 
     // Unit Stats
     protected float currentHealth;
@@ -113,7 +113,7 @@ public abstract class EnemyController : MonoBehaviour
     // Projectile special effect ONTO enemy unit
     private IEnumerator ApplySpecialEffectProjectile(BaseProjectile projectile)
     {
-        isAffected = true; 
+        //isAffected = true; 
         
         // Apply the knockback/effect and set statsCopy
         // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
@@ -129,13 +129,13 @@ public abstract class EnemyController : MonoBehaviour
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
-        isAffected = false;
+        //isAffected = false;
     }
 
     // Debuff / Special effects on attacks
     private IEnumerator HitBoxSpecialEffect(AttackHitboxController attackHitboxScript)
     {
-        isAffected = true; 
+        //isAffected = true; 
         
         // Apply the knockback/effect and set statsCopy
         // projectile special effects can either debuff a unit or apply whatever logic at end of projectile
@@ -151,7 +151,7 @@ public abstract class EnemyController : MonoBehaviour
         // Wait for a short duration so the physics force actually moves the object
         yield return new WaitForSeconds(0.2f); 
         
-        isAffected = false;
+        //isAffected = false;
     }
 
     //------

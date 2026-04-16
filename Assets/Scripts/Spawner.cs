@@ -72,7 +72,7 @@ public class Spawner : MonoBehaviour
     private bool proceduralSpawnSwitch = false;
     private SpawnerEntry proceduralEnemyList = new SpawnerEntry();
     public int proceduralEnemyListSize = 10;
-    private int demonCap = 3; // cap at 3 demons
+    //private int demonCap = 3; // cap at 3 demons
 
     private Dictionary<int, EnemyName> enemyNameMap = new Dictionary<int, EnemyName>
     {

@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 
 public class LanternFlicker : MonoBehaviour
 {
-    private Light2D light;
+    private new Light2D light;
     public float minIntensity = 5f;
     public float maxIntensity = 7.5f;
 
