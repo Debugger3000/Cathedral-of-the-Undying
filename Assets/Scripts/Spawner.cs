@@ -284,7 +284,7 @@ public class Spawner : MonoBehaviour
         }
         // one time settings per spawnEntry
         proceduralEnemyList.timesToSpawnPattern = GenerateRandomNumber(2,4); // spawn pattern 2 - 4 times
-        proceduralEnemyList.intervalBetweenSpawns = GenerateRandomNumber(1,3); // interval always 3..
+        proceduralEnemyList.intervalBetweenSpawns = GenerateRandomNumber(2,4); // interval always 3..
         int spawnLocationType = GenerateRandomNumber(0,2);
         if (spawnLocationType == 0)
         {

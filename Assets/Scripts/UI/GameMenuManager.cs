@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameMenuManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button goToMainMenuButton;
     [SerializeField] private Button exitGameButtonOnDeath;
+    public TextMeshProUGUI timeSurvivedText;
 
     private void OnEnable()
     {
@@ -107,8 +109,11 @@ public class GameMenuManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void DeathMenu()
+    public void DeathMenu(float timeSurvived)
     {
+        int minutes = Mathf.FloorToInt(timeSurvived / 60f);
+        int seconds = Mathf.FloorToInt(timeSurvived % 60f);
+        timeSurvivedText.text = $"Time Survived: {minutes:00}:{seconds:00}";
         menuOverlay.SetActive(true);
         menuPage.SetActive(false);
         howToPlayPage.SetActive(false);

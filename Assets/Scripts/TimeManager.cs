@@ -5,6 +5,7 @@ public class TimeManager : MonoBehaviour
     public UIManager uiManager; // Drag your Canvas/UIManager here
 
     private float startTime;
+    public float elapsed;
 
     void Start()
     {
@@ -13,7 +14,7 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-        float elapsed = Time.time - startTime;
+        elapsed = Time.time - startTime;
         uiManager.UpdateTimerDisplay(elapsed);
     }
 }
