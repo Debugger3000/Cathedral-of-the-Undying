@@ -33,7 +33,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 2998432818825421932, guid: 91105e8733a98a14bb822fb2e345a42e, type: 3}
   childrenProjectiles: []
   weaponPrefab: {fileID: 7061523503901339698, guid: 5389c7b0beb9f57419163a795f22cfd7, type: 3}
-  weaponSprite: {fileID: 21300156, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
+  weaponSprite: {fileID: -1690957184094765749, guid: 4234be20714f6a8499ca63c88931eeec, type: 3}
   hasDistanceEffect: 0
   distanceForDistanceEffect: 5
   pelletCount: 5
