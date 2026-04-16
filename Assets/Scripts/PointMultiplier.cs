@@ -56,12 +56,13 @@ public class PointMultiplier : MonoBehaviour
         multiplierPoints += baseAmountPoints;
 
 
-        if(multiplierPoints == 100 && multiplierLevel < multiplierLevelCeiling)
+        if(multiplierPoints >= 100 && multiplierLevel < multiplierLevelCeiling)
         {
             multiplierLevel++; // increment level
             multiplierPoints = 0; // reset multiplier points to 0
             UpdateLevelUI(); // update the level UI
 
+            Debug.Log($"Multiplie rPioints : {multiplierLevel}");
             // check what weapons / upgrades are now available to drop on kills..
         }
 

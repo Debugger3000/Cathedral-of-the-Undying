@@ -13,19 +13,26 @@ MonoBehaviour:
   m_Name: Orb
   m_EditorClassIdentifier: Assembly-CSharp::OrbData
   weaponName: Orb
-  fireRate: 0.5
+  fireRate: 1.5
   bulletSpeed: 20
   weaponDamage: 5
   initialWeaponAmmo: 999
-  weaponPenetration: 0
+  armourPenetration: 10
   weaponPoints: 10
   isSpecialEffect: 0
   debuffData: {fileID: 0}
-  HitBoxDamage: 10
+  hasOverHeat: 0
+  heatPerShot: 0.1
+  heatCoolDownRate: 0.5
+  overHeatCoolDown: 3
+  HitBoxDamage: 20
   hitboxLifetime: 1
   debuffDataHitBox: {fileID: 11400000, guid: 973965f98d2042c41a871f3bcd283c69, type: 2}
   isHitBoxSpecialEffect: 1
   attackHitbox: {fileID: 2393040464730061144, guid: 53256063fbe82a245848c1d3e76628de, type: 3}
   projectilePrefab: {fileID: 0}
+  childrenProjectiles: []
   weaponPrefab: {fileID: 72932949261231428, guid: cf00976e795e0b74d8d147bdb733dc79, type: 3}
   weaponSprite: {fileID: 21300142, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
+  hasDistanceEffect: 0
+  distanceForDistanceEffect: 5
