@@ -15,14 +15,14 @@ MonoBehaviour:
   weaponName: MagicWand
   fireRate: 10
   bulletSpeed: 10
-  weaponDamage: 25
+  weaponDamage: 20
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 5
   isSpecialEffect: 0
   debuffData: {fileID: 0}
   hasOverHeat: 1
-  heatPerShot: 0.1
+  heatPerShot: 0.2
   heatCoolDownRate: 0.5
   overHeatCoolDown: 1.5
   HitBoxDamage: 10

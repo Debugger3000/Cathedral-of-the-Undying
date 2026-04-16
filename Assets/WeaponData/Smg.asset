@@ -15,14 +15,14 @@ MonoBehaviour:
   weaponName: Smg
   fireRate: 15
   bulletSpeed: 20
-  weaponDamage: 10
+  weaponDamage: 5
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 1
   isSpecialEffect: 0
   debuffData: {fileID: 0}
   hasOverHeat: 1
-  heatPerShot: 0.04
+  heatPerShot: 0.15
   heatCoolDownRate: 0.2
   overHeatCoolDown: 3
   HitBoxDamage: 0
@@ -31,5 +31,8 @@ MonoBehaviour:
   isHitBoxSpecialEffect: 0
   attackHitbox: {fileID: 0}
   projectilePrefab: {fileID: 1258052255578545577, guid: 57d721f686e27244288417c9174d578c, type: 3}
+  childrenProjectiles: []
   weaponPrefab: {fileID: 7809258028031046341, guid: dbd8eeef8a4ab8540b36e7f9f89bb2ec, type: 3}
   weaponSprite: {fileID: 21300000, guid: 29c9cded5e558164aaf8c9bf08aa1510, type: 3}
+  hasDistanceEffect: 0
+  distanceForDistanceEffect: 5
