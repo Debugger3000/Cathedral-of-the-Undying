@@ -19,8 +19,8 @@ MonoBehaviour:
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 15
-  isSpecialEffect: 1
-  debuffData: {fileID: 11400000, guid: 966ddc07c4c6aaf4f8655e6c6ff78c02, type: 2}
+  isSpecialEffect: 0
+  debuffData: {fileID: 0}
   hasOverHeat: 0
   heatPerShot: 0.1
   heatCoolDownRate: 0.5

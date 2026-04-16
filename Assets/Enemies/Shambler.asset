@@ -17,7 +17,7 @@ MonoBehaviour:
   armour: 0
   moveSpeed: 4
   rotationSpeed: 3
-  damage: 10
+  damage: 5
   armourPenetration: 10
   projectileMoveSpeed: 10
   projectileDamage: 10
