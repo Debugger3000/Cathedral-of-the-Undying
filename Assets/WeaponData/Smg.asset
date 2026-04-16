@@ -22,7 +22,7 @@ MonoBehaviour:
   isSpecialEffect: 0
   debuffData: {fileID: 0}
   hasOverHeat: 1
-  heatPerShot: 0.15
+  heatPerShot: 0.08
   heatCoolDownRate: 0.2
   overHeatCoolDown: 3
   HitBoxDamage: 0

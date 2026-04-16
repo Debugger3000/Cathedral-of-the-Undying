@@ -22,7 +22,7 @@ MonoBehaviour:
   isSpecialEffect: 0
   debuffData: {fileID: 0}
   hasOverHeat: 1
-  heatPerShot: 0.1
+  heatPerShot: 0.08
   heatCoolDownRate: 0.5
   overHeatCoolDown: 3
   HitBoxDamage: 1
@@ -31,6 +31,9 @@ MonoBehaviour:
   isHitBoxSpecialEffect: 1
   attackHitbox: {fileID: 7230444070380457856, guid: 929ddc13a6fa7ba4291a188b41bb61aa, type: 3}
   projectilePrefab: {fileID: 0}
+  childrenProjectiles: []
   weaponPrefab: {fileID: 8607131891592281264, guid: 8cad31b20929b96478e257c501fa3407, type: 3}
   weaponSprite: {fileID: 21300000, guid: ea3538b6446538f43b03f79a5b78a947, type: 3}
+  hasDistanceEffect: 0
+  distanceForDistanceEffect: 5
   movementSpeedDebuff: 0.2
