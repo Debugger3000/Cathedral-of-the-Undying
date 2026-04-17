@@ -45,7 +45,13 @@ public abstract class EnemyController : MonoBehaviour
     {
         //myTransform = transform; // assign own transform
         rb = GetComponent<Rigidbody2D>(); // get rigidbody
-        target = GameObject.FindGameObjectWithTag("Player").transform; // get player transform to follow...
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player.transform;
+        }
+
         currentHealth = enemyData.maxHealth; // set health...
         statsCopy = new StatsCopy(enemyData.maxHealth, enemyData.moveSpeed, enemyData.armour); // set enemy stats copy
         enemyDebuffController = new DebuffController(statsCopy); // debuff controller for enemy unit
@@ -189,20 +195,14 @@ public abstract class EnemyController : MonoBehaviour
         // Attack check
         if (Time.time >= nextAttackTime)
         {
-            Debug.Log($"ISaTTACKING: {isAttacking}");
             RaycastHit2D hit = enemyData.DefaultDetection(bodyTransform, enemyData);
             if (hit.collider != null && !isAttacking)
             {
-                Debug.Log($"DEMON ATTACK............");
+                //Debug.Log($"DEMON ATTACK............");
                 StartCoroutine(AttackSequence(bodyTransform));
                 return; // attacking, don't move
             }
-            // else if(hit.collider != null && isAttacking)
-            // {
-            //     Debug.Log($"DEMONNN Stop attack....");
-            //     // weaponControl.PlayerStopsAttackWithWeapon(transform);
-            //     StartCoroutine(StopAttack(bodyTransform));
-            // }
+            
         }
 
         // check debuff status
@@ -242,7 +242,7 @@ public abstract class EnemyController : MonoBehaviour
             
 
             currentHealth -= damageTaken; // subtract health with normal (0-100)
-            Debug.Log($"Damage taken is: {damageTaken}");
+            //Debug.Log($"Damage taken is: {damageTaken}");
 
             healthBarFill.fillAmount = currentHealth / enemyData.maxHealth; // make sure fill scales with enemies total health
 
@@ -267,7 +267,7 @@ public abstract class EnemyController : MonoBehaviour
     public void FlatTakeDamage(float amount)
     {
         currentHealth -= amount; // subtract health with normal (0-100)
-        Debug.Log($"Damage taken is: {amount}");
+        //Debug.Log($"Damage taken is: {amount}");
 
         healthBarFill.fillAmount = currentHealth / enemyData.maxHealth; // set enemy units health bar fill amount
 
@@ -283,8 +283,7 @@ public abstract class EnemyController : MonoBehaviour
         // Random
         // Weapon Box drop on enemy death
         // roll 50% chance that a weapon box drops...
-        if (UnityEngine.Random.value <= 0.5f)
-        {
+        
             GameController instance = GameController.Instance;
             // have unit drop a box...
             WeaponName weaponName = instance.GetWeaponBoxDropName();
@@ -298,9 +297,9 @@ public abstract class EnemyController : MonoBehaviour
                 box = Instantiate(instance.weaponBox, transform.position, transform.rotation);
             }
             
-            Debug.Log($"weapon name for box drop is: {weaponName}");
+            //Debug.Log($"weapon name for box drop is: {weaponName}");
             box.GetComponentInChildren<WeaponBox>().SetWeaponToBox(weaponName); // weaponName ID to the box that drops
-        }
+        
     }
 
 
@@ -313,7 +312,7 @@ public abstract class EnemyController : MonoBehaviour
 
         var icon = Instantiate(data.overlayEffectPrefab, effectTray);
         activeIcons[data.debuffId] = icon; // key - debuffId / value - prefab icon
-        Debug.Log($"Added player debuff ICON: {activeIcons}");
+        //Debug.Log($"Added player debuff ICON: {activeIcons}");
     }
 
     // remove debuff
@@ -329,7 +328,7 @@ public abstract class EnemyController : MonoBehaviour
                 enemyEffects.RemoveAt(i);
             }
         }
-        Debug.Log($"Added player debuff ICON: {activeIcons}");
+        //Debug.Log($"Added player debuff ICON: {activeIcons}");
     }
 
    

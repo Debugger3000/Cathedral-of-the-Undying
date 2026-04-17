@@ -53,7 +53,8 @@ public class WeaponDatabaseGame : MonoBehaviour
 
     public WeaponName GetWeaponDrop(int level)
     {
-        // 20% chance to get a heal box instead of a weapon...
+        // 25% chance to get a heal box instead of a weapon...
+        // 0 - 3
         int healOrWeaponRoll = UnityEngine.Random.Range(0, 4);
         if(healOrWeaponRoll == 0)
         {
@@ -61,7 +62,6 @@ public class WeaponDatabaseGame : MonoBehaviour
         }
         else
         {
-            Debug.Log($"multiplier level is: {level}");
             List<WeaponDropEntry> availableWeaponDrops = new List<WeaponDropEntry>();
             // see which weapons are able to drop based on points multiplier
             foreach (WeaponDropEntry entry in weaponConfigs)
@@ -69,7 +69,8 @@ public class WeaponDatabaseGame : MonoBehaviour
                 // if weapon is available... and its not a pistol...
                 // point multiplier level must be equal or greater than a weapons dropLevel...
                 //
-                if (level >= entry.dropLevel && entry.weaponName != WeaponName.Pistol)
+                bool weaponExistsInInventory  = GameController.Instance.inventory.isWeaponInInventory(entry.weaponName);
+                if (level >= entry.dropLevel && entry.weaponName != WeaponName.Pistol && !weaponExistsInInventory)
                 {
                     availableWeaponDrops.Add(entry);
                 }
@@ -77,8 +78,6 @@ public class WeaponDatabaseGame : MonoBehaviour
             // int hee = Random
             // add to a list...
             int roll = UnityEngine.Random.Range(0, availableWeaponDrops.Count);
-            Debug.Log($"roll is: {roll} and avaialble weapons count is: {availableWeaponDrops.Count}");
-            Debug.Log($"Weapon drop is: {availableWeaponDrops[roll].weaponName}");
 
             // return weapon instance...
             return availableWeaponDrops[roll].weaponName;

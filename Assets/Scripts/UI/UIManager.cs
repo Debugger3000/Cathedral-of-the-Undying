@@ -48,7 +48,6 @@ public class UIManager : MonoBehaviour
 
         var icon = Instantiate(data.overlayEffectPrefab, effectTray);
         activeIcons[data.debuffId] = icon; // key - debuffId / value - prefab icon
-        Debug.Log($"Added player debuff ICON: {activeIcons}");
     }
 
     // remove debuff
@@ -59,7 +58,6 @@ public class UIManager : MonoBehaviour
             activeIcons.Remove(data.debuffId);
             Destroy(icon); // remove debuff icon...
         }
-        Debug.Log($"Added player debuff ICON: {activeIcons}");
     }
 
 

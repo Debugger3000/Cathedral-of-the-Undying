@@ -68,10 +68,10 @@ public abstract class WeaponData : ScriptableObject
     {
         if (activeHitbox != null)
         {
-             Debug.Log($"STOPPING FLAMER ATTACK HITBOX.//...............");
+             //Debug.Log($"STOPPING FLAMER ATTACK HITBOX.//...............");
             Destroy(activeHitbox);
             activeHitbox = null;
-             Debug.Log($"HIBOX: {activeHitbox}");
+             //Debug.Log($"HIBOX: {activeHitbox}");
         }
     }
 
@@ -110,8 +110,8 @@ public abstract class WeaponData : ScriptableObject
     {
         //
         //Debug.Log("Enemy basic attack called...");
-        Debug.Log($"Hitbox Attack Player: {muzzle} { playerTransform}");
-        Debug.Log($"Muzzle pos: {muzzle.position} rot: {muzzle.rotation} scale: {muzzle.lossyScale}");
+        //Debug.Log($"Hitbox Attack Player: {muzzle} { playerTransform}");
+        //Debug.Log($"Muzzle pos: {muzzle.position} rot: {muzzle.rotation} scale: {muzzle.lossyScale}");
 
         
 
@@ -122,12 +122,12 @@ public abstract class WeaponData : ScriptableObject
         // 'transform.up' is the direction the enemy is facing. 
         // Multiply by 0.5f or 1.0f to push it out.
         Vector3 spawnPosition = muzzle.position + (muzzle.up * 4f);
-        Debug.Log($"Spawn pos: {spawnPosition}");
+        //Debug.Log($"Spawn pos: {spawnPosition}");
 
         GameObject hitbox = Instantiate(attackHitbox, spawnPosition, muzzle.rotation); // generate hitbox
 
         hitbox.GetComponentInChildren<AttackHitboxController>().Setup(HitBoxDamage, armourPenetration, weaponPoints, hitboxLifetime, isHitBoxSpecialEffect, debuffDataHitBox);
-        Debug.Log($"After hitvox created.........");
+        //Debug.Log($"After hitvox created.........");
         Destroy(hitbox,1f); // destroy hitbox after attack...
     }
 

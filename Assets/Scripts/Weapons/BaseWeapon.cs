@@ -57,7 +57,6 @@ public abstract class BaseWeapon : MonoBehaviour
             if(currentWeaponData.weaponData.hasOverHeat)
             {
                 currentHeat += currentWeaponData.weaponData.heatPerShot; // increment heat
-                Debug.Log($"Weapon heat: {currentHeat}.................................");
             }
             
             // check if weapon has OverHeated...
@@ -65,7 +64,6 @@ public abstract class BaseWeapon : MonoBehaviour
             {
                 currentWeaponData.weaponData.StopAttackController(playerTransform,muzzlePoint);
                 isOverheated = true;
-                Debug.Log("Weapon has overheated...");
             }
         }
     }
@@ -158,7 +156,6 @@ public abstract class BaseWeapon : MonoBehaviour
         }
         // update overheat since we got new weapon now...
 
-        Debug.Log("Now holding: " + newData.weaponData.weaponName);
     }
 
     public WeaponInstance GetWeaponInstance()

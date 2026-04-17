@@ -103,11 +103,10 @@ public class GameController : MonoBehaviour
 
     public void PlayerDamaged(float currentHealth)
     {
-        Debug.Log($"Player took damage: {currentHealth}");
         // player is dead
         if(currentHealth <= 0f)    
         {
-            Debug.Log("Player died.......................");
+            //Debug.Log("Player died.......................");
             Destroy(playerInstance); // kill player model...
             // get time survived
             gameMenuManager.DeathMenu(timeManager.elapsed); // run death menu...
@@ -131,7 +130,6 @@ public class GameController : MonoBehaviour
 
     public void PickUpWeaponBox(WeaponName weaponName)
     {
-        Debug.Log($"Player is picking up weaon in GAMECONTROLLER: {weaponName}");
         WeaponInstance weaponInstance = weaponDataBaseGame.GetWeaponPickUp(weaponName); // get weapon instance..
 
         // if heal, then heal player...

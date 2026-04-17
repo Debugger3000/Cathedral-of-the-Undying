@@ -93,11 +93,11 @@ public class PlayerController : MonoBehaviour
         
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyAttack"))
         {
-            Debug.Log("Enemy hitbox triggered player via TRIGGER event!");
+            //Debug.Log("Enemy hitbox triggered player via TRIGGER event!");
 
             if (other.TryGetComponent<AttackHitboxController>(out var attackHitboxScript))
             {
-                Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
+                //Debug.Log($"Hit by {other.gameObject.name} for {attackHitboxScript.damage} damage!");
 
                 // if hitbox has damage to it
                 if (attackHitboxScript.damage > 0)
@@ -119,11 +119,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
-            Debug.Log("Enemy projectile hit player............");
+            //Debug.Log("Enemy projectile hit player............");
 
             if (other.TryGetComponent<BaseProjectile>(out var baseProjectileScript))
             {
-                Debug.Log($"Hit by {other.gameObject.name} for {baseProjectileScript.damage} damage!");
+                //Debug.Log($"Hit by {other.gameObject.name} for {baseProjectileScript.damage} damage!");
 
                 PlayerTakeDamage(baseProjectileScript.damage, baseProjectileScript.armourPenetration); // player takes damage from projectile
 
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
             if (boxScript != null) 
             {
                 WeaponName name = boxScript.weaponName;
-                Debug.Log($"Weapon name on player pickup is: {name}");
+                //Debug.Log($"Weapon name on player pickup is: {name}");
                 
                 GameController.Instance.PickUpWeaponBox(name);
                 
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
             }
             else 
             {
-                Debug.LogWarning("Hit a 'WeaponBox' layer, but no WeaponBox script was found!");
+                //Debug.LogWarning("Hit a 'WeaponBox' layer, but no WeaponBox script was found!");
             }
         }
     }
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
     {
         // run through armour calculations first...
         float damageTaken = GameController.Instance.armourClass.armourDeductionBase(armour, armourPenetration, damage);
-        Debug.Log($"Player took damage: {damageTaken}");
+        //Debug.Log($"Player took damage: {damageTaken}");
         currentHealth -= damageTaken; // subtract
         GameController.Instance.PlayerDamaged(currentHealth); // update UI for player health bar + check death condition
 
@@ -225,10 +225,10 @@ public class PlayerController : MonoBehaviour
     // flat damage for dots and other sources
     public void FlatPlayerTakeDamage(float damageTaken)
     {
-        Debug.Log($"Flat damage to player is: {damageTaken} to health of: {currentHealth}");
+        //Debug.Log($"Flat damage to player is: {damageTaken} to health of: {currentHealth}");
         currentHealth -= damageTaken; // subtract
         GameController.Instance.PlayerDamaged(currentHealth); // update UI for player health bar + check death condition
-        Debug.Log($"flat dmg taken health is now: {currentHealth}");
+        //Debug.Log($"flat dmg taken health is now: {currentHealth}");
 
     }
 
@@ -242,9 +242,9 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             // rotate weapon in inventory...
-            Debug.Log("Pressed Q to get inventory...");
+            //Debug.Log("Pressed Q to get inventory...");
             GameController.Instance.SwitchWeapon(); // call gameController to swap weapon...
-            Debug.Log("After sweapon has been swapped.....");
+            //Debug.Log("After sweapon has been swapped.....");
             // if (weaponControl.GetWeaponInstance().weaponData.name == "Flamer")
             // {
             //     // slow movement down

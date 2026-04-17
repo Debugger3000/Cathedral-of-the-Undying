@@ -43,6 +43,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool isWeaponInInventory(WeaponName weaponName)
+    {
+        foreach (WeaponInstance entry in inventoryWeapons)
+        {
+            string name = entry.weaponData.weaponName;
+
+            if (weaponName.ToString() == name)
+            {
+                return true; // weapon exists in inventory already
+            }
+        }
+        return false; // weapon not in inventory so we can drop crate for it...
+        
+    }
+
     // deal with weapon upgrade
     public void WeaponUpgrade(WeaponInstance upgradedWeapon)
     {

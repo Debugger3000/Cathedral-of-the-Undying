@@ -23,8 +23,8 @@ MonoBehaviour:
   debuffData: {fileID: 0}
   hasOverHeat: 1
   heatPerShot: 0.08
-  heatCoolDownRate: 0.5
-  overHeatCoolDown: 2
+  heatCoolDownRate: 0.6
+  overHeatCoolDown: 1
   HitBoxDamage: 1
   hitboxLifetime: 0.05
   debuffDataHitBox: {fileID: 11400000, guid: 141561536d92c5147abbd73f613c7ac8, type: 2}

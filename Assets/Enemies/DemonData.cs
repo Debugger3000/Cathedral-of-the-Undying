@@ -101,7 +101,7 @@ public class DemonData : EnemyData
         // Spawn warning indicator (harmless)
         Vector3 transformPosition = transform.position + (transform.up * 5f);
         activeHitbox = Instantiate(attackHitboxList[1], transformPosition, transform.rotation, transform);
-        Debug.Log($"Beam spawned SPAWNED: {activeHitbox != null}");
+        //Debug.Log($"Beam spawned SPAWNED: {activeHitbox != null}");
         // Spawn actual damaging hitbox at same position
         activeHitbox.GetComponentInChildren<AttackHitboxController>().Setup(damage, armourPenetration, 0, beamAttackDuration, isHitBoxSpecialEffect, debuffDataHitBox);
         

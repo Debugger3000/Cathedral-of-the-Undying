@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Shotgun
   fireRate: 1.5
   bulletSpeed: 20
-  weaponDamage: 10
+  weaponDamage: 15
   initialWeaponAmmo: 999
   armourPenetration: 25
   weaponPoints: 4

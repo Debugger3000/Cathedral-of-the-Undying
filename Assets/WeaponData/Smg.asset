@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Smg
   fireRate: 15
   bulletSpeed: 20
-  weaponDamage: 5
+  weaponDamage: 10
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 1
@@ -23,8 +23,8 @@ MonoBehaviour:
   debuffData: {fileID: 0}
   hasOverHeat: 1
   heatPerShot: 0.04
-  heatCoolDownRate: 0.2
-  overHeatCoolDown: 2
+  heatCoolDownRate: 0.6
+  overHeatCoolDown: 1
   HitBoxDamage: 0
   hitboxLifetime: 0
   debuffDataHitBox: {fileID: 0}

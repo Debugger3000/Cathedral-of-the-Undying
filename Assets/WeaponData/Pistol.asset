@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Pistol
   fireRate: 2
   bulletSpeed: 10
-  weaponDamage: 20
+  weaponDamage: 25
   initialWeaponAmmo: 999
   armourPenetration: 10
   weaponPoints: 15

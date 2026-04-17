@@ -39,26 +39,22 @@ public class MenuManagerController : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        Debug.Log("[MenuManager] Play button clicked");
         
         SceneManager.LoadScene("Map");
     }
 
     private void OnControlsClicked()
     {
-        Debug.Log("[MenuManager] Controls button clicked");
         ShowControlsPage();
     }
 
     private void OnExitClicked()
     {
-        Debug.Log("[MenuManager] Exit button clicked");
         Application.Quit();
     }
 
     private void OnBackClicked()
     {
-        Debug.Log("[MenuManager] Back button clicked");
         ShowMainMenu();
     }
 
@@ -66,14 +62,12 @@ public class MenuManagerController : MonoBehaviour
     {
         mainMenuPage.SetActive(true);
         controlsPage.SetActive(false);
-        Debug.Log("[MenuManager] Showing Main Menu");
     }
 
     private void ShowControlsPage()
     {
         mainMenuPage.SetActive(false);
         controlsPage.SetActive(true);
-        Debug.Log("[MenuManager] Showing Controls Page");
     }
 }
 

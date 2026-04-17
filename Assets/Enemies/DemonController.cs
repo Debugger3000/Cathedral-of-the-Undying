@@ -17,7 +17,7 @@ public class DemonController : EnemyController
         // {
         //     enemyData.RandomizeAttack(); // randomize 3 attacks in queue for demon...
         // }
-        Debug.Log("DEMON IS ATTACKING SEQUENCE RUNNSSSSSSSSSSSSSSSSSSSSSSSS");
+        //Debug.Log("DEMON IS ATTACKING SEQUENCE RUNNSSSSSSSSSSSSSSSSSSSSSSSS");
         int attackIndex = enemyData.attackQueue.Dequeue();
         enemyData.attackIndex = attackIndex;
         // Do AOE Splash attack

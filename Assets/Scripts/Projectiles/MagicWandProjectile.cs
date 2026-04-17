@@ -19,7 +19,6 @@ public class MagicWandProjectile : BaseProjectile
 
     protected override void DistanceEffect()
     {
-        Debug.Log($"Distance effect has triggered........");
         // do something
         for (int i = 0; i < 2; i++)
         {
